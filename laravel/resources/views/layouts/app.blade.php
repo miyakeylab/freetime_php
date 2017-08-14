@@ -16,12 +16,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/assets/css/bootstrap.css')}}" rel="stylesheet">
-    <link href="{{ asset('css/assets/css/font-awesome.css')}}" rel="stylesheet">
-    <link href="{{ asset('css/assets/css/docs.css')}}" rel="stylesheet">
-    <link href="{{ asset('css/bootstrap-social.css')}}" rel="stylesheet">
-    <link href="{{ asset('css/assets/css/style.css')}}" rel="stylesheet">
+    <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('css/assets/css/bootstrap.css')}}" rel="stylesheet">
+    <link href="{{ secure_asset('css/assets/css/font-awesome.css')}}" rel="stylesheet">
+    <link href="{{ secure_asset('css/assets/css/docs.css')}}" rel="stylesheet">
+    <link href="{{ secure_asset('css/bootstrap-social.css')}}" rel="stylesheet">
+    <link href="{{ secure_asset('css/assets/css/style.css')}}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     
 </head>
@@ -86,6 +86,6 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ secure_asset('js/app.js') }}"></script>
 </body>
 </html>
