@@ -73,7 +73,7 @@
                                 <a href="{{ url('/auth/facebook')}}" class="btn btn-facebook">
                                     <i class="fa fa-facebook"></i> Facebook</a>
                                 <a href="{{ url('/auth/google')}}" class="btn btn-google">
-                                    <i class="fa fa-google"></i> google</a>
+                                    <i class="fa fa-google"></i> google+</a>
                         </div>
                     </form>
                 </div>
