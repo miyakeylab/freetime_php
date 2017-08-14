@@ -18,21 +18,37 @@ class AuthController extends Controller
         return Socialite::driver($provider)->redirect();
     }
     
+    /**
+     * コールバック処理メソッド
+     **/
     public function handleProviderCallback($provider) 
     {
         $user = Socialite::driver($provider)->user();
         $authUser = $this->findOrCreateUser($user, $provider);
-        Auth::login($authUser, true); //Auth にソーシャル 情 報 を 預 けてログイン
-        return redirect('/home'); //★★ 認 証 後 に 表示 したいページを 指定 ★★
+        Auth::login($authUser, true); //Authにソーシャル情報を預けてログイン
+        return redirect('/home'); //認証後に表示したいページを指定
     }
     
+    /**
+     * ユーザー処理
+     **/
     public function findOrCreateUser($user, $provider) { 
         $authUser = User::where('provider_id', $user->id)->first();
+        
+        // 既に存在している場合
         if ($authUser) { 
             return $authUser; 
             
         } 
         
+        // nullで名前が戻ってきた時
+        if($user->name == null)
+        {
+            // emailをユーザー名にする
+            $user->name = $user->email;
+        }
+        
+        // ユーザーアカウント作成
         return User::create([   'name' => $user->name, 
                                 'email' => $user->email, 
                                 'provider' => $provider, 
