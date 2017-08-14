@@ -65,7 +65,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     Register
                                 </button>
-                            </div>
+                            </div><br><br>
                             <a href="{{ url('/auth/github')}}" class="btn btn-github">
                                     <i class="fa fa-github"></i> Github</a> 
                                 <a href="{{ url('/auth/twitter')}}" class="btn btn-twitter">
