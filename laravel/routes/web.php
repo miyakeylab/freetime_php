@@ -10,14 +10,15 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+/** 
+* スケジュールホーム
+*/ 
+Route::get('/', 'ScheduleController@RootView');
 
-Route::get('/', function () {
-    return view('/home');
-});
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+/** 
+* スケジュール 表示 
+*/ 
+Route::get('/my_schedule','ScheduleController@ScheView');
 
 Auth::routes();
 
