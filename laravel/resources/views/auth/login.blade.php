@@ -57,6 +57,7 @@
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     Forgot Your Password?
                                 </a>
+                                <br><br>
                                 <a href="{{ url('/auth/github')}}" class="btn btn-github">
                                     <i class="fa fa-github"></i> Github</a> 
                                 <a href="{{ url('/auth/twitter')}}" class="btn btn-twitter">
