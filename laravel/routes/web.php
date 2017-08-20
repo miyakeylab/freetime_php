@@ -13,16 +13,22 @@
 /** 
 * スケジュールホーム
 */ 
-Route::get('/', 'ScheduleController@RootView');
+Route::get('/', 'ScheduleController@MainView');
 
 /** 
-* スケジュール 表示 
+* スケジュール表示 
 */ 
-Route::get('/my_schedule','ScheduleController@ScheView');
+Route::get('/my_schedule','ScheduleController@MainView');
 
 Auth::routes();
-
+/** 
+* HOME表示 
+*/ 
 Route::get('/home', 'HomeController@index')->name('home');
+/** 
+* 友達表示 
+*/ 
+Route::get('/my_friend','FriendController@MainView');
 
 /**
  * SNSログインリダイレクト

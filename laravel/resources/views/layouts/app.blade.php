@@ -74,7 +74,9 @@
                                             {{ csrf_field() }}
                                         </form>
                             </ul>
-                            <li><a href="../my_schedule">マイスケジュール</a></li>
+                            <li>
+                                <a href="../my_schedule">マイスケジュール</a></li><li>
+                                <a href="../my_friend">友達</a></li>
                         </li>
                     @endif
                 </ul>

@@ -6,19 +6,18 @@
     <!-- Bootstrap の定形コード... -->
     <div class="panel-body" >
         <div class="table-responsive" id="LAYER">
+            <button>友達追加</button>
+            @if (count($friends) > 0)
         <table class="table table-bordered table-condensed" style="font-size : 5px;">
-            <tr>
-                <?php for ($i=0;$i<48;$i++): ?>
-                <th></th>
-                <?php endfor;?>
-            </tr>
+            @foreach ($friends as $friend)
+
             <tr>
                 <?php for ($i=0;$i<24;$i++): ?>
-                <td colspan="2" align="center"><?=$i?>:00</td>
+                <td colspan="2" align="center">{{ $friend-> }}</td>
                 <?php endfor;?>
             </tr>
         </table>
-        
+        @endif
         </div>
     </div>
 @endsection
