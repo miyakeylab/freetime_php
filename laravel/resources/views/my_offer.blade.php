@@ -1,4 +1,4 @@
-<!-- resources/views/my_schedule.blade.php -->
+<!-- resources/views/my_offer.blade.php -->
 
 @extends('layouts.app')
 
