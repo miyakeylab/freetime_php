@@ -5,7 +5,8 @@
 @section('content')
     <!-- google API -->
     <div class="panel-body" >
-        <div>
+        <div class="table-responsive" id="LAYER">
             <button>グーグルカレンダー連携</button>
+        </div>
     </div>
 @endsection

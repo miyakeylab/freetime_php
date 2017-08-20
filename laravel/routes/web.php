@@ -51,6 +51,13 @@ Route::get('/my_offer','OfferController@MainView');
  * オファー作成
  */ 
 Route::get('/my_offer/{content}','OfferController@OfferCreate');
+
+/** 
+* 連携表示 
+*/ 
+Route::get('/my_google_api','GoogleApiController@MainView');
+
+
 /**
  * SNSログインリダイレクト
  */

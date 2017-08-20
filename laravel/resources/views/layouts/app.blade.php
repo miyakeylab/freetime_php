@@ -15,13 +15,14 @@
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
-    <!-- Styles -->
     <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ secure_asset('css/assets/css/bootstrap.css')}}" rel="stylesheet">
     <link href="{{ secure_asset('css/assets/css/font-awesome.css')}}" rel="stylesheet">
     <link href="{{ secure_asset('css/assets/css/docs.css')}}" rel="stylesheet">
     <link href="{{ secure_asset('css/bootstrap-social.css')}}" rel="stylesheet">
     <link href="{{ secure_asset('css/assets/css/style.css')}}" rel="stylesheet">
+    <!-- favicon -->
+    <link rel="icon" href="{{ secure_asset('css/assets/img/favicon.ico')}}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     
 </head>
@@ -40,15 +41,14 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}"></a>
+                <a class="navbar-brand" href="{{ url('/home') }}"></a>
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav navbar-left">
                     @if (!Auth::guest())
                     <li><a>{{ "ようこそ".Auth::user()->name."さん" }}</a></li>
-                    <li><a href="{{ url('/home') }}">Test用Home</a></li>
                     @endif
                 </ul>
 
@@ -60,25 +60,28 @@
                         <li><a href="{{ url('/register') }}">新規登録</a></li>
                     @else
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                            <li>    
-                            <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();"><i class="fa fa-btn fa-sign-out"></i>
-                                            ログアウト
-                                        </a></li>
+                            <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">-->
+                            <!--    {{ Auth::user()->name }} <span class="caret"></span>-->
+                            <!--</a>-->
+                            <!--<ul class="dropdown-menu" role="menu">-->
+                            <!--<li>    -->
 
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                            </ul>
+                            <!--</ul>-->
                             <li><a href="{{ url('/my_schedule') }}">スケジュール</a></li>
                             <li><a href="{{ url('/my_friend') }}">友達</a></li>
                             <li><a href="{{ url('/my_offer') }}">オファー</a></li>
                             <li><a href="{{ url('/my_group') }}">グループ</a></li>
+                            <li><a href="{{ url('/my_google_api') }}">連携</a></li>
+                                               <li>         <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();"><i class="fa fa-btn fa-sign-out"></i>
+                                            ログアウト
+                                        </a>
+                                        <!--</li>-->
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form></li>
                         </li>
                     @endif
                 </ul>
