@@ -47,7 +47,8 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     @if (!Auth::guest())
-                    <li><a href="{{ url('/home') }}">Home</a></li>
+                    <li><a>{{ "ようこそ".Auth::user()->name."さん" }}</a></li>
+                    <li><a href="{{ url('/home') }}">Test用Home</a></li>
                     @endif
                 </ul>
 
@@ -74,9 +75,10 @@
                                             {{ csrf_field() }}
                                         </form>
                             </ul>
-                            <li>
-                                <a href="../my_schedule">マイスケジュール</a></li><li>
-                                <a href="../my_friend">友達</a></li>
+                            <li><a href="{{ url('/my_schedule') }}">スケジュール</a></li>
+                            <li><a href="{{ url('/my_friend') }}">友達</a></li>
+                            <li><a href="{{ url('/my_offer') }}">オファー</a></li>
+                            <li><a href="{{ url('/my_group') }}">グループ</a></li>
                         </li>
                     @endif
                 </ul>

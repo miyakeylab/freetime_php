@@ -29,7 +29,28 @@ Route::get('/home', 'HomeController@index')->name('home');
 * 友達表示 
 */ 
 Route::get('/my_friend','FriendController@MainView');
+/**
+ * 友達追加
+ */ 
+Route::get('/my_friend/{friend_id}','FriendController@FriendRegist');
 
+/** 
+* グループ表示 
+*/ 
+Route::get('/my_group','GroupController@MainView');
+/**
+ * グループ作成
+ */ 
+Route::get('/my_group/{group_name}','GroupController@GroupCreate');
+
+/** 
+* オファー表示 
+*/ 
+Route::get('/my_offer','OfferController@MainView');
+/**
+ * オファー作成
+ */ 
+Route::get('/my_offer/{content}','OfferController@OfferCreate');
 /**
  * SNSログインリダイレクト
  */

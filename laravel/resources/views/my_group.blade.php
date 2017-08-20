@@ -3,17 +3,17 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- 友達 -->
+    <!-- グループ -->
     <div class="panel-body" >
         <div class="table-responsive" id="LAYER">
-            <button>友達追加</button>
+            <button>グループ新規作成</button>
         
-        @if (count($friends) > 0)
-        <!-- 友達一覧 -->
+        @if (count($groups) > 0)
+        <!-- グループ一覧 -->
         <table class="table table-bordered table-condensed" style="font-size : 5px;">
-            @foreach ($friends as $friend)
+            @foreach ($groups as $group)
             <tr>
-                <td colspan="2" align="center">{{ $friend->friend_user_id }}</td>
+                <td colspan="2" align="center">{{ $group->group_name }}</td>
             </tr>
             @endforeach
         </table>

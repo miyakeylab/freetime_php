@@ -3,17 +3,18 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- 友達 -->
+    <!-- オファー -->
     <div class="panel-body" >
         <div class="table-responsive" id="LAYER">
-            <button>友達追加</button>
+            <button>オファー作成</button>
         
-        @if (count($friends) > 0)
-        <!-- 友達一覧 -->
+        @if (count($offers) > 0)
+        <!-- オファー一覧 -->
         <table class="table table-bordered table-condensed" style="font-size : 5px;">
-            @foreach ($friends as $friend)
+            @foreach ($offers as $offer)
             <tr>
-                <td colspan="2" align="center">{{ $friend->friend_user_id }}</td>
+                <td colspan="2" align="center">{{ $offer->state }}</td>
+                <td colspan="2" align="center">{{ $offer->content }}</td>
             </tr>
             @endforeach
         </table>
