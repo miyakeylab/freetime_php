@@ -15,6 +15,10 @@
             <tr>
                 <td colspan="2" align="center">{{ $friend->friend_user_id }}</td>
                 <td colspan="2" align="center">{{ $friend->name }}</td>
+                <td colspan="2" align="center">{{ $friend->user_content }}</td>
+                <td colspan="2" align="center">{{ $friend->user_sex }}</td>
+                <td colspan="2" align="center">{{ $friend->user_img }}</td>
+                <td colspan="2" align="center">{{ $friend->user_birthday }}</td>
             </tr>
             @endforeach
         </table>
