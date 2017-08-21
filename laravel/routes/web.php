@@ -28,34 +28,39 @@ Route::get('/home', 'HomeController@index')->name('home');
 /** 
 * 友達表示 
 */ 
-Route::get('/my_friend','FriendController@MainView');
+Route::get('/friend','FriendController@MainView');
 /**
  * 友達追加
  */ 
-Route::get('/my_friend/{friend_id}','FriendController@FriendRegist');
+Route::get('/friend/{friend_id}','FriendController@FriendRegist');
 
 /** 
 * グループ表示 
 */ 
-Route::get('/my_group','GroupController@MainView');
+Route::get('/group','GroupController@MainView');
 /**
  * グループ作成
  */ 
-Route::get('/my_group/{group_name}','GroupController@GroupCreate');
+Route::get('/group/{group_name}','GroupController@GroupCreate');
 
 /** 
 * オファー表示 
 */ 
-Route::get('/my_offer','OfferController@MainView');
+Route::get('/offer','OfferController@MainView');
 /**
  * オファー作成
  */ 
-Route::get('/my_offer/{content}','OfferController@OfferCreate');
+Route::get('/offer/{content}','OfferController@OfferCreate');
 
 /** 
 * 連携表示 
 */ 
-Route::get('/my_google_api','GoogleApiController@MainView');
+Route::get('/google_api','GoogleApiController@MainView');
+
+/** 
+* 設定表示 
+*/ 
+Route::get('/setting','SettingController@MainView');
 
 
 /**

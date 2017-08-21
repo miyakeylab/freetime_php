@@ -1,19 +1,19 @@
-<!-- resources/views/my_group.blade.php -->
+<!-- resources/views/friend.blade.php -->
 
 @extends('layouts.app')
 
 @section('content')
-    <!-- グループ -->
+    <!-- 友達 -->
     <div class="panel-body" >
         <div class="table-responsive" id="LAYER">
-            <button>グループ新規作成</button>
+            <button>友達追加</button>
         
-        @if (count($groups) > 0)
-        <!-- グループ一覧 -->
+        @if (count($friends) > 0)
+        <!-- 友達一覧 -->
         <table class="table table-bordered table-condensed" style="font-size : 5px;">
-            @foreach ($groups as $group)
+            @foreach ($friends as $friend)
             <tr>
-                <td colspan="2" align="center">{{ $group->group_name }}</td>
+                <td colspan="2" align="center">{{ $friend->friend_user_id }}</td>
             </tr>
             @endforeach
         </table>

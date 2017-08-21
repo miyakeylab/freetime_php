@@ -20,7 +20,7 @@ class FriendController extends Controller
     public function MainView() {
         Log::info('友達画面表示 ID:'.Auth::user()->id);
         $friends = Friend::get();
-        return view('my_friend', ['friends' => $friends]);
+        return view('friend', ['friends' => $friends]);
     }
     
     /**
@@ -28,6 +28,6 @@ class FriendController extends Controller
      **/
     public function FriendRegist($friend_id) 
     {
-        return redirect('my_friend'); 
+        return redirect('friend'); 
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Log;
 
-class GoogleApiController extends Controller
+class SettingController extends Controller
 {
     public function __construct()
     {
@@ -14,12 +14,10 @@ class GoogleApiController extends Controller
     }
     
     /**
-     *  連携画面表示 
+     *  設定画面表示 
      **/
     public function MainView() {
         Log::info('連携画面表示 ID:'.Auth::user()->id);
-        return view('google_api');
+        return view('setting');
     }
-    
-
 }

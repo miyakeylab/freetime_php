@@ -20,7 +20,7 @@ class OfferController extends Controller
     public function MainView() {
         Log::info('オファー画面表示 ID:'.Auth::user()->id);
         $offers = Offer::get();
-        return view('my_offer', ['offers' => $offers]);
+        return view('offer', ['offers' => $offers]);
     }
     
     /**
@@ -28,6 +28,6 @@ class OfferController extends Controller
      **/
     public function OfferCreate($content) 
     {
-        return redirect('my_offer'); 
+        return redirect('offer'); 
     }
 }

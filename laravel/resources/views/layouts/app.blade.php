@@ -23,6 +23,7 @@
     <link href="{{ secure_asset('css/assets/css/style.css')}}" rel="stylesheet">
     <!-- favicon -->
     <link rel="icon" href="{{ secure_asset('css/assets/img/favicon.ico')}}">
+    <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     
 </head>
@@ -68,17 +69,16 @@
 
                             <!--</ul>-->
                             <li><a href="{{ url('/my_schedule') }}">スケジュール</a></li>
-                            <li><a href="{{ url('/my_friend') }}">友達</a></li>
-                            <li><a href="{{ url('/my_offer') }}">オファー</a></li>
-                            <li><a href="{{ url('/my_group') }}">グループ</a></li>
-                            <li><a href="{{ url('/my_google_api') }}">連携</a></li>
-                                               <li>         <a href="{{ route('logout') }}"
+                            <li><a href="{{ url('/friend') }}">友達</a></li>
+                            <li><a href="{{ url('/offer') }}">オファー</a></li>
+                            <li><a href="{{ url('/group') }}">グループ</a></li>
+                            <li><a href="{{ url('/google_api') }}">連携</a></li>
+                            <li><a href="{{ url('/setting') }}">設定</a></li>
+                            <li><a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();"><i class="fa fa-btn fa-sign-out"></i>
                                             ログアウト
                                         </a>
-                                        <!--</li>-->
-
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form></li>

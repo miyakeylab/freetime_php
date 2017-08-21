@@ -1,4 +1,4 @@
-<!-- resources/views/my_google_api.blade.php -->
+<!-- resources/views/google_api.blade.php -->
 
 @extends('layouts.app')
 

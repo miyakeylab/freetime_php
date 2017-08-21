@@ -20,7 +20,7 @@ class GroupController extends Controller
     public function MainView() {
         Log::info('グループ画面表示 ID:'.Auth::user()->id);
         $groups = Group::get();
-        return view('my_group', ['groups' => $groups]);
+        return view('group', ['groups' => $groups]);
     }
     
     /**
@@ -28,6 +28,6 @@ class GroupController extends Controller
      **/
     public function GroupCreate($group_name) 
     {
-        return redirect('my_group'); 
+        return redirect('group'); 
     }
 }
