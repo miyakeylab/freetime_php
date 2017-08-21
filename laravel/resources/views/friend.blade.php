@@ -10,10 +10,11 @@
         
         @if (count($friends) > 0)
         <!-- 友達一覧 -->
-        <table class="table table-bordered table-condensed" style="font-size : 5px;">
+        <table class="table table-bordered " style="font-size : 5px;">
             @foreach ($friends as $friend)
             <tr>
                 <td colspan="2" align="center">{{ $friend->friend_user_id }}</td>
+                <td colspan="2" align="center">{{ $friend->name }}</td>
             </tr>
             @endforeach
         </table>
