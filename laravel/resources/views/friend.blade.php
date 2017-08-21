@@ -20,5 +20,27 @@
         </table>
         @endif
         </div>
-    </div>
+        <div class="media">
+            <!-- 1.画像の配置 -->
+            <a class="media-left" href="#">
+                <img class="media-object" src="{{url('css/assets/img/user_icon/no_icon.jpg')}}">
+            </a>
+            <!-- 2.画像の説明 -->
+            <div class="media-body">
+                <h4 class="media-heading">友達名前1</h4>
+                <p>友達内容1</p>
+            </div>
+        </div>
+                <div class="media">
+            <!-- 1.画像の配置 -->
+            <a class="media-left" href="#">
+                <img class="media-object" src="{{url('css/assets/img/user_icon/no_icon.jpg')}}">
+            </a>
+            <!-- 2.画像の説明 -->
+            <div class="media-body">
+                <h4 class="media-heading">友達名前2</h4>
+                <p>友達内容2</p>
+            </div>
+        </div>
+     </div>
 @endsection
