@@ -3,10 +3,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- google API -->
-    <div class="panel-body" >
+    <!-- 設定 -->
+    <div class="container" >
         <div class="table-responsive" id="LAYER">
-            <button>グーグルカレンダー連携</button>
+            <button>設定</button>
         </div>
     </div>
 @endsection

@@ -68,20 +68,16 @@
                             <!--<li>    -->
 
                             <!--</ul>-->
-                            <li><a href="{{ url('/my_schedule') }}">スケジュール</a></li>
-                            <li><a href="{{ url('/friend') }}">友達</a></li>
-                            <li><a href="{{ url('/offer') }}">オファー</a></li>
-                            <li><a href="{{ url('/group') }}">グループ</a></li>
-                            <li><a href="{{ url('/google_api') }}">連携</a></li>
-                            <li><a href="{{ url('/setting') }}">設定</a></li>
-                            <li><a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();"><i class="fa fa-btn fa-sign-out"></i>
-                                            ログアウト
-                                        </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form></li>
+                            <li><a href="{{ url('/my_schedule') }}"><i class="fa fa-btn fa-calendar"></i> スケジュール</a></li>
+                            <li><a href="{{ url('/friend') }}"><i class="fa fa-btn fa-user"></i> 友達</a></li>
+                            <li><a href="{{ url('/offer') }}"><i class="fa fa-btn fa-envelope-o"></i> オファー</a></li>
+                            <li><a href="{{ url('/group') }}"><i class="fa fa-btn fa-users"></i> グループ</a></li>
+                            <li><a href="{{ url('/google_api') }}"><i class="fa fa-btn fa-google"></i> 連携</a></li>
+                            <li><a href="{{ url('/setting') }}"><i class="fa fa-btn fa-cog"></i> 設定</a></li>
+                            <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-btn fa-sign-out"></i> ログアウト</a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
+                                </form></li>
                         </li>
                     @endif
                 </ul>

@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- グループ -->
-    <div class="panel-body" >
+    <div class="container" >
         <div class="table-responsive" id="LAYER">
             <button>グループ新規作成</button>
         

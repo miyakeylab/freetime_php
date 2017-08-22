@@ -3,10 +3,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- 設定 -->
-    <div class="panel-body" >
+    <!-- グーグルカレンダー連携 -->
+    <div class="container" >
         <div class="table-responsive" id="LAYER">
-            <button>設定</button>
+            <button>グーグルカレンダー連携</button>
         </div>
     </div>
 @endsection

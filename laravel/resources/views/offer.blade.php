@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- オファー -->
-    <div class="panel-body" >
+    <div class="container" >
         <div class="table-responsive" id="LAYER">
             <button>オファー作成</button>
         

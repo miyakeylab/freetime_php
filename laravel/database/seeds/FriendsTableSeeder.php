@@ -12,9 +12,12 @@ class FriendsTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker\Factory::create('ja_JP');
-        for($i = 0;$i<10;$i++)
+        for($i = 2;$i<10;$i++)
         {
-            App\Friend::create([ 'user_id' => $i,// 文字列 
+            // App\Friend::create([ 'user_id' => $i,// 文字列 
+            //                     'friend_user_id' => $i+1,
+            //                     ]);
+                        App\Friend::create([ 'user_id' => 2,// 文字列 
                                 'friend_user_id' => $i+1,
                                 ]);
         }

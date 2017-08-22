@@ -19,8 +19,8 @@ class FriendController extends Controller
      **/
     public function MainView() {
         Log::info('友達画面表示 ID:'.Auth::user()->id);
-        //$friends = Friend::where('user_id',Auth::user()->id)->get();
-        $friends = Friend::join('users', 'friends.user_id', '=', 'users.id')->join('userdetails', 'friends.user_id', '=', 'userdetails.user_id')->where('friends.user_id',Auth::user()->id)->get();
+        // Friends join users join userdetails
+        $friends = Friend::join('users', 'friends.friend_user_id', '=', 'users.id')->join('userdetails', 'friends.friend_user_id', '=', 'userdetails.user_id')->where('friends.user_id',Auth::user()->id)->get();
         return view('friend', ['friends' => $friends]);
     }
     

@@ -4,47 +4,30 @@
 
 @section('content')
     <!-- 友達 -->
-    <div class="panel-body" >
-        <div class="table-responsive" id="LAYER">
-            <button>友達追加</button>
-        
+    <div class="container" >
+        <button type="submit" class="btn btn-primary btn-lg">
+            <i class="fa fa-btn fa-user-plus"></i> 友達追加</button>
         @if (count($friends) > 0)
+        <div class="panel panel-default">
+        <div class="panel-heading">友達一覧</div>
+        <div class="panel-body">
         <!-- 友達一覧 -->
-        <table class="table table-bordered " style="font-size : 5px;">
             @foreach ($friends as $friend)
-            <tr>
-                <td colspan="2" align="center">{{ $friend->friend_user_id }}</td>
-                <td colspan="2" align="center">{{ $friend->name }}</td>
-                <td colspan="2" align="center">{{ $friend->user_content }}</td>
-                <td colspan="2" align="center">{{ $friend->user_sex }}</td>
-                <td colspan="2" align="center">{{ $friend->user_img }}</td>
-                <td colspan="2" align="center">{{ $friend->user_birthday }}</td>
-            </tr>
+            <div class="media">
+                <!-- 1.画像の配置 -->
+                <a class="media-left" href="#">
+                    <img class="media-object" src="{{url($friend->user_img)}}">
+                </a>
+                <!-- 2.画像の説明 -->
+                <div class="media-body">
+                    <h4 class="media-heading">{{ $friend->name }}</h4>
+                    <p>{{ $friend->user_content."/".$friend->user_sex."/".$friend->user_birthday }}</p>
+                </div>
+            </div>
             @endforeach
-        </table>
+            </div>
+            </div>
+            </div>
         @endif
-        </div>
-        <div class="media">
-            <!-- 1.画像の配置 -->
-            <a class="media-left" href="#">
-                <img class="media-object" src="{{url('css/assets/img/user_icon/no_icon.jpg')}}">
-            </a>
-            <!-- 2.画像の説明 -->
-            <div class="media-body">
-                <h4 class="media-heading">友達名前1</h4>
-                <p>友達内容1</p>
-            </div>
-        </div>
-                <div class="media">
-            <!-- 1.画像の配置 -->
-            <a class="media-left" href="#">
-                <img class="media-object" src="{{url('css/assets/img/user_icon/no_icon.jpg')}}">
-            </a>
-            <!-- 2.画像の説明 -->
-            <div class="media-body">
-                <h4 class="media-heading">友達名前2</h4>
-                <p>友達内容2</p>
-            </div>
-        </div>
      </div>
 @endsection
