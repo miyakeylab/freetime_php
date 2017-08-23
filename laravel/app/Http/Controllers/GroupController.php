@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Group;
+use App\Groupuser;
 use Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -19,7 +19,7 @@ class GroupController extends Controller
      **/
     public function MainView() {
         Log::info('グループ画面表示 ID:'.Auth::user()->id);
-        $groups = Group::get();
+        $groups = Groupuser::where('groupusers.user_id',Auth::user()->id)->join('groups', 'groupusers.user_group_id', '=', 'groups.id')->get();
         return view('group', ['groups' => $groups]);
     }
     
