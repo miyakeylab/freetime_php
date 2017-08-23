@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Friend;
+use App\User;
 use Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -22,6 +23,7 @@ class FriendController extends Controller
         // Friends join users join userdetails
         $friends = Friend::join('users', 'friends.friend_user_id', '=', 'users.id')->join('userdetails', 'friends.friend_user_id', '=', 'userdetails.user_id')->where('friends.user_id',Auth::user()->id)->get();
         $friendOffers = Friend::join('users', 'friends.friend_user_id', '=', 'users.id')->join('userdetails', 'friends.friend_user_id', '=', 'userdetails.user_id')->where('friends.user_id',Auth::user()->id)->get();
+        
         return view('friend', ['friends' => $friends,'friendOffers' => $friendOffers]);
     }
     

@@ -5,10 +5,8 @@
 @section('content')
     <!-- 友達 -->
     <div class="container" >
-        <button type="submit" class="btn btn-primary btn-lg">
-            <i class="fa fa-btn fa-user-plus"></i> 友達追加</button>
 
-        <div class="padding-top-10">
+        
         @if (count($friends) > 0)
         <div class="panel panel-default">
         <div class="panel-heading">友達一覧</div>
@@ -32,7 +30,7 @@
             </div>
             </div>
         @endif
-        </div>
+        
         @if (count($friendOffers) > 0)
         <div class="panel panel-default">
         <div class="panel-heading">友達申請</div>
@@ -64,5 +62,8 @@
             </div>
             </div>
         @endif
+        <button type="submit" class="btn btn-primary">
+            <i class="fa fa-btn fa-user-plus"></i> 友達リクエスト</button>
+
      </div>
 @endsection
