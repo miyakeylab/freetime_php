@@ -7,6 +7,8 @@
     <div class="container" >
         <button type="submit" class="btn btn-primary btn-lg">
             <i class="fa fa-btn fa-user-plus"></i> 友達追加</button>
+
+        <div class="padding-top-10">
         @if (count($friends) > 0)
         <div class="panel panel-default">
         <div class="panel-heading">友達一覧</div>
@@ -26,6 +28,35 @@
             </div>
             @endforeach
             </div>
+            </div>
+        @endif
+        </div>
+        @if (count($friendOffers) > 0)
+        <div class="panel panel-default">
+        <div class="panel-heading">友達申請</div>
+        <div class="panel-body">
+        <!-- 友達一覧 -->
+            @foreach ($friendOffers as $friendOffer)
+            <div class="media">
+                <!-- 1.画像の配置 -->
+                <a class="media-left" href="#">
+                    <img class="media-object" src="{{url($friendOffer->user_img)}}">
+                </a>
+                <!-- 2.画像の説明 -->
+                <div class="media-body">
+                    <h4 class="media-heading">{{ $friendOffer->name }}</h4>
+                    <p>{{ $friendOffer->user_content."/".$friendOffer->user_sex."/".$friendOffer->user_birthday }}</p>
+                </div>
+                <div class="media-right">
+                    <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-btn fa-user-plus"></i> 友達追加</button>
+                    <div class="padding-top-10">
+                    <button type="submit" class="btn btn-warning">
+                    <i class="fa fa-btn fa-user-plus"></i> 拒否</button>
+                    </div>
+                </div>
+            </div>
+            @endforeach
             </div>
             </div>
         @endif
