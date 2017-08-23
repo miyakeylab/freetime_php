@@ -15,6 +15,10 @@ class CreateFriendoffersTable extends Migration
     {
         Schema::create('friendoffers', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('master_user_id');//フレンドーユーザーID
+            $table->unsignedInteger('client_user_id');//フレンドクライアントユーザーID
+            $table->unsignedInteger('state');         //オファー状況
+            $table->string('content');                //メッセージ内容
             $table->timestamps();
         });
     }
