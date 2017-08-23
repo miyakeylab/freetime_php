@@ -22,7 +22,9 @@
                 </a>
                 <!-- 2.画像の説明 -->
                 <div class="media-body">
+                    @if($friend->name !== "")
                     <h4 class="media-heading">{{ $friend->name }}</h4>
+                    @endif
                     <p>{{ $friend->user_content."/".$friend->user_sex."/".$friend->user_birthday }}</p>
                 </div>
             </div>
@@ -44,7 +46,9 @@
                 </a>
                 <!-- 2.画像の説明 -->
                 <div class="media-body">
+                    @if($friendOffer->name !== "")
                     <h4 class="media-heading">{{ $friendOffer->name }}</h4>
+                    @endif
                     <p>{{ $friendOffer->user_content."/".$friendOffer->user_sex."/".$friendOffer->user_birthday }}</p>
                 </div>
                 <div class="media-right">

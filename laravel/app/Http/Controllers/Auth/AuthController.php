@@ -44,8 +44,8 @@ class AuthController extends Controller
         // nullで名前が戻ってきた時
         if($user->name == null)
         {
-            // emailをユーザー名にする
-            $user->name = $user->email;
+            // ゲストをユーザー名にする
+            $user->name = "guest";
         }
         
         // ユーザーアカウント作成

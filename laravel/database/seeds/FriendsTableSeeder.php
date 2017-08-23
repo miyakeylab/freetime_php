@@ -17,7 +17,7 @@ class FriendsTableSeeder extends Seeder
             // App\Friend::create([ 'user_id' => $i,// 文字列 
             //                     'friend_user_id' => $i+1,
             //                     ]);
-                        App\Friend::create([ 'user_id' => 2,// 文字列 
+                        App\Friend::create([ 'user_id' => 1,// 文字列 
                                 'friend_user_id' => $i+1,
                                 ]);
         }
