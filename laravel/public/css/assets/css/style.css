@@ -8,3 +8,28 @@
 .padding-top-10{
   padding-top: 10px;
 }
+
+#schedule-table {
+  display:table;
+  font-size: 5px;
+}
+.schedule-row {
+    display:table-row;
+    }
+.schedule-row>div {
+    display:table-cell;
+    padding:5px;
+    border:1px solid;
+    background-color:#eee;
+}
+
+.schedule-row-main {
+    display:table-row;
+    }
+.schedule-row-main>div {
+    display:table-cell;
+    text-align: center;
+    padding:5px;
+    border:0px;
+    background-color:#eee;
+}

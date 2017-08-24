@@ -4,24 +4,8 @@
 
 @section('content')
     <!-- Bootstrap の定形コード... -->
-    <div class="panel-body" onload="table_scroll()">
-        <script type="text/javascript">
-        $(function () {
-            // 初期化処理
-            $(document).ready(table_scroll);
-        });
-        /**
-         * とりあえずセンタリング指定を試す
-         **/
-        function table_scroll() {
-            
-        var L = document.getElementById('LAYER');
-        var T = L.getElementsByTagName('table')[0];
-        L.scrollLeft =
-        T.offsetLeft + (T.rows[0].cells[1].offsetLeft*54);
-        }
-        </script>
-        <div class="table-responsive" id="LAYER">
+    <div class="panel-body">
+        <div class="table-responsive" >
         <table class="table table-bordered table-condensed" style="font-size : 5px;">
             <tr>
                 <?php for ($i=0;$i<48;$i++): ?>
@@ -46,7 +30,37 @@
                 <td colspan="26" align="center"></td>
             </tr>
         </table>
-        
         </div>
+        
+        <div id="schedule-table">
+            <div class="schedule-row">
+                <div>8/22</div>
+                @for ($i=0;$i<24;$i++)
+                <div><?=$i?>:00</div>
+                @endfor
+            </div>
+            @for ($k=0;$k<24;$k++)
+            <div class="schedule-row-main">
+                <div>
+                <img class="media-object" src="{{url('css/assets/img/user_icon/no_icon.jpg')}}">
+                </div>
+                @for ($i=0;$i<24;$i++)
+                @if($i === 2 )
+                <div>work</div>
+                @else
+                <div></div>
+                @endif
+                @endfor
+            </div>
+            <div class="schedule-row-main">
+                <div>ユーザー名
+                </div>
+                @for ($i=0;$i<24;$i++)
+                <div></div>
+                @endfor
+            </div>
+            @endfor
+        </div>
+        
     </div>
 @endsection
