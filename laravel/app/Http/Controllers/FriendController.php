@@ -23,8 +23,10 @@ class FriendController extends Controller
         // Friends join users join userdetails
         $friends = Friend::join('users', 'friends.friend_user_id', '=', 'users.id')->join('userdetails', 'friends.friend_user_id', '=', 'userdetails.user_id')->where('friends.user_id',Auth::user()->id)->get();
         $friendOffers = Friend::join('users', 'friends.friend_user_id', '=', 'users.id')->join('userdetails', 'friends.friend_user_id', '=', 'userdetails.user_id')->where('friends.user_id',Auth::user()->id)->get();
-        
-        return view('friend', ['friends' => $friends,'friendOffers' => $friendOffers]);
+        Log::info('ユーザー数前');
+        $users = User::where('id','!=',Auth::user()->id)->get();
+        Log::info('ユーザー数:'.count($users));
+        return view('friend', ['friends' => $friends,'friendOffers' => $friendOffers,'users' => $users]);
     }
     
     /**

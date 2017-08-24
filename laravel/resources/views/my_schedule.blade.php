@@ -5,7 +5,7 @@
 @section('content')
     <!-- Bootstrap の定形コード... -->
     <div class="panel-body">
-        <div >
+        <div class='table-responsive'>
         <script type="text/javascript">
         $(document).ready(function(){
           var $table = $('table');
