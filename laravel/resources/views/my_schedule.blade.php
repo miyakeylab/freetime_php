@@ -5,23 +5,40 @@
 @section('content')
     <!-- Bootstrap の定形コード... -->
     <div class="panel-body">
-        <div class="table-responsive" >
-        <table class="table table-bordered table-condensed" style="font-size : 5px;">
+        <div >
+        <script type="text/javascript">
+        $(document).ready(function(){
+          var $table = $('table');
+          $table.floatThead({
+              top:50,
+              responsiveContainer: function($table){
+                  return $table.closest('.table-responsive');
+              }
+          });
+        });
+        </script>
+        <table class="table table-bordered table-condensed demo2" style="font-size : 5px;">
+            <thread>
             <tr>
-                <?php for ($i=0;$i<48;$i++): ?>
-                <th></th>
-                <?php endfor;?>
-            </tr>
-            <tr>
+                <th colspan="2" align="center">8/22</th>
                 <?php for ($i=0;$i<24;$i++): ?>
-                <td colspan="2" align="center"><?=$i?>:00</td>
+                <th colspan="2" align="center"><?=$i?>:00</th>
                 <?php endfor;?>
             </tr>
+            </thread>
+            <tbody>
             <tr>
+                <td colspan="2" align="center">
+                    <img class="media-object" src="{{url('css/assets/img/user_icon/no_icon.jpg')}}">
+                </td>
                 <td class="info" colspan="12" align="center">睡眠</td>
-                <td colspan="36" align="center"></td>
+                <td colspan="36" align="center"><img class="media-object" src="{{url('css/assets/img/favicon.ico')}}"></td>
             </tr>
+            <?php for ($i=0;$i<24;$i++): ?>
             <tr>
+                <td colspan="2" align="center">
+                    <img class="media-object" src="{{url('css/assets/img/user_icon/no_icon.jpg')}}">
+                </td>
                 <td class="info" colspan="12" align="center">睡眠</td>
                 <td colspan="1" align="center">朝食</td>
                 <td colspan="1" align="center"></td>
@@ -29,9 +46,11 @@
                 <td class="danger" colspan="6" align="center">仕事</td>
                 <td colspan="26" align="center"></td>
             </tr>
+            <?php endfor;?>
+            </tbody>
         </table>
         </div>
-        
+        <div class="table-responsive" >       
         <div id="schedule-table">
             <div class="schedule-row">
                 <div>8/22</div>
@@ -61,6 +80,6 @@
             </div>
             @endfor
         </div>
-        
+        </div>
     </div>
 @endsection
