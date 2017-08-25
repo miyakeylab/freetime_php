@@ -16,7 +16,7 @@
             <div class="media">
                 <!-- 1.画像の配置 -->
                 <a class="media-left" href="#">
-                    <!--<img class="media-object" src="{{url($friendOffer->user_img)}}">-->
+                   
                 </a>
                 <!-- 2.画像の説明 -->
                 <div class="media-body">
