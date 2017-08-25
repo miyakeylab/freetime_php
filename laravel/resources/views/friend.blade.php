@@ -39,7 +39,7 @@
             @foreach ($friendOffers as $friendOffer)
             <div class="media">
                 <!-- 1.画像の配置 -->
-                <a class="media-left" href="">
+                <a class="media-left" href="{{ url('/user_schedule',$friendOffer->user_id) }}">
                     <img class="media-object" src="{{url($friendOffer->user_img)}}">
                 </a>
                 <!-- 2.画像の説明 -->
