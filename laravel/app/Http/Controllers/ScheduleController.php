@@ -17,6 +17,9 @@ class ScheduleController extends Controller
      *  スケジュール画面表示 
      **/
     public function MainView() {
-        return view('my_schedule');
+        $dt = Carbon::now();
+        $now = $dt->month."/".$dt->day;
+        $hour = $dt->hour;
+        return view('my_schedule',['now' => $now,'hour' => $hour]);
     }
 }
