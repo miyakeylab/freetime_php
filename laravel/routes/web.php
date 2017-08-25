@@ -19,6 +19,10 @@ Route::get('/', 'ScheduleController@MainView');
 * スケジュール表示 
 */ 
 Route::get('/my_schedule','ScheduleController@MainView');
+/**
+ * ユーザースケジュール表示 
+ */ 
+Route::get('/user_schedule/{id}','ScheduleController@UserScheduleView');
 
 Auth::routes();
 /** 
