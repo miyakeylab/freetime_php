@@ -6,7 +6,9 @@
     <!-- グループ -->
     <div class="container" >
         
-        <button>グループ新規作成</button>
+        <button type="submit" class="btn btn-success">
+        <i class="fa fa-btn fa-users"></i> グループ新規作成</button>
+        <div class="padding-top-10">
         @if (count($groups) > 0)
         <div class="panel panel-default">
         <div class="panel-heading">グループ申請</div>
@@ -16,7 +18,7 @@
             <div class="media">
                 <!-- 1.画像の配置 -->
                 <a class="media-left" href="#">
-                   
+                   <img class="media-object" src="{{url($group->group_img)}}">
                 </a>
                 <!-- 2.画像の説明 -->
                 <div class="media-body">

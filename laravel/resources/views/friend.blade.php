@@ -6,7 +6,6 @@
     <!-- 友達 -->
     <div class="container" >
 
-        
         @if (count($friends) > 0)
         <div class="panel panel-default">
         <div class="panel-heading">友達一覧</div>
@@ -26,6 +25,7 @@
                     <p>{{ $friend->user_content."/".$friend->user_sex."/".$friend->user_birthday }}</p>
                 </div>
             </div>
+            <hr class="style-one">
             @endforeach
             </div>
             </div>
@@ -58,20 +58,21 @@
                     </div>
                 </div>
             </div>
+            <hr class="style-one">
             @endforeach
             </div>
             </div>
         @endif
         @if (count($users) > 0)
         <div class="panel panel-default">
-        <div class="panel-heading">友達一覧</div>
+        <div class="panel-heading">ユーザー一覧</div>
         <div class="panel-body">
         <!-- 友達一覧 -->
             @foreach ($users as $user)
             <div class="media">
                 <!-- 1.画像の配置 -->
                 <a class="media-left" href="#">
-                    <!--<img class="media-object" src="{{url($friendOffer->user_img)}}">-->
+                    <img class="media-object" src="{{url($user->user_img)}}">
                 </a>
                 <!-- 2.画像の説明 -->
                 <div class="media-body">
@@ -84,6 +85,7 @@
                          <i class="fa fa-btn fa-user-plus"></i> 友達リクエスト</button>
                 </div>
             </div>
+            <hr class="style-one">
             @endforeach
             </div>
             </div>

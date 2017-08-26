@@ -5,6 +5,10 @@
 @section('content')
     <!-- Bootstrap の定形コード... -->
     <div class="panel-body">
+        <button type="submit" class="btn btn-success">
+        <i class="fa fa-btn fa-calendar"></i> スケジュール新規作成</button>
+        <div class="padding-top-10">
+        
         <div class='table-responsive'>
 
         <script type="text/javascript">

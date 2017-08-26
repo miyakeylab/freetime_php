@@ -16,6 +16,7 @@ class GroupsTableSeeder extends Seeder
         {
 
             App\Group::create([ 'group_name' => $faker->word(),// 文字列
+                                'group_img' => "css/assets/img/user_icon/no_icon.jpg",
                     ]);
 
         }

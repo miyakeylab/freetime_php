@@ -17,7 +17,7 @@ table.floatThead-table {
 
 body { 
   padding-top: 70px;
-      min-width: 1000px !important;
+      min-width: 300px !important;
      overflow: auto;
   
 }
@@ -27,4 +27,14 @@ table
   font-size: 5px;
   table-layout: auto;
     min-width: 0px;
+}
+
+hr.style-one {
+    border: 0;
+    height: 1px;
+    background: #9c0000;
+    background-image: -webkit-linear-gradient(left, #ccc, #9c0000, #ccc);
+    background-image:    -moz-linear-gradient(left, #ccc, #9c0000, #ccc);
+    background-image:     -ms-linear-gradient(left, #ccc, #9c0000, #ccc);
+    background-image:      -o-linear-gradient(left, #ccc, #9c0000, #ccc);
 }
