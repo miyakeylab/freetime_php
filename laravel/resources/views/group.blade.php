@@ -8,7 +8,7 @@
         
         <button type="submit" class="btn btn-success">
         <i class="fa fa-btn fa-users"></i> グループ新規作成</button>
-        <div class="padding-top-10">
+        <div class="padding-top-10"></div>
         
         @if (count($groups) > 0)
         <div class="panel panel-default">
@@ -30,9 +30,9 @@
                 <div class="media-right">
                     <button type="submit" class="btn btn-danger">
                     <i class="fa fa-btn fa-frown-o"></i> 退会</button>
-                    </div>
                 </div>
             </div>
+            <hr class="style-one">
             @endforeach
             </div>
             </div>
@@ -63,6 +63,7 @@
                     </div>
                 </div>
             </div>
+            <hr class="style-one">
             @endforeach
             </div>
             </div>
