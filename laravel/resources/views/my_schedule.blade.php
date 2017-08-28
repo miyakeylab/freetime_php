@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="panel-body">
-        <button type="submit" class="btn btn-success">
+        <button type="submit" class="btn btn-success" id="staticModalButton">
         <i class="fa fa-btn fa-calendar"></i> スケジュール新規作成</button>
         <div class="padding-top-10">
         
@@ -30,7 +30,7 @@
                 <td colspan="1" align="center">
                     <img class="media-object" src="{{url('css/assets/img/user_icon/no_icon.jpg')}}">
                 </td>
-                <td class="info" colspan="6" align="center">睡眠</td>
+                <td class="info" colspan="6" align="center"><a href="#staticModal" data-toggle="modal" data-whatever="睡眠">睡眠</a></td>
                 <td colspan="18" align="center"><img class="media-object" src="{{url('css/assets/img/favicon.ico')}}"></td>
             </tr>
             <tr>
@@ -65,5 +65,30 @@
             </tbody>
         </table>
         </div>
+        </div>
     </div>
+  <!-- モーダルダイアログ -->
+  <div class="modal" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&#215;</span><span class="sr-only">閉じる</span>
+          </button>
+          <h4 class="modal-title">Static Modal タイトル</h4>
+        </div><!-- /modal-header -->
+        <div class="modal-body">
+          <p class="recipient">本文</p>
+          <p>
+            <a class="btn btn-info" href="#001" data-dismiss="modal">data-dismiss 有り</a>
+            <a class="btn btn-info" href="#002">data-dismiss 無し</a>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+          <button type="button" class="btn btn-primary">変更を保存</button>
+        </div>
+      </div> <!-- /.modal-content -->
+    </div> <!-- /.modal-dialog -->
+  </div> <!-- /.modal -->
 @endsection
