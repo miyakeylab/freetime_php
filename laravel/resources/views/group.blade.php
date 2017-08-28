@@ -1,6 +1,9 @@
 <!-- resources/views/group.blade.php -->
 
 @extends('layouts.app')
+@include('layouts.head')
+@include('layouts.nav')
+
 
 @section('content')
     <!-- グループ -->

@@ -19,7 +19,7 @@ class OfferController extends Controller
      **/
     public function MainView() {
         Log::info('オファー画面表示 ID:'.Auth::user()->id);
-        $offers = Offer::get();
+        $offers = Offer::where('client_user_id',Auth::user()->id)->get();
         return view('offer', ['offers' => $offers]);
     }
     

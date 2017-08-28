@@ -1,6 +1,8 @@
 <!-- resources/views/google_api.blade.php -->
 
 @extends('layouts.app')
+@include('layouts.head')
+@include('layouts.nav')
 
 @section('content')
     <!-- 設定 -->

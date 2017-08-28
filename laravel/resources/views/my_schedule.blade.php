@@ -1,9 +1,10 @@
 <!-- resources/views/my_schedule.blade.php -->
 
 @extends('layouts.app')
+@include('layouts.head')
+@include('layouts.nav')
 
 @section('content')
-    <!-- Bootstrap の定形コード... -->
     <div class="panel-body">
         <button type="submit" class="btn btn-success">
         <i class="fa fa-btn fa-calendar"></i> スケジュール新規作成</button>
@@ -11,18 +12,6 @@
         
         <div class='table-responsive'>
 
-        <script type="text/javascript">
-        $(document).ready(function(){
-
-          var $table = $('table');
-          $table.floatThead({
-              top:50,
-              responsiveContainer: function($table){
-                  return $table.closest('.table-responsive');
-              }
-          });
-        });
-        </script>
         <table class="table table-striped sticky-header" style="font-size : 5px;">
             <thead>
             <tr>

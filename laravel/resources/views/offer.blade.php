@@ -1,6 +1,8 @@
 <!-- resources/views/offer.blade.php -->
 
 @extends('layouts.app')
+@include('layouts.head')
+@include('layouts.nav')
 
 @section('content')
     <!-- オファー -->

@@ -1,6 +1,9 @@
 <!-- resources/views/user_schedule.blade.php -->
 
 @extends('layouts.app')
+@include('layouts.head')
+@include('layouts.nav')
+
 
 @section('content')
   
