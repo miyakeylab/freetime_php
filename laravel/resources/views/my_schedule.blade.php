@@ -53,12 +53,12 @@
                 <td colspan="1" align="center">
                     <img class="media-object" src="{{url('css/assets/img/user_icon/no_icon.jpg')}}">
                 </td>
-                <td class="info" colspan="6" align="center">睡眠</td>
-                <td colspan="1" align="center">朝食</td>
-                <td colspan="1" align="center"></td>
-                <td colspan="2" align="center">移動</td>
-                <td class="danger" colspan="6" align="center">仕事</td>
-                <td colspan="8" align="center"></td>
+                <td class="info friendFeed" colspan="6" align="center">睡眠</td>
+                <td class="friendFeed" colspan="1" align="center">朝食</td>
+                <td class="friendFeed" colspan="1" align="center"></td>
+                <td class="friendFeed" colspan="2" align="center">移動</td>
+                <td class="danger friendFeed" colspan="6" align="center">仕事</td>
+                <td class="friendFeed" colspan="8" align="center"></td>
             </tr>
             <tr>
                 <td colspan="1" align="center">
@@ -74,7 +74,7 @@
         </div>
         </div>
     </div>
-  <!-- モーダルダイアログ -->
+  <!-- 自モーダルダイアログ -->
   <div class="modal" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" >
     <div class="modal-dialog">
       <div class="modal-content">
@@ -98,6 +98,23 @@
           <button type="submit" class="btn btn-primary">変更を保存</button>
         </div>
         <form>
+      </div> <!-- /.modal-content -->
+    </div> <!-- /.modal-dialog -->
+  </div> <!-- /.modal -->
+    <!-- 他モーダルダイアログ -->
+  <div class="modal" id="friendModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" >
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&#215;</span><span class="sr-only">閉じる</span>
+          </button>
+          <h4 class="modal-title">スケジュール表示</h4>
+        </div><!-- /modal-header -->
+        <div class="modal-body">
+          <p class="recipient">本文</p>
+        </div>
       </div> <!-- /.modal-content -->
     </div> <!-- /.modal-dialog -->
   </div> <!-- /.modal -->
