@@ -33,7 +33,11 @@
                 <td class="info" colspan="6" align="center"><a href="#staticModal" data-toggle="modal" data-whatever="睡眠">睡眠</a></td>
                 
                 @for ($n=0;$n<18;$n++)
-                <td colspan="1" align="center" id="{{ 'td-'.$n }}" ><img class="media-object" src="{{url('css/assets/img/favicon.ico')}}"></td>
+                @if ($n === 1)
+                <td class="myFeed" colspan="1" align="center" id="{{ 'td-'.$n }}" ><img class="media-object" src="{{url('css/assets/img/favicon.ico')}}"></td>
+                @else
+                <td class="myFeed" colspan="1" align="center" ></td>
+                @endif
                 @endfor
             </tr>
             <tr>
@@ -80,7 +84,7 @@
           <button type="button" class="close" data-dismiss="modal">
             <span aria-hidden="true">&#215;</span><span class="sr-only">閉じる</span>
           </button>
-          <h4 class="modal-title">Static Modal タイトル</h4>
+          <h4 class="modal-title">スケジュール登録</h4>
         </div><!-- /modal-header -->
         <div class="modal-body">
           <p class="recipient">本文</p>

@@ -4,9 +4,12 @@
 $(function () {
     // テーブル処理
     $(document).ready(TableInit);
-      $('#td-1').on('click', function() {
+    
+    // tdクリックイベント
+    $('.myFeed').on('click', function() {
       $('#staticModal').modal();
-    });  
+    });
+    
     // JavaScript で表示
     $('#staticModalButton').on('click', function() {
       $('#staticModal').modal();
