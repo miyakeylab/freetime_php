@@ -31,17 +31,20 @@
                     <img class="media-object" src="{{url('css/assets/img/user_icon/no_icon.jpg')}}">
                 </td>
                 <td class="info" colspan="6" align="center"><a href="#staticModal" data-toggle="modal" data-whatever="睡眠">睡眠</a></td>
-                <td colspan="18" align="center"><img class="media-object" src="{{url('css/assets/img/favicon.ico')}}"></td>
+                
+                @for ($n=0;$n<18;$n++)
+                <td colspan="1" align="center" id="{{ 'td-'.$n }}" ><img class="media-object" src="{{url('css/assets/img/favicon.ico')}}"></td>
+                @endfor
             </tr>
             <tr>
                 <td colspan="1" align="center">
                     ユーザー名
                 </td>
-                <?php for ($n=0;$n<24;$n++): ?>
+                @for ($n=0;$n<24;$n++)
                 <th colspan="1" align="center"></th>
-                <?php endfor;?>
+                @endfor
             </tr>
-            <?php for ($i=0;$i<24;$i++): ?>
+            @for ($i=0;$i<24;$i++)
             <tr>
                 <td colspan="1" align="center">
                     <img class="media-object" src="{{url('css/assets/img/user_icon/no_icon.jpg')}}">
@@ -57,11 +60,11 @@
                 <td colspan="1" align="center">
                     ユーザー名
                 </td>
-                <?php for ($n=0;$n<24;$n++): ?>
+                @for ($n=0;$n<24;$n++)
                 <th colspan="1" align="center"></th>
-                <?php endfor;?>
+                @endfor
             </tr>
-            <?php endfor;?>
+            @endfor
             </tbody>
         </table>
         </div>
@@ -71,6 +74,8 @@
   <div class="modal" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" >
     <div class="modal-dialog">
       <div class="modal-content">
+        <form class="form-horizontal" method="POST" action="{{ url('my_schedule/set') }}">
+            {{ csrf_field() }}
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">
             <span aria-hidden="true">&#215;</span><span class="sr-only">閉じる</span>
@@ -86,8 +91,9 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
-          <button type="button" class="btn btn-primary">変更を保存</button>
+          <button type="submit" class="btn btn-primary">変更を保存</button>
         </div>
+        <form>
       </div> <!-- /.modal-content -->
     </div> <!-- /.modal-dialog -->
   </div> <!-- /.modal -->

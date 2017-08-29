@@ -4,7 +4,9 @@
 $(function () {
     // テーブル処理
     $(document).ready(TableInit);
-    
+      $('#td-1').on('click', function() {
+      $('#staticModal').modal();
+    });  
     // JavaScript で表示
     $('#staticModalButton').on('click', function() {
       $('#staticModal').modal();
@@ -23,7 +25,7 @@ $(function () {
     });
     $('#staticModal').on('click', '.modal-footer .btn-primary', function() {
       $('#staticModal').modal('hide');
-      alert('変更を保存をクリックしました。');
+      
     });
 });  
   

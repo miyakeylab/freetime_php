@@ -19,10 +19,15 @@ Route::get('/', 'ScheduleController@MainView');
 * スケジュール表示 
 */ 
 Route::get('/my_schedule','ScheduleController@MainView');
+
 /**
  * ユーザースケジュール表示 
  */ 
 Route::get('/user_schedule/{id}','ScheduleController@UserScheduleView');
+/** 
+* スケジュール登録 
+*/ 
+Route::post('/my_schedule/set','ScheduleController@CreateSchedule');
 
 Auth::routes();
 /** 
