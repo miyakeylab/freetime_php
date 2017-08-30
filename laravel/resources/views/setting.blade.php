@@ -9,19 +9,17 @@
     <div class="container">    
       <div class="row">
           <div class="panel panel-default">
-          <div class="panel-heading">  <h4 >User Profile</h4></div>
+          <div class="panel-heading">  <h4 >ユーザープロフィール</h4></div>
            <div class="panel-body">
           <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
-           <img alt="User Pic" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" id="profile-image1" class="img-circle img-responsive"> 
+           <img alt="User Pic" src="{{ url('css/assets/img/user_icon/no_icon.jpg') }}" id="profile-image1" class="img-circle img-responsive"> 
          
      
           </div>
           <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8" >
               <div class="container" >
-                <h2>John Doe</h2>
-                <p>an   <b> Employee</b></p>
-              
-               
+                <h2>ユーザー名</h2>
+                <p></p>
               </div>
                <hr>
               <ul class="container details" >
