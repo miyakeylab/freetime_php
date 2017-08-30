@@ -32,9 +32,5 @@ table
 hr.style-one {
     border: 0;
     height: 1px;
-    background: #cc0000;
-    background-image: -webkit-linear-gradient(left, #ccc, #cc0000, #ccc);
-    background-image:    -moz-linear-gradient(left, #ccc, #cc0000, #ccc);
-    background-image:     -ms-linear-gradient(left, #ccc, #cc0000, #ccc);
-    background-image:      -o-linear-gradient(left, #ccc, #cc0000, #ccc);
+    background: #0CA5B0;
 }

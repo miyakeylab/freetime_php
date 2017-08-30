@@ -10,6 +10,8 @@
     <div class="container" >
 
         @if (count($friends) > 0)
+        <div class="row">
+        <div class="col-md-8 col-md-offset-2">
         <div class="panel panel-default">
         <div class="panel-heading">友達一覧</div>
         <div class="panel-body">
@@ -32,9 +34,13 @@
             @endforeach
             </div>
             </div>
+            </div>
+            </div>
         @endif
         
         @if (count($friendOffers) > 0)
+        <div class="row">
+        <div class="col-md-8 col-md-offset-2">        
         <div class="panel panel-default">
         <div class="panel-heading">友達申請</div>
         <div class="panel-body">
@@ -64,9 +70,13 @@
             <hr class="style-one">
             @endforeach
             </div>
+            </div>            
+            </div>
             </div>
         @endif
         @if (count($users) > 0)
+        <div class="row">
+        <div class="col-md-8 col-md-offset-2">          
         <div class="panel panel-default">
         <div class="panel-heading">ユーザー一覧</div>
         <div class="panel-body">
@@ -92,9 +102,8 @@
             @endforeach
             </div>
             </div>
-        @endif        
-        
-       
-
+            </div>
+            </div>
+        @endif
      </div>
 @endsection

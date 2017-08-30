@@ -6,9 +6,7 @@
                 <!-- Collapsed Hamburger -->
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                     <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <img class="media-object" src="{{url('css/assets/img/favicon.ico')}}" width="18" height="18">
                 </button>
 
                 <!-- Branding Image -->
@@ -38,12 +36,12 @@
                             <!--<li>    -->
 
                             <!--</ul>-->
-                            <li><a href="{{ url('/my_schedule') }}"><i class="fa fa-btn fa-calendar"></i> スケジュール</a></li>
-                            <li><a href="{{ url('/friend') }}"><i class="fa fa-btn fa-user"></i> 友達 <span class="badge">26</span></a></li>
-                            <li><a href="{{ url('/offer') }}"><i class="fa fa-btn fa-envelope-o"></i> オファー <span class="badge">26</span></a></li>
-                            <li><a href="{{ url('/group') }}"><i class="fa fa-btn fa-users"></i> グループ</a></li>
-                            <li><a href="{{ url('/google_api') }}"><i class="fa fa-btn fa-google"></i> 連携</a></li>
-                            <li><a href="{{ url('/setting') }}"><i class="fa fa-btn fa-cog"></i> 設定</a></li>
+                            <li><a href="{{ url('/my_schedule') }}"><i class="fa fa-btn fa-calendar"></i> </a></li>
+                            <li><a href="{{ url('/friend') }}"><i class="fa fa-btn fa-user"></i> <span class="badge">26</span></a></li>
+                            <li><a href="{{ url('/offer') }}"><i class="fa fa-btn fa-envelope-o"></i> <span class="badge">26</span></a></li>
+                            <li><a href="{{ url('/group') }}"><i class="fa fa-btn fa-users"></i> </a></li>
+                            <li><a href="{{ url('/google_api') }}"><i class="fa fa-btn fa-google"></i> </a></li>
+                            <li><a href="{{ url('/setting') }}"><i class="fa fa-btn fa-cog"></i> </a></li>
                             <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-btn fa-sign-out"></i> ログアウト</a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     {{ csrf_field() }}
