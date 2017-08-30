@@ -8,7 +8,30 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading"><i class="fa fa-btn fa-sign-in"></i> ログイン</div>
+                <div class="panel-heading"><i class="fa fa-btn fa-sign-in"></i> SNSログイン</div>
+                <div class="panel-body">
+                    <div class="col-md-6 col-md-offset-3">
+                    <div class="padding-top-10 ">
+                    <a href="{{ url('/auth/google')}}" class="btn btn-social btn-google">
+                        <i class="fa fa-google"></i> google+ アカウントでログイン　　　</a>
+                        </div>
+                         <div class="padding-top-10">
+                    <a href="{{ url('/auth/facebook')}}" class="btn btn-social btn-facebook">
+                        <i class="fa fa-facebook"></i> Facebook アカウントでログイン 　　</a>
+                         </div>
+                          <div class="padding-top-10">
+                    <a href="{{ url('/auth/twitter')}}" class="btn btn-social btn-twitter">
+                        <i class="fa fa-twitter"></i> Twitterアカウントでログイン　　　　</a>
+                         </div>
+                          <div class="padding-top-10">
+                    <a href="{{ url('/auth/github')}}" class="btn btn-social btn-github">
+                        <i class="fa fa-github"></i> Githubアカウントでログイン　　　　</a> 
+                         </div>
+                         </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading"><i class="fa fa-btn fa-sign-in"></i> メールアドレスログイン</div>
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
@@ -60,15 +83,6 @@
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     パスワードをお忘れですか?
                                 </a>
-                                <br><br>
-                                <a href="{{ url('/auth/github')}}" class="btn btn-github">
-                                    <i class="fa fa-github"></i> Github</a> 
-                                <a href="{{ url('/auth/twitter')}}" class="btn btn-twitter">
-                                    <i class="fa fa-twitter"></i> Twitter</a>
-                                <a href="{{ url('/auth/facebook')}}" class="btn btn-facebook">
-                                    <i class="fa fa-facebook"></i> Facebook</a>
-                                <a href="{{ url('/auth/google')}}" class="btn btn-google">
-                                    <i class="fa fa-google"></i> google+</a>
                             </div>
                         </div>
                     </form>

@@ -9,9 +9,8 @@
         <button type="submit" class="btn btn-success" id="staticModalButton">
         <i class="fa fa-btn fa-calendar"></i> スケジュール新規作成</button>
         <div class="padding-top-10">
-        
-        <div class='table-responsive'>
 
+        <div class='table-responsive'>
         <table class="table table-striped sticky-header" style="font-size : 5px;">
             <thead>
             <tr>
@@ -86,6 +85,18 @@
           </button>
           <h4 class="modal-title">スケジュール登録</h4>
         </div><!-- /modal-header -->
+        <div class="row">
+           <div class="padding-top-5"></div>
+            <div class="col-xs-4 col-md-offset-1 input-group date" id="dp3" >
+                <input class="form-control" size="16" type="text" >
+                <span class="input-group-addon"><span class="add-on glyphicon glyphicon-th"></span></span>
+            </div>
+            <div class="padding-top-5"></div>
+            <div class="col-xs-4 col-md-offset-1 input-group date" id="dp3" >
+                <input class="form-control" size="16" type="text" >
+                <span class="input-group-addon"><span class="add-on glyphicon glyphicon-th"></span></span>
+            </div>
+        </div>
         <div class="modal-body">
           <p class="recipient">本文</p>
           <p>
@@ -118,4 +129,12 @@
       </div> <!-- /.modal-content -->
     </div> <!-- /.modal-dialog -->
   </div> <!-- /.modal -->
+  <!--(フローティングメニューに載せたいHTMLコード)-->
+  <div id="floating-menu">
+     <i class="fa fa-btn fa-chevron-up"></i>
+     <div class="padding-top-5"></div>
+     <i class="fa fa-btn fa-chevron-left"></i> <i class="fa fa-btn fa-chevron-right"></i>
+     <div class="padding-top-5"></div>
+     <i class="fa fa-btn fa-chevron-down"></i> 
+  </div>
 @endsection

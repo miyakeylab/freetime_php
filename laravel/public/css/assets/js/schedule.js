@@ -48,6 +48,7 @@ $(function () {
     $('#friendModal').on('click', '.modal-footer .btn-primary', function() {
       $('#friendModal').modal('hide');
     });
+  
     
 });  
   
@@ -62,4 +63,7 @@ function TableInit(){
           return $table.closest('.table-responsive');
       }
   });
+  
+  $('.date').datetimepicker({ format : 'YYYY/MM/DD HH:mm',
+                              sideBySide: true });
 }

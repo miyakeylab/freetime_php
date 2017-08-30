@@ -15,18 +15,32 @@
     <link href="{{ secure_asset('css/assets/css/reset.css') }}" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
     <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
+    <!-- bootstrap -->
     <link href="{{ secure_asset('css/assets/css/bootstrap.css')}}" rel="stylesheet">
+    <!-- bootstrap-glyphicons -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
     <link href="{{ secure_asset('css/assets/css/font-awesome.css')}}" rel="stylesheet">
     <link href="{{ secure_asset('css/assets/css/docs.css')}}" rel="stylesheet">
+    <!-- bootstrap social -->
     <link href="{{ secure_asset('css/bootstrap-social.css')}}" rel="stylesheet">
+    <!-- bootstrap datetimepicker -->
+    <link href="{{ secure_asset('css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet">
+    <!-- my CSS -->
     <link href="{{ secure_asset('css/assets/css/style.css')}}" rel="stylesheet">
     <!-- favicon -->
     <link rel="icon" href="{{ secure_asset('css/assets/img/favicon.ico')}}">
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    
     <!-- Scripts -->
+    <!-- scedule script -->
     <script src="{{ secure_asset('css/assets/js/schedule.js') }}"></script>
     <script src="{{ secure_asset('js/app.js') }}"></script>
+    <!-- moment script -->
+    <script src="{{ secure_asset('js/moment.min.js') }}"></script>
+    <!-- bootstrap datetimepicker script -->
+    <script src="{{ secure_asset('js/bootstrap-datetimepicker.min.js') }}"></script>
+    <!-- jquery floatThead script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/floatthead/1.4.5/jquery.floatThead.js"></script>
 @endsection
 

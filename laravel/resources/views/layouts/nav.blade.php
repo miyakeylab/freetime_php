@@ -42,7 +42,7 @@
                             <li><a href="{{ url('/group') }}"><i class="fa fa-btn fa-users"></i> </a></li>
                             <li><a href="{{ url('/google_api') }}"><i class="fa fa-btn fa-google"></i> </a></li>
                             <li><a href="{{ url('/setting') }}"><i class="fa fa-btn fa-cog"></i> </a></li>
-                            <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-btn fa-sign-out"></i> ログアウト</a>
+                            <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-btn fa-sign-out"></i> </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     {{ csrf_field() }}
                                 </form></li>
