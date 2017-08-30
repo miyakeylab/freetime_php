@@ -25,8 +25,8 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">ログイン</a></li>
-                        <li><a href="{{ url('/register') }}">新規登録</a></li>
+                        <li><a href="{{ url('/login') }}"><i class="fa fa-btn fa-sign-in"></i> </a></li>
+                        <li><a href="{{ url('/register') }}"><i class="fa fa-btn fa-lock"></i> </a></li>
                     @else
                         <li class="dropdown">
                             <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">-->
