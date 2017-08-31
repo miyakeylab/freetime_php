@@ -45,6 +45,36 @@
             </div>
         </div>
         @endif
+        
+        @if (count($offers) > 0)
+        <div class="row">
+        <div class="col-md-8 col-md-offset-2">  
+        <div class="panel panel-default">
+        <div class="panel-heading">申請中オファー一覧</div>
+        <div class="panel-body">
+            <!-- 受領オファー一覧 -->
+            <?php $i = 0; ?>
+            @foreach ($offers as $offer)
+            <?php if($i !== 0){ ?>
+            <hr class="style-one">
+            <?php } ?>
+            <?php $i++; ?>
+            <div class="media">
+                <!-- 1.画像の配置 -->
+                <a class="media-left" href="#">
+                   {{ Config::get('const.OFFER_STRING')[$offer->state] }}
+                </a>
+                <!-- 2.画像の説明 -->
+                <div class="media-body">
+                    <h4 class="media-heading">{{ $offer->content }}</h4>
+                </div>
+            </div>
+            @endforeach
+            </div>
+            </div>           
+            </div>
+        </div>
+        @endif
         </div>
     </div>
 @endsection

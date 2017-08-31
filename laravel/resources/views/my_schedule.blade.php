@@ -11,15 +11,15 @@
         <div class="padding-top-10">
 
         <div class='table-responsive'>
-        <table class="table table-striped sticky-header" style="font-size : 5px;">
+        <table class="table table-striped sticky-header" >
             <thead>
             <tr>
-                <th colspan="1" align="center">{{ $now }}</th>
+                <th colspan="1" align="center"><b>{{ $now }}</b></th>
                 @for ($i=0;$i<24;$i++)
                 @if ($i === $hour )
-                <th class="info" colspan="1" align="center">{{ "NOW" }}</th>
+                <th colspan="1" align="center"><font color="#FF0000"><b>{{"NOW"}}</b></font></th>
                 @else
-                <th colspan="1" align="center">{{ $i.":00" }}</th>
+                <th colspan="1" align="center"><b>{{ $i.":00" }}</b></th>
                 @endif
                 @endfor
             </tr>
@@ -52,7 +52,7 @@
                 <td colspan="1" align="center">
                     <img class="media-object" src="{{url('css/assets/img/user_icon/no_icon.jpg')}}">
                 </td>
-                <td class="info friendFeed" colspan="6" align="center">睡眠</td>
+                <td class="info friendFeed" colspan="6" align="center">bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa睡眠</td>
                 <td class="friendFeed" colspan="1" align="center">朝食</td>
                 <td class="friendFeed" colspan="1" align="center"></td>
                 <td class="friendFeed" colspan="2" align="center">移動</td>

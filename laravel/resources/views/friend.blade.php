@@ -32,7 +32,7 @@
                     @if($friend->name !== "")
                     <h4 class="media-heading">{{ $friend->name }}</h4>
                     @endif
-                    <p>{{ $friend->user_content."/".$friend->user_sex."/".$friend->user_birthday }}</p>
+                    <p>{{ $friend->user_content."/".Config::get('const.USER_SEX_STRING')[$friend->user_sex]."/".$friend->user_birthday }}</p>
                 </div>
             </div>
             @endforeach

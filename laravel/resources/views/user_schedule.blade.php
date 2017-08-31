@@ -18,7 +18,7 @@
             <!-- 2.画像の説明 -->
             <div class="media-body">
                 <h4 class="media-heading">{{ $user->name }}</h4>
-                <p>{{ $user->user_content."/".$user->user_sex."/".$user->user_birthday }}</p>
+                <p>{{ $user->user_content."/".Config::get('const.USER_SEX_STRING')[$user->user_sex]."/".$user->user_birthday }}</p>
             </div>
         </div>
         
@@ -39,10 +39,10 @@
         <table class="table table-striped sticky-header" style="font-size : 5px;">
             <thead>
             <tr>
-                <th colspan="1" align="center">{{ $month."月" }}</th>
+                <th colspan="1" align="center"><b>{{ $month."月" }}</b></th>
                 @for ($i=0;$i<24;$i++)
 
-                <th colspan="1" align="center">{{ $i.":00" }}</th>
+                <th colspan="1" align="center"><b>{{ $i.":00" }}</b></th>
                 @endfor
             </tr>
             </thead>
