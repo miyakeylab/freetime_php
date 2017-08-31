@@ -19,8 +19,13 @@
         <div class="panel panel-default">
         <div class="panel-heading">グループ一覧</div>
         <div class="panel-body">
-        <!-- 友達一覧 -->
+            <!-- グループ一覧 -->
+            <?php $i = 0; ?>
             @foreach ($groups as $group)
+            <?php if($i !== 0){ ?>
+            <hr class="style-one">
+            <?php } ?>
+            <?php $i++; ?>
             <div class="media">
                 <!-- 1.画像の配置 -->
                 <a class="media-left" href="#">
@@ -37,7 +42,6 @@
                     <i class="fa fa-btn fa-frown-o"></i> 退会</button>
                 </div>
             </div>
-            <hr class="style-one">
             @endforeach
             </div>
             </div>           
@@ -50,8 +54,13 @@
         <div class="panel panel-default">
         <div class="panel-heading">グループ申請</div>
         <div class="panel-body">
-        <!-- 友達一覧 -->
+            <!-- グループ申請 -->
+            <?php $i = 0; ?>
             @foreach ($groups as $group)
+            <?php if($i !== 0){ ?>
+            <hr class="style-one">
+            <?php } ?>
+            <?php $i++; ?>
             <div class="media">
                 <!-- 1.画像の配置 -->
                 <a class="media-left" href="#">
@@ -72,7 +81,6 @@
                     </div>
                 </div>
             </div>
-            <hr class="style-one">
             @endforeach
             </div>
             </div>            

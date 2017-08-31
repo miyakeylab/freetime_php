@@ -40,24 +40,27 @@ table
 hr.style-one {
     border: 0;
     height: 1px;
-    background: #0CA5B0;
+    background: #ccc;
 }
 
+/**
+ * フローティングボタン用
+ */
 div#floating-menu {
     position: fixed;
     opacity: 0.5;
     top: 90%;
     right: 0px;
-    width: 100px;
+    width: 50px;
     height: 100px;
     background-color: #FFFFFF;
     border: 0px;
+    z-index: 9998;
+}
+.modal {
     z-index: 9999;
 }
-
 .datepicker {
-    line-height: 20px;
-    font-size: 20px;
     background: white;
 }
 .timepicker {

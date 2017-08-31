@@ -74,7 +74,7 @@
         </div>
     </div>
   <!-- 自モーダルダイアログ -->
-  <div class="modal" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" >
+  <div class="modal" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
         <form class="form-horizontal" method="POST" action="{{ url('my_schedule/set') }}">
@@ -85,28 +85,37 @@
           </button>
           <h4 class="modal-title">スケジュール登録</h4>
         </div><!-- /modal-header -->
-        <div class="row">
+          <div class="panel panel-default">
+                <div class="panel-heading">日時</div>
+                <div class="panel-body">
            <div class="padding-top-5"></div>
-            <div class="col-xs-4 col-md-offset-1 input-group date" id="dp3" >
-                <input class="form-control" size="16" type="text" >
+            <label for="schedule-start" class="col-md-4 control-label">開始</label>
+            <div class="col-md-4 input-group date" >
+                <input class="form-control" type="text" id="schedule-start">
                 <span class="input-group-addon"><span class="add-on glyphicon glyphicon-th"></span></span>
             </div>
             <div class="padding-top-5"></div>
-            <div class="col-xs-4 col-md-offset-1 input-group date" id="dp3" >
-                <input class="form-control" size="16" type="text" >
+            <label for="schedule-end" class="col-md-4 control-label">終了</label>
+            <div class="col-md-4 input-group date" >
+                <input class="form-control" type="text" id="schedule-end">
                 <span class="input-group-addon"><span class="add-on glyphicon glyphicon-th"></span></span>
             </div>
-        </div>
+            </div>
+            </div>
         <div class="modal-body">
-          <p class="recipient">本文</p>
-          <p>
-            <a class="btn btn-info" href="#001" data-dismiss="modal">data-dismiss 有り</a>
-            <a class="btn btn-info" href="#002">data-dismiss 無し</a>
-          </p>
+          <div class="panel panel-default">
+            <div class="panel-heading">内容</div>
+            <div class="panel-body">
+            <label for="schedule-content" class="col-md-4 control-label">内容</label>
+            <div class="col-md-6"  >
+                <textarea class="form-control" id="schedule-content" cols="45" rows="8" ></textarea>
+            </div>
+            </div>
+            </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
-          <button type="submit" class="btn btn-primary">変更を保存</button>
+          <button type="submit" class="btn btn-primary">登録</button>
         </div>
         <form>
       </div> <!-- /.modal-content -->

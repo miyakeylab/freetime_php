@@ -15,8 +15,13 @@
         <div class="panel panel-default">
         <div class="panel-heading">友達一覧</div>
         <div class="panel-body">
-        <!-- 友達一覧 -->
+            <?php $i=0; ?>
+            <!-- 友達一覧 -->
             @foreach ($friends as $friend)
+            <?php if($i !== 0){ ?>
+            <hr class="style-one">
+            <?php } ?>
+            <?php $i++; ?>
             <div class="media">
                 <!-- 1.画像の配置 -->
                 <a class="media-left" href="{{ url('/user_schedule',$friend->friend_user_id) }}">
@@ -30,7 +35,6 @@
                     <p>{{ $friend->user_content."/".$friend->user_sex."/".$friend->user_birthday }}</p>
                 </div>
             </div>
-            <hr class="style-one">
             @endforeach
             </div>
             </div>
@@ -44,8 +48,13 @@
         <div class="panel panel-default">
         <div class="panel-heading">友達申請</div>
         <div class="panel-body">
-        <!-- 友達一覧 -->
+            <?php $i=0; ?>
+            <!-- 友達一覧 -->
             @foreach ($friendOffers as $friendOffer)
+            <?php if($i !== 0){ ?>
+            <hr class="style-one">
+            <?php } ?>
+            <?php $i++; ?>
             <div class="media">
                 <!-- 1.画像の配置 -->
                 <a class="media-left" href="{{ url('/user_schedule',$friendOffer->user_id) }}">
@@ -56,7 +65,7 @@
                     @if($friendOffer->name !== "")
                     <h4 class="media-heading">{{ $friendOffer->name }}</h4>
                     @endif
-                    <p>{{ $friendOffer->user_content."/".$friendOffer->user_sex."/".$friendOffer->user_birthday }}</p>
+                    <p>{{ $friendOffer->user_content."/".Config::get('const.USER_SEX_STRING')[$friendOffer->user_sex]."/".$friendOffer->user_birthday }}</p>
                 </div>
                 <div class="media-right">
                     <button type="submit" class="btn btn-success">
@@ -67,7 +76,7 @@
                     </div>
                 </div>
             </div>
-            <hr class="style-one">
+
             @endforeach
             </div>
             </div>            
@@ -80,8 +89,13 @@
         <div class="panel panel-default">
         <div class="panel-heading">ユーザー一覧</div>
         <div class="panel-body">
-        <!-- 友達一覧 -->
+            <?php $i=0; ?>
+            <!-- 友達一覧 -->
             @foreach ($users as $user)
+            <?php if($i !== 0){ ?>
+            <hr class="style-one">
+            <?php } ?>
+            <?php $i++; ?>
             <div class="media">
                 <!-- 1.画像の配置 -->
                 <a class="media-left" href="#">
@@ -98,7 +112,6 @@
                          <i class="fa fa-btn fa-user-plus"></i> 友達リクエスト</button>
                 </div>
             </div>
-            <hr class="style-one">
             @endforeach
             </div>
             </div>
