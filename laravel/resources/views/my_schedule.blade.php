@@ -27,13 +27,13 @@
             <tbody>
             <tr>
                 <td colspan="1" align="center">
-                    <img class="media-object" src="{{url('css/assets/img/user_icon/no_icon.jpg')}}">
+                    <img class="media-object user_icon_size" src="{{url($user->user_img)}}">
                 </td>
                 <td class="info" colspan="6" align="center"><a href="#staticModal" data-toggle="modal" data-whatever="睡眠">睡眠</a></td>
                 
                 @for ($n=0;$n<18;$n++)
                 @if ($n === 1)
-                <td class="myFeed" colspan="1" align="center" id="{{ 'td-'.$n }}" ><img class="media-object" src="{{url('css/assets/img/favicon.ico')}}"></td>
+                <td class="myFeed" colspan="1" align="center" id="{{ 'td-'.$n }}" ><img class="media-object" src="{{url('css/assets/img/favicon.png')}}" width="32" height="32"></td>
                 @else
                 <td class="myFeed" colspan="1" align="center" ></td>
                 @endif
@@ -41,18 +41,22 @@
             </tr>
             <tr>
                 <td colspan="1" align="center">
-                    ユーザー名
+                    {{ $user->name }}
                 </td>
                 @for ($n=0;$n<24;$n++)
                 <th colspan="1" align="center"></th>
                 @endfor
             </tr>
-            @for ($i=0;$i<24;$i++)
+            <!-- 友達  -->
+            @if (count($friends) > 0)
+            @foreach ($friends as $friend)
             <tr>
                 <td colspan="1" align="center">
-                    <img class="media-object" src="{{url('css/assets/img/user_icon/no_icon.jpg')}}">
+                  <a href="{{ url('/user_schedule',$friend->friend_user_id) }}">
+                    <img class="media-object user_icon_size" src="{{url($friend->user_img)}}" >
+                  </a>
                 </td>
-                <td class="info friendFeed" colspan="6" align="center">bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa睡眠</td>
+                <td class="info friendFeed" colspan="6" align="center">睡眠</td>
                 <td class="friendFeed" colspan="1" align="center">朝食</td>
                 <td class="friendFeed" colspan="1" align="center"></td>
                 <td class="friendFeed" colspan="2" align="center">移動</td>
@@ -61,13 +65,16 @@
             </tr>
             <tr>
                 <td colspan="1" align="center">
-                    ユーザー名
+                  <a href="{{ url('/user_schedule',$friend->friend_user_id) }}">
+                    {{ $friend->name  }}
+                  <a>
                 </td>
                 @for ($n=0;$n<24;$n++)
                 <th colspan="1" align="center"></th>
                 @endfor
             </tr>
-            @endfor
+            @endforeach
+            @endif
             </tbody>
         </table>
         </div>

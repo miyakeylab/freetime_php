@@ -28,7 +28,7 @@
     <!-- my CSS -->
     <link href="{{ secure_asset('css/assets/css/style.css')}}" rel="stylesheet">
     <!-- favicon -->
-    <link rel="icon" href="{{ secure_asset('css/assets/img/favicon.ico')}}">
+    <link rel="icon" href="{{ secure_asset('css/assets/img/favicon.png')}}">
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     

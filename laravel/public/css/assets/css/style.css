@@ -73,3 +73,19 @@ div#floating-menu {
     padding: 4px 5px;
         background: white;
 }
+
+.user_icon_size
+{
+    width: 32px;
+    height: 32px;
+}
+.user_setting_size
+{
+     width: 280px;
+    height: 280px;   
+}
+
+.user-setting-font
+{
+      font-size: 20px;
+}

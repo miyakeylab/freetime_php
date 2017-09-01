@@ -7,6 +7,7 @@ use Validator;
 use Carbon\Carbon;
 use Auth;
 use App\User;
+use App\Friend;
 use Illuminate\Support\Facades\Log;
 
 class ScheduleController extends Controller
@@ -23,8 +24,11 @@ class ScheduleController extends Controller
         $dt = Carbon::now();
         $now = $dt->year."/".$dt->month."/".$dt->day;
         $hour = $dt->hour;
+        $friends = Friend::join('users', 'friends.friend_user_id', '=', 'users.id')->join('userdetails', 'friends.friend_user_id', '=', 'userdetails.user_id')->where('friends.user_id',Auth::user()->id)->get();
+        $user = User::join('userdetails', 'users.id', '=', 'userdetails.user_id')->where('users.id',Auth::user()->id)->first();
+
         Log::info('スケジュール画面表示 ID:'.Auth::user()->id.' 日付:'.$now.' 時間:'.$hour);
-        return view('my_schedule',['now' => $now,'hour' => $hour]);
+        return view('my_schedule',['now' => $now,'hour' => $hour,'friends' => $friends,'user' => $user]);
     }
     
     /**
