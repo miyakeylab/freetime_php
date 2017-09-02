@@ -15,6 +15,7 @@ class userdetailsTableSeeder extends Seeder
         for($i = 0;$i<10;$i++)
         {
             App\Userdetail::create([ 'user_id' => $i,                       // ユーザーID
+                'user_name' => $faker->word(),                       // ユーザーコメント
                 'user_content' => $faker->word(),                       // ユーザーコメント
                 'user_sex' => $faker->numberBetween(0, 2),              // ユーザー性別(0:無し/1:男/2:女)
                 'user_img' => "css/assets/img/user_icon/no_icon.jpg",   // ユーザー画像(default:no_image)

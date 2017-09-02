@@ -25,7 +25,7 @@ class ScheduleController extends Controller
         $now = $dt->year."/".$dt->month."/".$dt->day;
         $hour = $dt->hour;
         $friends = Friend::join('users', 'friends.friend_user_id', '=', 'users.id')->join('userdetails', 'friends.friend_user_id', '=', 'userdetails.user_id')->where('friends.user_id',Auth::user()->id)->get();
-        $user = User::join('userdetails', 'users.id', '=', 'userdetails.user_id')->where('users.id',Auth::user()->id)->first();
+        $user = User::find(Auth::user()->id)->userdetail()->first();
 
         Log::info('スケジュール画面表示 ID:'.Auth::user()->id.' 日付:'.$now.' 時間:'.$hour);
         return view('my_schedule',['now' => $now,'hour' => $hour,'friends' => $friends,'user' => $user]);

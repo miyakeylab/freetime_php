@@ -19,7 +19,7 @@
                 @if ($i === $hour )
                 <th colspan="1" align="center"><font color="#FF0000"><b>{{"NOW"}}</b></font></th>
                 @else
-                <th colspan="1" align="center"><b>{{ $i.":00" }}</b></th>
+                <th colspan="1" align="center" ><b>{{ $i.":00" }}</b></th>
                 @endif
                 @endfor
             </tr>
@@ -33,18 +33,24 @@
                 
                 @for ($n=0;$n<18;$n++)
                 @if ($n === 1)
-                <td class="myFeed" colspan="1" align="center" id="{{ 'td-'.$n }}" ><img class="media-object" src="{{url('css/assets/img/favicon.png')}}" width="32" height="32"></td>
+                <td class="myFeed" colspan="1" align="center" ><img class="media-object" src="{{url('css/assets/img/favicon.png')}}"></td>
                 @else
                 <td class="myFeed" colspan="1" align="center" ></td>
                 @endif
                 @endfor
             </tr>
             <tr>
-                <td colspan="1" align="center">
-                    {{ $user->name }}
+                <td class="overflow" colspan="1" align="center">
+                  <a href="{{ url('/user_schedule',$user->user_id) }}">
+                    {{ $user->user_name }}
+                  </a>
                 </td>
                 @for ($n=0;$n<24;$n++)
-                <th colspan="1" align="center"></th>
+                  @if($n % 2 === 0)
+                    <td colspan="1" align="center"></td>
+                  @else
+                    <td colspan="1" align="center"></td>
+                  @endif
                 @endfor
             </tr>
             <!-- 友達  -->
@@ -57,20 +63,20 @@
                   </a>
                 </td>
                 <td class="info friendFeed" colspan="6" align="center">睡眠</td>
-                <td class="friendFeed" colspan="1" align="center">朝食</td>
+                <td class="danger friendFeed" colspan="1" align="center">朝食</td>
                 <td class="friendFeed" colspan="1" align="center"></td>
-                <td class="friendFeed" colspan="2" align="center">移動</td>
+                <td class="info friendFeed" colspan="2" align="center">移動</td>
                 <td class="danger friendFeed" colspan="6" align="center">仕事</td>
                 <td class="friendFeed" colspan="8" align="center"></td>
             </tr>
             <tr>
-                <td colspan="1" align="center">
+                <td class="overflow" colspan="1" align="center">
                   <a href="{{ url('/user_schedule',$friend->friend_user_id) }}">
                     {{ $friend->name  }}
                   <a>
                 </td>
                 @for ($n=0;$n<24;$n++)
-                <th colspan="1" align="center"></th>
+                <td colspan="1" align="center"></td>
                 @endfor
             </tr>
             @endforeach
@@ -149,7 +155,7 @@
   <div id="floating-menu">
      <i class="fa fa-btn fa-chevron-up"></i>
      <div class="padding-top-5"></div>
-     <i class="fa fa-btn fa-chevron-left"></i> <i class="fa fa-btn fa-chevron-right"></i>
+     <i class="fa fa-btn fa-chevron-left"></i> {{ "$now" }}<i class="fa fa-btn fa-chevron-right"></i>
      <div class="padding-top-5"></div>
      <i class="fa fa-btn fa-chevron-down"></i> 
   </div>

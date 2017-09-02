@@ -34,7 +34,8 @@ table
 {
   font-size: 7px;
   table-layout: auto;
-    min-width: 0px;
+  min-width: 0px;
+  text-align: center;
 }
 
 hr.style-one {
@@ -49,9 +50,10 @@ hr.style-one {
 div#floating-menu {
     position: fixed;
     opacity: 0.5;
-    top: 90%;
+    margin: 0 auto;
+    top: 85%;
     right: 0px;
-    width: 50px;
+    width: 100px;
     height: 100px;
     background-color: #FFFFFF;
     border: 0px;
@@ -88,4 +90,17 @@ div#floating-menu {
 .user-setting-font
 {
       font-size: 20px;
+}
+
+.overflow {
+  width: 32px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.table td img{
+  width: 32px;
+  height: 32px;
 }

@@ -26,9 +26,20 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-    
+    /**
+     * ユーザー詳細(1:1)
+     *
+     */
+    public function userdetail()
+    { 
+        return $this->hasOne('App\Userdetail','user_id'); 
+    }    
+    /**
+     * スケジュール(1:N)
+     *
+     */
     public function schedule()
     { 
-        return $this->hasMany(Schedule::class); 
+        return $this->hasMany('App\Schedule','user_id'); 
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Userdetail;
+use Carbon\Carbon;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -48,10 +50,19 @@ class AuthController extends Controller
             $user->name = "guest";
         }
         
-        // ユーザーアカウント作成
-        return User::create([   'name' => $user->name, 
+        $newUser = User::create(['name' => $user->name, 
                                 'email' => $user->email, 
                                 'provider' => $provider, 
                                 'provider_id' => $user->id ]);
+                                
+        Userdetail::create(['user_id' => $newUser->id,      // ユーザーID
+                'user_name' => $user->name,                 // ユーザー名
+                'user_content' => "",                       // ユーザーコメント
+                'user_sex' => 0,                            // ユーザー性別(0:無し/1:男/2:女)
+                'user_img' => "css/assets/img/user_icon/no_icon.jpg",   // ユーザー画像(default:no_image)
+                'user_birthday' =>  Carbon::now(),             // ユーザー生年月日
+                                ]);
+        // ユーザーアカウント作成
+        return $newUser;
     }
 }
