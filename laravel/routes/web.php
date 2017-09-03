@@ -41,7 +41,9 @@ Route::get('/friend','FriendController@MainView');
 /**
  * 友達追加
  */ 
-Route::get('/friend/{friend_id}','FriendController@FriendRegist');
+// Route::get('/friend/{friend_id}','FriendController@FriendRegist');
+
+Route::post('/friend/offer', 'FriendController@FriendRegist');
 
 /** 
 * グループ表示 

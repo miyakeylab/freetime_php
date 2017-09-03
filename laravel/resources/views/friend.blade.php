@@ -111,7 +111,7 @@
                     @endif
                 </div>
                 <div class="media-right">
-                     <button type="submit" class="btn btn-primary" id="frinedModalButton">
+                     <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#friendOfferModal" data-name="{{ $user->name }}" data-id="{{ $user->id }}">
                          <i class="fa fa-btn fa-user-plus"></i> 友達リクエスト</button>
                 </div>
             </div>
@@ -142,8 +142,11 @@
             <div class="panel-body">
             <label for="friend-offer-content" class="col-md-4 control-label">内容</label>
             <div class="col-md-6"  >
-                <textarea class="form-control" id="friend-offer-content" cols="45" rows="8" ></textarea>
+                <p class="recipient">本文</p>
+                <!--<p class="user_id" >id</p>-->
+                <textarea class="form-control" id="friend-offer-content" name="friendoffer_cotent" cols="45" rows="3" ></textarea>
             </div>
+            <input class="user_id" type="hidden" name="friendoffer_id" id="friendoffer_id" />      
             </div>
             </div>
         </div>

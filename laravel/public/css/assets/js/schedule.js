@@ -57,18 +57,17 @@ $(function () {
       $('#friendModal').modal('hide');
     });
   
-       /**
-     * 友達スケジュールボタン
-     */
-    $('#frinedModalButton').on('click', function() {
-      $('#friendOfferModal').modal();
-    });   
+
         // ダイアログ表示前にJavaScriptで操作する
     $('#friendOfferModal').on('show.bs.modal', function(event) {
       var button = $(event.relatedTarget);
-      var recipient = button.data('whatever');
+      var recipient = button.data('name');
+      var id_data = button.data('id');
       var modal = $(this);
+      // 名前
       modal.find('.modal-body .recipient').text(recipient);
+      // ユーザーID
+      modal.find('.modal-body .user_id').val(id_data);
       //modal.find('.modal-body input').val(recipient);
     });
     // ダイアログ表示直後にフォーカスを設定する

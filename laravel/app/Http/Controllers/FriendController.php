@@ -33,8 +33,9 @@ class FriendController extends Controller
     /**
      * 友達登録
      **/
-    public function FriendRegist($friend_id) 
+    public function FriendRegist(Request $request) 
     {
+        Log::info('友達登録画面 ユーザーID:'.$request->friendoffer_id);
         return redirect('friend'); 
     }
 }
