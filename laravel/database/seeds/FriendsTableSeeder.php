@@ -19,7 +19,7 @@ class FriendsTableSeeder extends Seeder
                 if($i !== $n)
                 {
                     App\Friend::create([ 'user_id' => $n,// 文字列 
-                            'friend_user_id' => $i+1,
+                            'friend_user_id' => $i,
                             ]);
                 }
             }

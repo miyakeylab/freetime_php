@@ -19,7 +19,7 @@ class FriendoffersTableSeeder extends Seeder
                 if($i !== $n)
                 {
                     App\Friendoffer::create([ 'master_user_id' => $n,       // 申請元 
-                            'client_user_id' => $i+1,                       // 申請先
+                            'client_user_id' => $i,                       // 申請先
                             'state' => $faker->numberBetween(1,3),          // オファー状況
                             'content' => $faker->word(),                    // 内容
                             

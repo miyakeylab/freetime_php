@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Userdetail;
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -62,12 +64,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        
+        $newUser = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'provider' => "", 
             'provider_id' => "",
         ]);
+      Userdetail::create(['user_id' => $newUser->id,      // ユーザーID
+            'user_name' => $newUser->name,                 // ユーザー名
+            'user_content' => "",                       // ユーザーコメント
+            'user_sex' => 0,                            // ユーザー性別(0:無し/1:男/2:女)
+            'user_img' => "css/assets/img/user_icon/no_icon.jpg",   // ユーザー画像(default:no_image)
+            'user_birthday' =>  Carbon::now(),             // ユーザー生年月日
+                            ]);      
+        return $newUser;
     }
 }

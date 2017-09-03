@@ -104,3 +104,6 @@ div#floating-menu {
   width: 32px;
   height: 32px;
 }
+.table th{
+    text-align: center;
+}
