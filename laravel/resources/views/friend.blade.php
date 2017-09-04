@@ -70,11 +70,19 @@
                     <p>{{ $friendOffer->content }}</p>
                 </div>
                 <div class="media-right">
-                    <button type="submit" class="btn btn-success">
-                    <i class="fa fa-btn fa-user-plus"></i> 友達追加</button>
+                    <form class="form-horizontal" method="POST" action="{{ url('friend/reaponse/ok') }}">
+                        {{ csrf_field() }}
+                        <button type="submit" class="btn btn-success">
+                        <i class="fa fa-btn fa-user-plus"></i> 友達追加</button>
+                        <input type="hidden" name="friend_res_ok_id" value="{{$friendOffer->master_id}}" />  
+                    </form>
                     <div class="padding-top-10">
-                    <button type="submit" class="btn btn-danger">
-                    <i class="fa fa-btn fa-frown-o"></i> 拒否</button>
+                        <form class="form-horizontal" method="POST" action="{{ url('friend/reaponse/ng') }}">
+                            {{ csrf_field() }}                
+                            <button type="submit" class="btn btn-danger">
+                            <i class="fa fa-btn fa-frown-o"></i> 拒否</button>
+                            <input type="hidden" name="friend_res_ng_id" value="{{$friendOffer->master_id}}" />  
+                        </form>
                     </div>
                 </div>
             </div>
@@ -111,8 +119,11 @@
                     @endif
                 </div>
                 <div class="media-right">
-                     <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#friendOfferModal" data-name="{{ $user->name }}" data-id="{{ $user->id }}">
-                         <i class="fa fa-btn fa-user-plus"></i> 友達リクエスト</button>
+                    @if(in_array( $user->id, $RequestingUsers) === false)
+                    
+                    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#friendOfferModal" data-name="{{ $user->name }}" data-id="{{ $user->id }}" >
+                    <i class="fa fa-btn fa-user-plus"></i> 友達リクエスト</button>
+                    @endif
                 </div>
             </div>
             @endforeach

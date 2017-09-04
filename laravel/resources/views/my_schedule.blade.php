@@ -27,7 +27,9 @@
             <tbody>
             <tr>
                 <td colspan="1" align="center">
+                  <a href="{{ url('/user_schedule',$user->user_id) }}">
                     <img class="media-object user_icon_size" src="{{url($user->user_img)}}">
+                  </a>
                 </td>
                 <td class="info" colspan="6" align="center"><a href="#staticModal" data-toggle="modal" data-whatever="睡眠">睡眠</a></td>
                 
@@ -104,13 +106,13 @@
            <div class="padding-top-5"></div>
             <label for="schedule-start" class="col-md-4 control-label">開始</label>
             <div class="col-md-4 input-group date" >
-                <input class="form-control" type="text" id="schedule-start">
+                <input class="form-control" type="text" id="schedule-start" name="schedule-start" />
                 <span class="input-group-addon"><span class="add-on glyphicon glyphicon-th"></span></span>
             </div>
             <div class="padding-top-5"></div>
             <label for="schedule-end" class="col-md-4 control-label">終了</label>
             <div class="col-md-4 input-group date" >
-                <input class="form-control" type="text" id="schedule-end">
+                <input class="form-control" type="text" id="schedule-end" name="schedule-end" />>
                 <span class="input-group-addon"><span class="add-on glyphicon glyphicon-th"></span></span>
             </div>
             </div>
@@ -121,7 +123,7 @@
             <div class="panel-body">
             <label for="schedule-content" class="col-md-4 control-label">内容</label>
             <div class="col-md-6"  >
-                <textarea class="form-control" id="schedule-content" cols="45" rows="8" ></textarea>
+                <textarea class="form-control" id="schedule-content" name="schedule-content" cols="45" rows="8" ></textarea>
             </div>
             </div>
             </div>

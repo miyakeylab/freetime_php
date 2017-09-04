@@ -39,12 +39,17 @@ Route::get('/home', 'HomeController@index')->name('home');
 */ 
 Route::get('/friend','FriendController@MainView');
 /**
- * 友達追加
+ * 友達リクエスト
  */ 
-// Route::get('/friend/{friend_id}','FriendController@FriendRegist');
-
 Route::post('/friend/offer', 'FriendController@FriendRegist');
-
+/**
+ * 友達リクエストOK
+ */ 
+Route::post('/friend/reaponse/ok', 'FriendController@FriendRequestOk');
+/**
+ * 友達リクエストNG
+ */ 
+Route::post('/friend/reaponse/ng', 'FriendController@FriendRequestNg');
 /** 
 * グループ表示 
 */ 
