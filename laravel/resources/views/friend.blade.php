@@ -1,7 +1,7 @@
 <!-- resources/views/friend.blade.php -->
 
 @extends('layouts.app')
-@include('layouts.head')
+@include('layouts.head', ['page' => 2])
 @include('layouts.nav')
 
 
@@ -140,11 +140,10 @@
           <div class="panel panel-default">
             <div class="panel-heading">内容</div>
             <div class="panel-body">
-            <label for="friend-offer-content" class="col-md-4 control-label">内容</label>
+            <p class="friend_user_name"></p>
+            <label for="friend-offer-content" class="col-md-4 control-label">メッセージ</label>
             <div class="col-md-6"  >
-                <p class="recipient">本文</p>
-                <!--<p class="user_id" >id</p>-->
-                <textarea class="form-control" id="friend-offer-content" name="friendoffer_cotent" cols="45" rows="3" ></textarea>
+                <textarea class="form-control" id="friend-offer-content" name="friendoffer_content" cols="45" rows="3" ></textarea>
             </div>
             <input class="user_id" type="hidden" name="friendoffer_id" id="friendoffer_id" />      
             </div>

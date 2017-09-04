@@ -33,8 +33,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     
     <!-- Scripts -->
+    <!-- page=1　スケジュール -->
+    @if($page === 1)
     <!-- scedule script -->
     <script src="{{ secure_asset('css/assets/js/schedule.js') }}"></script>
+    @elseif($page === 2)
+    <script src="{{ secure_asset('css/assets/js/friend.js') }}"></script>
+    @endif
     <script src="{{ secure_asset('js/app.js') }}"></script>
     <!-- moment script -->
     <script src="{{ secure_asset('js/moment.min.js') }}"></script>

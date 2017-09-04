@@ -35,7 +35,15 @@ class FriendController extends Controller
      **/
     public function FriendRegist(Request $request) 
     {
-        Log::info('友達登録画面 ユーザーID:'.$request->friendoffer_id);
+        Log::info('友達登録画面 ユーザーID:'.$request->friendoffer_id.' メッセージ内容:'.$request->friendoffer_content);
+        
+        $friendoffer = new Friendoffer;
+        $friendoffer->master_user_id = Auth::user()->id;         //フレンドーユーザーID
+        $friendoffer->client_user_id = $request->friendoffer_id; //フレンドクライアントユーザーID
+        $friendoffer->state = 0;                                 //オファー状況
+        $friendoffer->content=$request->friendoffer_content;     //メッセージ内容
+        $friendoffer->save();
+        
         return redirect('friend'); 
     }
 }

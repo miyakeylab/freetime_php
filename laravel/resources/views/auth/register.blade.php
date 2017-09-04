@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@include('layouts.head')
+@include('layouts.head',['page' => 0])
 @include('layouts.nav')
 
 
