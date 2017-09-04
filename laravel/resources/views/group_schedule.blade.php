@@ -8,8 +8,6 @@
 @section('content')
   
     <div class="panel-body">
-        
-        
         <!-- ユーザー詳細 -->
         <div class="media">
             <!-- 1.画像の配置 -->
@@ -22,21 +20,7 @@
                 <p>{{ $user->user_content."/".$user->user_sex."/".$user->user_birthday }}</p>
             </div>
         </div>
-        
         <div class='table-responsive'>
-
-        <script type="text/javascript">
-        $(document).ready(function(){
-
-          var $table = $('table');
-          $table.floatThead({
-              top:50,
-              responsiveContainer: function($table){
-                  return $table.closest('.table-responsive');
-              }
-          });
-        });
-        </script>
         <table class="table table-striped sticky-header" style="font-size : 5px;">
             <thead>
             <tr>

@@ -15,7 +15,8 @@ class CreateGroupsTable extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('group_name');              //グループ名
+            $table->unsignedInteger('administrator_id');//グループID
+            $table->string('group_name');               //グループ名
             $table->string('group_img');                // グループ画像(default:no_image)
             $table->timestamps();
         });
