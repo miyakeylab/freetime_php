@@ -70,6 +70,7 @@
                 <div class="media-body">
                     @if($group->group_name !== "")
                     <h4 class="media-heading">{{ $group->group_name }}</h4>
+                    <p>管理者：</p>
                     @endif
                 </div>
                 <div class="media-right">

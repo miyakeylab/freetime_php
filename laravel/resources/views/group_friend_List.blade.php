@@ -1,4 +1,4 @@
-<!-- resources/views/friend_List.blade.php -->
+<!-- resources/views/group_friend_List.blade.php -->
 
 @extends('layouts.app')
 @include('layouts.head', ['page' => 2])
