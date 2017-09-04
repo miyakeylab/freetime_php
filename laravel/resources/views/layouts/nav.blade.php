@@ -37,8 +37,16 @@
 
                             <!--</ul>-->
                             <li><a href="{{ url('/my_schedule') }}"><i class="fa fa-btn fa-calendar"></i> </a></li>
-                            <li><a href="{{ url('/friend') }}"><i class="fa fa-btn fa-user"></i> <span class="badge">26</span></a></li>
-                            <li><a href="{{ url('/offer') }}"><i class="fa fa-btn fa-envelope-o"></i> <span class="badge">26</span></a></li>
+                            <li><a href="{{ url('/friend') }}"><i class="fa fa-btn fa-user"></i> 
+                            @if(count($friend_offer_count) > 0)
+                                <span class="badge">{{ count($friend_offer_count) }}</span>
+                            @endif
+                            </a></li>
+                            <li><a href="{{ url('/offer') }}"><i class="fa fa-btn fa-envelope-o"></i> 
+                            @if(count($offer_count) > 0)
+                                <span class="badge">{{ count($offer_count) }}</span>
+                            @endif
+                            </a></li>
                             <li><a href="{{ url('/group') }}"><i class="fa fa-btn fa-users"></i> </a></li>
                             <li><a href="{{ url('/google_api') }}"><i class="fa fa-btn fa-google"></i> </a></li>
                             <li><a href="{{ url('/setting') }}"><i class="fa fa-btn fa-cog"></i> </a></li>

@@ -20,6 +20,7 @@ class userdetailsTableSeeder extends Seeder
                 'user_sex' => $faker->numberBetween(0, 2),              // ユーザー性別(0:無し/1:男/2:女)
                 'user_img' => "css/assets/img/user_icon/no_icon.jpg",   // ユーザー画像(default:no_image)
                 'user_birthday' => $faker->dateTime('now'),             // ユーザー生年月日
+                'user_privacy' => 0,        // ユーザープライバシー(0:ロック/666:全表示)
                                 ]);
         }
     }

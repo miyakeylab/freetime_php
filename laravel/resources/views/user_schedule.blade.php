@@ -24,19 +24,7 @@
         
         <div class='table-responsive'>
 
-        <script type="text/javascript">
-        $(document).ready(function(){
-
-          var $table = $('table');
-          $table.floatThead({
-              top:50,
-              responsiveContainer: function($table){
-                  return $table.closest('.table-responsive');
-              }
-          });
-        });
-        </script>
-        <table class="table table-striped sticky-header" style="font-size : 5px;">
+        <table class="table table-striped sticky-header">
             <thead>
             <tr>
                 <th colspan="1" align="center"><b>{{ $month."月" }}</b></th>

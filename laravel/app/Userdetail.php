@@ -17,5 +17,6 @@ class Userdetail extends Model
         'user_sex',    // ユーザー性別(0:無し/1:男/2:女)
         'user_img',    // ユーザー画像(default:no_image)
         'user_birthday',             // ユーザー生年月日
+        'user_privacy',             // ユーザープライバシー
     ];
 }

@@ -38,10 +38,11 @@ class FriendController extends Controller
         }
         Log::info('友達ID一覧 '.print_r($friendValue, true)); 
         
-        // 友達申請
+        // 友達申請(master_id,name,user_id,user_img,content)
         $friendOffers = Friendoffer::join('users', 'friendoffers.master_user_id', '=', 'users.id')
                                     ->join('userdetails', 'friendoffers.master_user_id', '=', 'userdetails.user_id')
                                     ->where('friendoffers.client_user_id',Auth::user()->id)
+                                    ->where('state', Config::get('const.FRIEND_OFFER_REQ'))
                                     ->get(["friendoffers.id as master_id","name","user_id","user_img","content"]);
 
         // 友達有無
@@ -49,13 +50,13 @@ class FriendController extends Controller
         {
             // 友達と自分以外のユーザー
             $users = User::join('userdetails', 'users.id', '=', 'userdetails.user_id')
-                            ->where('users.id','!=',Auth::user()->id)
+                            ->whereNotIn('users.id',[Auth::user()->id])
                             ->get();
         }else
         {
             // 友達と自分以外のユーザー
             $users = User::join('userdetails', 'users.id', '=', 'userdetails.user_id')
-                            ->where('users.id','!=',Auth::user()->id)
+                            ->whereNotIn('users.id',[Auth::user()->id])
                             ->whereNotIn('users.id',$friendValue)
                             ->get();
         }
@@ -71,11 +72,16 @@ class FriendController extends Controller
                             ->exists() === true)
             {
                 $RequestingUsers[] = $user->id;
+            }else if(Friendoffer::where('master_user_id',$user->id)
+                            ->where('state', Config::get('const.FRIEND_OFFER_REQ'))
+                            ->where('client_user_id', Auth::user()->id)
+                            ->exists() === true)
+            {
+                $RequestingUsers[] = $user->id;
             }
  
         }
-        Log::info('オファー中のユーザー '.print_r($RequestingUsers, true));     
-    
+        Log::info('オファー中のユーザー '.print_r($RequestingUsers, true));
         
         return view('friend', ['friends' => $friends,
                                 'friendOffers' => $friendOffers,
@@ -116,7 +122,8 @@ class FriendController extends Controller
         $friendoffer = Friendoffer::find($request->friend_res_ok_id);
         $friendoffer->state = Config::get('const.FRIEND_OFFER_OK');
         $friendoffer->save();
-        
+        // 友達作成
+        $this->FriendCreate($friendoffer->master_user_id);
         return redirect('friend'); 
     }
     
@@ -130,6 +137,28 @@ class FriendController extends Controller
         $friendoffer = Friendoffer::find($request->friend_res_ng_id);
         $friendoffer->state = Config::get('const.FRIEND_OFFER_NG');
         $friendoffer->save();
+        
+        return redirect('friend'); 
+    }
+    
+    /**
+     * 友達作成
+     **/
+    public function FriendCreate($friend_id) 
+    {
+        Log::info('友達作成 friend_id:'.$friend_id);
+        
+        $friend = new Friend;
+        $friend->user_id = Auth::user()->id;         //ユーザーID
+        $friend->friend_user_id=$friend_id;         //友達ユーザーID
+            
+        $friend->save();
+        
+        $friend_req = new Friend;
+        $friend_req->user_id = $friend_id;         //ユーザーID
+        $friend_req->friend_user_id = Auth::user()->id;         //友達ユーザーID
+            
+        $friend_req->save();
         
         return redirect('friend'); 
     }
