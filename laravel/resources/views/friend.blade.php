@@ -120,9 +120,16 @@
                 </div>
                 <div class="media-right">
                     @if(in_array( $user->id, $RequestingUsers) === false)
-                    
-                    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#friendOfferModal" data-name="{{ $user->name }}" data-id="{{ $user->id }}" >
-                    <i class="fa fa-btn fa-user-plus"></i> 友達リクエスト</button>
+                        @if(in_array( $user->id, $ResUsers) === false)
+                            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#friendOfferModal" data-name="{{ $user->name }}" data-id="{{ $user->id }}" >
+                            <i class="fa fa-btn fa-user-plus"></i> 友達リクエスト</button>
+                        @else
+                            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#friendOfferModal" data-name="{{ $user->name }}" data-id="{{ $user->id }}" disabled>
+                             リクエスト受信中</button>
+                        @endif
+                    @else
+                        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#friendOfferModal" data-name="{{ $user->name }}" data-id="{{ $user->id }}" disabled>
+                         リクエスト申請中</button>
                     @endif
                 </div>
             </div>

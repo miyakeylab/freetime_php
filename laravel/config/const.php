@@ -6,6 +6,9 @@ return array(
   'FRIEND_OFFER_REQ'=>0,              // 友達オファー申請中
   'FRIEND_OFFER_OK'=>1,              // 友達オファー申請OK
   'FRIEND_OFFER_NG'=>2,              // 友達オファー申請NG
+  'OFFER_REQ'=>0,             // オファー申請中
+  'OFFER_OK'=>1,              // オファー申請OK
+  'OFFER_NG'=>2,              // オファー申請NG
   'TIME_ZONE_NAME'=>array("日本",
                           "アメリカ(ハワイ)",
                           "アメリカ(ロサンゼルス、サンフランシスコ、ラスベガス)",

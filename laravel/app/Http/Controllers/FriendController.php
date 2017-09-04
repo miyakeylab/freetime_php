@@ -63,6 +63,7 @@ class FriendController extends Controller
     
         //オファー中のユーザー情報
         $RequestingUsers = array();
+        $ResUsers = array();
         foreach($users as $user)
         {
 
@@ -77,7 +78,7 @@ class FriendController extends Controller
                             ->where('client_user_id', Auth::user()->id)
                             ->exists() === true)
             {
-                $RequestingUsers[] = $user->id;
+                $ResUsers[] = $user->id;
             }
  
         }
@@ -86,7 +87,8 @@ class FriendController extends Controller
         return view('friend', ['friends' => $friends,
                                 'friendOffers' => $friendOffers,
                                 'users' => $users,
-                                'RequestingUsers' => $RequestingUsers]);
+                                'RequestingUsers' => $RequestingUsers,
+                                'ResUsers' => $ResUsers]);
     }
     
     /**

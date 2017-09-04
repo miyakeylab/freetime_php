@@ -27,7 +27,7 @@ class NavLayoutComposer
         if($user !== null)
         {
             $friend_offer_count = Friendoffer::where('client_user_id',Auth::user()->id)->where('state', Config::get('const.FRIEND_OFFER_REQ'))->get();
-            $offer_count = Offer::where('client_user_id',Auth::user()->id)->get();
+            $offer_count = Offer::where('client_user_id',Auth::user()->id)->where('state', Config::get('const.OFFER_REQ'))->get();
             $view->with('friend_offer_count', $friend_offer_count)->with('offer_count', $offer_count);
         }
     }
