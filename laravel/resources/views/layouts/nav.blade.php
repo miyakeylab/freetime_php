@@ -16,6 +16,7 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-left">
+                    <!-- ユーザー名 -->
                     @if (!Auth::guest())
                     <li><a>{{ __('messages.nav_welcome', ['name' => Auth::user()->name]) }}</a></li>
                     @endif
@@ -23,7 +24,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             {{ Config::get('languages')[App::getLocale()] }}
-                        </a>
+                        <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             @foreach (Config::get('languages') as $lang => $language)
                                 @if ($lang != App::getLocale())
@@ -40,17 +41,12 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
+                    <!-- ログイン前 -->
                         <li><a href="{{ url('/login') }}"><i class="fa fa-btn fa-sign-in"></i> </a></li>
                         <li><a href="{{ url('/register') }}"><i class="fa fa-btn fa-lock"></i> </a></li>
                     @else
+                    <!-- ログイン後メニュー -->
                         <li class="dropdown">
-                            <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">-->
-                            <!--    {{ Auth::user()->name }} <span class="caret"></span>-->
-                            <!--</a>-->
-                            <!--<ul class="dropdown-menu" role="menu">-->
-                            <!--<li>    -->
-
-                            <!--</ul>-->
                             <li><a href="{{ url('/my_schedule') }}"><i class="fa fa-btn fa-calendar"></i> </a></li>
                             <li><a href="{{ url('/friend') }}"><i class="fa fa-btn fa-user"></i> 
                             @if(count($friend_offer_count) > 0)
