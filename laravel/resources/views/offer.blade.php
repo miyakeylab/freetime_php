@@ -9,7 +9,7 @@
     <div class="container" >
         <div class="col-md-8 col-md-offset-2"> 
         <button type="submit" class="btn btn-success" >
-        <i class="fa fa-btn fa-envelope-o"></i> {{ __('messages.offerCerate') }}</button>
+        <i class="fa fa-btn fa-envelope-o"></i>{{ __('messages.offerCerate') }}</button>
         <div class="padding-top-10"></div>
         </div>
         @if (count($offers) > 0)

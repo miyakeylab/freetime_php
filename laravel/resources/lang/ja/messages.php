@@ -94,5 +94,17 @@ return [
     'offerTimeEnd' => '終了：',
     'offerNgButton' => " 拒否",
     'reqOfferList' => "申請中オファー一覧",
+    /*
+    |--------------------------------------------------------------------------
+    | resources/views/group.blade.php
+    |--------------------------------------------------------------------------
+    */
+    'group_create_button' => ' グループ新規作成',
+    'group_list' => 'グループ一覧',
+    'group_leave_button' => ' 退会',
+    'group_request_list' => 'グループ申請一覧',
+    'group_ng_Button' => ' 拒否',
+    'group_add_Button' => " グループ参加",
+    'group_admin' => "管理者：",
 
 ];

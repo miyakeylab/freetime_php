@@ -94,5 +94,17 @@ return [
     'offerTimeEnd' => 'End：',
     'offerNgButton' => ' Reject',
     'reqOfferList' => 'Pending Offer List',
+    /*
+    |--------------------------------------------------------------------------
+    | resources/views/group.blade.php
+    |--------------------------------------------------------------------------
+    */
+    'group_create_button' => ' Create new group',
+    'group_list' => 'Group List',
+    'group_leave_button' => ' Leave',
+    'group_request_list' => 'Group Request List',
+    'group_ng_Button' => ' Reject',
+    'group_add_Button' => " Join",
+    'group_admin' => "Administrator：",
 
 ];

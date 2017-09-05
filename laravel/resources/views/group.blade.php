@@ -10,14 +10,14 @@
     <div class="container" >
         <div class="col-md-8 col-md-offset-2">  
         <button type="submit" class="btn btn-success">
-        <i class="fa fa-btn fa-users"></i> グループ新規作成</button>
+        <i class="fa fa-btn fa-users"></i>{{ __('messages.group_create_button') }}</button>
         <div class="padding-top-10"></div>
         </div>
         @if (count($groups) > 0)
         <div class="row">
         <div class="col-md-8 col-md-offset-2">  
         <div class="panel panel-default">
-        <div class="panel-heading">グループ一覧</div>
+        <div class="panel-heading">{{ __('messages.group_list') }}</div>
         <div class="panel-body">
             <!-- グループ一覧 -->
             <?php $i = 0; ?>
@@ -35,12 +35,12 @@
                 <div class="media-body">
                     @if($group->group_name !== "")
                     <h4 class="media-heading">{{ $group->group_name }}</h4>
-                    <p>管理者：</p>
+                    <p>{{ __('messages.group_admin') }}</p>
                     @endif
                 </div>
                 <div class="media-right">
                     <button type="submit" class="btn btn-danger">
-                    <i class="fa fa-btn fa-frown-o"></i> 退会</button>
+                    <i class="fa fa-btn fa-frown-o"></i>{{ __('messages.group_leave_button') }}</button>
                 </div>
             </div>
             @endforeach
@@ -53,7 +53,7 @@
         <div class="row">
         <div class="col-md-8 col-md-offset-2"> 
         <div class="panel panel-default">
-        <div class="panel-heading">グループ申請</div>
+        <div class="panel-heading">{{ __('messages.group_request_list') }}</div>
         <div class="panel-body">
             <!-- グループ申請 -->
             <?php $i = 0; ?>
@@ -71,15 +71,15 @@
                 <div class="media-body">
                     @if($group->group_name !== "")
                     <h4 class="media-heading">{{ $group->group_name }}</h4>
-                    <p>管理者：</p>
+                    <p>{{ __('messages.group_admin') }}</p>
                     @endif
                 </div>
                 <div class="media-right">
                     <button type="submit" class="btn btn-success">
-                    <i class="fa fa-btn fa-users"></i> グループ参加</button>
+                    <i class="fa fa-btn fa-users"></i>{{ __('messages.group_ng_Button') }}</button>
                     <div class="padding-top-10">
                     <button type="submit" class="btn btn-danger">
-                    <i class="fa fa-btn fa-frown-o"></i> 拒否</button>
+                    <i class="fa fa-btn fa-frown-o"></i>{{ __('messages.group_add_Button') }}</button>
                     </div>
                 </div>
             </div>
