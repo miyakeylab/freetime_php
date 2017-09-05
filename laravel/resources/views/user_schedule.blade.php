@@ -18,7 +18,7 @@
             <!-- 2.画像の説明 -->
             <div class="media-body">
                 <h4 class="media-heading">{{ $user->name }}</h4>
-                <p>{{ $user->user_content."/".Config::get('const.USER_SEX_STRING')[$user->user_sex]."/".$user->user_birthday }}</p>
+                <p>{{ $user->user_content."/".__('messages.user_sex')[$user->user_sex]."/".$user->user_birthday }}</p>
             </div>
         </div>
         

@@ -17,9 +17,9 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-left">
                     @if (!Auth::guest())
-                    <li><a>{{ "ようこそ".Auth::user()->name."さん" }}</a></li>
+                    <li><a>{{ __('messages.nav_welcome', ['name' => Auth::user()->name]) }}</a></li>
                     @endif
-
+                    <!-- 言語切り替え -->
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             {{ Config::get('languages')[App::getLocale()] }}

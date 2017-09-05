@@ -71,7 +71,7 @@
                     <h4 class="media-heading">{{ $offer->content }}</h4>
                     <p>{{ __('messages.offerTimeStart') }}{{ $offer->start_time }}</p>
                     <p>{{ __('messages.offerTimeEnd') }}{{ $offer->end_time }}</p>
-                    <p>{{ Config::get('const.OFFER_STRING')[$offer->state] }}</p>
+                    <p>{{ __('messages.offer_state')[$offer->state] }}</p>
                 </div>
             </div>
             @endforeach

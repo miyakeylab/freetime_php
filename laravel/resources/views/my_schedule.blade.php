@@ -7,7 +7,7 @@
 @section('content')
     <div class="panel-body">
         <button type="submit" class="btn btn-success" id="staticModalButton">
-        <i class="fa fa-btn fa-calendar"></i> スケジュール新規作成</button>
+        <i class="fa fa-btn fa-calendar"></i>{{ __('messages.schedule_create_button') }}</button>
         <div class="padding-top-10">
 
         <div class='table-responsive'>
@@ -96,32 +96,32 @@
             {{ csrf_field() }}
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">
-            <span aria-hidden="true">&#215;</span><span class="sr-only">閉じる</span>
+            <span aria-hidden="true">&#215;</span><span class="sr-only">{{ __('messages.schedule_close') }}</span>
           </button>
-          <h4 class="modal-title">スケジュール登録</h4>
+          <h4 class="modal-title">{{ __('messages.schedule_modal_title') }}</h4>
         </div><!-- /modal-header -->
           <div class="panel panel-default">
-                <div class="panel-heading">日時</div>
+                <div class="panel-heading">{{ __('messages.schedule_modal_date') }}</div>
                 <div class="panel-body">
            <div class="padding-top-5"></div>
-            <label for="schedule-start" class="col-md-4 control-label">開始</label>
+            <label for="schedule-start" class="col-md-4 control-label">{{ __('messages.schedule_modal_start') }}</label>
             <div class="col-md-4 input-group date" >
                 <input class="form-control" type="text" id="schedule-start" name="schedule-start" />
                 <span class="input-group-addon"><span class="add-on glyphicon glyphicon-th"></span></span>
             </div>
             <div class="padding-top-5"></div>
-            <label for="schedule-end" class="col-md-4 control-label">終了</label>
+            <label for="schedule-end" class="col-md-4 control-label">{{ __('messages.schedule_modal_end') }}</label>
             <div class="col-md-4 input-group date" >
-                <input class="form-control" type="text" id="schedule-end" name="schedule-end" />>
+                <input class="form-control" type="text" id="schedule-end" name="schedule-end" />
                 <span class="input-group-addon"><span class="add-on glyphicon glyphicon-th"></span></span>
             </div>
             </div>
             </div>
         <div class="modal-body">
           <div class="panel panel-default">
-            <div class="panel-heading">内容</div>
+            <div class="panel-heading">{{ __('messages.schedule_modal_content_title') }}</div>
             <div class="panel-body">
-            <label for="schedule-content" class="col-md-4 control-label">内容</label>
+            <label for="schedule-content" class="col-md-4 control-label">{{ __('messages.schedule_modal_content') }}</label>
             <div class="col-md-6"  >
                 <textarea class="form-control" id="schedule-content" name="schedule-content" cols="45" rows="8" ></textarea>
             </div>
@@ -129,8 +129,8 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
-          <button type="submit" class="btn btn-primary">登録</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('messages.schedule_modal_close_button') }}</button>
+          <button type="submit" class="btn btn-primary">{{ __('messages.schedule_modal_reg_button') }}</button>
         </div>
         <form>
       </div> <!-- /.modal-content -->
@@ -143,12 +143,12 @@
 
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">
-            <span aria-hidden="true">&#215;</span><span class="sr-only">閉じる</span>
+            <span aria-hidden="true">&#215;</span><span class="sr-only">{{ __('messages.schedule_modal_close') }}</span>
           </button>
-          <h4 class="modal-title">スケジュール表示</h4>
+          <h4 class="modal-title">{{ __('messages.schedule_modal_disp') }}</h4>
         </div><!-- /modal-header -->
         <div class="modal-body">
-          <p class="recipient">本文</p>
+          <p class="recipient"></p>
         </div>
       </div> <!-- /.modal-content -->
     </div> <!-- /.modal-dialog -->

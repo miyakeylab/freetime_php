@@ -12,7 +12,7 @@
         <div class="row">
         <div class="col-md-8 col-md-offset-2">
         <div class="panel panel-default">
-        <div class="panel-heading">友達一覧</div>
+        <div class="panel-heading">{{ __('messages.friend_list') }}</div>
         <div class="panel-body">
         @if (count($friends) > 0)
             <?php $i=0; ?>
@@ -32,7 +32,7 @@
                     @if($friend->name !== "")
                     <h4 class="media-heading">{{ $friend->name }}</h4>
                     @endif
-                    <p>{{ $friend->user_content."/".Config::get('const.USER_SEX_STRING')[$friend->user_sex]."/".$friend->user_birthday }}</p>
+                    <p>{{ $friend->user_content."/".__('messages.user_sex')[$friend->user_sex]."/".$friend->user_birthday }}</p>
                 </div>
             </div>
             @endforeach
@@ -47,7 +47,7 @@
         <div class="row">
         <div class="col-md-8 col-md-offset-2">        
         <div class="panel panel-default">
-        <div class="panel-heading">友達申請</div>
+        <div class="panel-heading">{{ __('messages.friend_request_list') }}</div>
         <div class="panel-body">
         @if (count($friendOffers) > 0)
             <?php $i=0; ?>
@@ -73,14 +73,14 @@
                     <form class="form-horizontal" method="POST" action="{{ url('friend/reaponse/ok') }}">
                         {{ csrf_field() }}
                         <button type="submit" class="btn btn-success">
-                        <i class="fa fa-btn fa-user-plus"></i> 友達追加</button>
+                        <i class="fa fa-btn fa-user-plus"></i>{{ __('messages.friend_add') }}</button>
                         <input type="hidden" name="friend_res_ok_id" value="{{$friendOffer->master_id}}" />  
                     </form>
                     <div class="padding-top-10">
                         <form class="form-horizontal" method="POST" action="{{ url('friend/reaponse/ng') }}">
                             {{ csrf_field() }}                
                             <button type="submit" class="btn btn-danger">
-                            <i class="fa fa-btn fa-frown-o"></i> 拒否</button>
+                            <i class="fa fa-btn fa-frown-o"></i>{{ __('messages.friend_ng_Button') }}</button>
                             <input type="hidden" name="friend_res_ng_id" value="{{$friendOffer->master_id}}" />  
                         </form>
                     </div>
@@ -97,7 +97,7 @@
         <div class="row">
         <div class="col-md-8 col-md-offset-2">          
         <div class="panel panel-default">
-        <div class="panel-heading">ユーザー一覧</div>
+        <div class="panel-heading">{{ __('messages.friend_user_list') }}</div>
         <div class="panel-body">
         @if (count($users) > 0)
             <?php $i=0; ?>
@@ -122,14 +122,14 @@
                     @if(in_array( $user->id, $RequestingUsers) === false)
                         @if(in_array( $user->id, $ResUsers) === false)
                             <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#friendOfferModal" data-name="{{ $user->name }}" data-id="{{ $user->id }}" >
-                            <i class="fa fa-btn fa-user-plus"></i> 友達リクエスト</button>
+                            <i class="fa fa-btn fa-user-plus"></i>{{ __('messages.friend_request_Button') }}</button>
                         @else
                             <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#friendOfferModal" data-name="{{ $user->name }}" data-id="{{ $user->id }}" disabled>
-                             リクエスト受信中</button>
+                             {{ __('messages.friend_request_receiving') }}</button>
                         @endif
                     @else
                         <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#friendOfferModal" data-name="{{ $user->name }}" data-id="{{ $user->id }}" disabled>
-                         リクエスト申請中</button>
+                         {{ __('messages.friend_request_pending') }}</button>
                     @endif
                 </div>
             </div>

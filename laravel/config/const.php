@@ -1,8 +1,6 @@
 <?php
 
 return array(
-  'OFFER_STRING'=>array("","申請中","承認待ち","承認済み"),// オファー状態
-  'USER_SEX_STRING'=>array("","男性","女性"),              // 性別
   'FRIEND_OFFER_REQ'=>0,              // 友達オファー申請中
   'FRIEND_OFFER_OK'=>1,              // 友達オファー申請OK
   'FRIEND_OFFER_NG'=>2,              // 友達オファー申請NG
