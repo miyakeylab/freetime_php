@@ -108,4 +108,6 @@ return [
     'group_admin' => "管理者：",
     'group_modal_title' => "グループ新規作成",
     'group_modal_close_button' => "閉じる", 
+    'group_modal_content' => "内容",
+    'group_modal_name' => "グループ名", 
 ];

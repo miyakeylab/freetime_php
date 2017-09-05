@@ -1,5 +1,5 @@
 /**
- * friend 処理
+ * group 処理
  */
 $(function () {
     // 初期化処理

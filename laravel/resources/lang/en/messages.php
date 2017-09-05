@@ -108,4 +108,6 @@ return [
     'group_admin' => "Administrator：",
     'group_modal_title' => "Create new group",
     'group_modal_close_button' => "Close",
+    'group_modal_content' => "Contents",
+    'group_modal_name' => "Group Name", 
 ];
