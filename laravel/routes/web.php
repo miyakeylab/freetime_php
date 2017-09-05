@@ -87,3 +87,7 @@ Route::get('auth/{provide}','Auth\AuthController@redirectToProvider');
  * SNSログインコールバック
  */
 Route::get('auth/{provide}/callback','Auth\AuthController@handleProviderCallback');
+/**
+ * 言語切替
+ */
+Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
