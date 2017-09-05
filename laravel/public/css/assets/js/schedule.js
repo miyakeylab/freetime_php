@@ -35,7 +35,7 @@ $(function () {
     });
     
     
-      /**
+    /**
      * 友達スケジュールボタン
      */
     $('.friendFeed').on('click', function() {
@@ -57,8 +57,9 @@ $(function () {
       $('#friendModal').modal('hide');
     });
   
-
-        // ダイアログ表示前にJavaScriptで操作する
+    /**
+     * 友達スケジュールモーダル表示前処理
+     */
     $('#friendOfferModal').on('show.bs.modal', function(event) {
       var button = $(event.relatedTarget);
       var friendName = button.data('name');
@@ -68,7 +69,7 @@ $(function () {
       modal.find('.modal-body .friend_user_name').text(friendName);
       // ユーザーID
       modal.find('.modal-body .user_id').val(id_data);
-      //modal.find('.modal-body input').val(recipient);
+      
     });
     // ダイアログ表示直後にフォーカスを設定する
     $('#friendOfferModal').on('shown.bs.modal', function(event) {

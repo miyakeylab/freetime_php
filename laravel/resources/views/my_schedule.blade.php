@@ -136,7 +136,8 @@
       </div> <!-- /.modal-content -->
     </div> <!-- /.modal-dialog -->
   </div> <!-- /.modal -->
-    <!-- 他モーダルダイアログ -->
+  
+  <!-- 他モーダルダイアログ -->
   <div class="modal" id="friendModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" >
     <div class="modal-dialog">
       <div class="modal-content">
@@ -155,10 +156,6 @@
   </div> <!-- /.modal -->
   <!--(フローティングメニューに載せたいHTMLコード)-->
   <div id="floating-menu">
-     <i class="fa fa-btn fa-chevron-up"></i>
-     <div class="padding-top-5"></div>
-     <i class="fa fa-btn fa-chevron-left"></i> {{ "$now" }}<i class="fa fa-btn fa-chevron-right"></i>
-     <div class="padding-top-5"></div>
-     <i class="fa fa-btn fa-chevron-down"></i> 
+     <i class="fa fa-btn fa-chevron-left"></i> {{ " "."$now"." " }}<i class="fa fa-btn fa-chevron-right"></i>
   </div>
 @endsection

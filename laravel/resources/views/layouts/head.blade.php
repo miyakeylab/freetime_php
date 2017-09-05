@@ -39,6 +39,8 @@
     <script src="{{ secure_asset('css/assets/js/schedule.js') }}"></script>
     @elseif($page === 2)
     <script src="{{ secure_asset('css/assets/js/friend.js') }}"></script>
+    @elseif($page === 3)
+    <script src="{{ secure_asset('css/assets/js/group.js') }}"></script>
     @endif
     <script src="{{ secure_asset('js/app.js') }}"></script>
     <!-- moment script -->

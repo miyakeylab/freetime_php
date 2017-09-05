@@ -106,5 +106,6 @@ return [
     'group_ng_Button' => ' Reject',
     'group_add_Button' => " Join",
     'group_admin' => "Administrator：",
-
+    'group_modal_title' => "Create new group",
+    'group_modal_close_button' => "Close",
 ];

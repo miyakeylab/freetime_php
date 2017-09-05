@@ -1,7 +1,7 @@
 <!-- resources/views/group.blade.php -->
 
 @extends('layouts.app')
-@include('layouts.head', ['page' => 1])
+@include('layouts.head', ['page' => 3])
 @include('layouts.nav')
 
 
@@ -10,7 +10,7 @@
     <div class="container" >
         <div class="col-md-8 col-md-offset-2">  
         <!-- グループ作成ボタン -->
-        <button type="submit" class="btn btn-success">
+        <button type="submit" class="btn btn-success" id="groupModalButton">
         <i class="fa fa-btn fa-users"></i>{{ __('messages.group_create_button') }}</button>
         <div class="padding-top-10"></div>
         </div>
@@ -94,4 +94,21 @@
             </div>
         @endif
     </div>
+  <!-- グループ作成ダイアログ -->
+  <div class="modal" id="groupModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" >
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&#215;</span><span class="sr-only">{{ __('messages.group_modal_close_button') }}</span>
+          </button>
+          <h4 class="modal-title">{{ __('messages.group_modal_title') }}</h4>
+        </div><!-- /modal-header -->
+        <div class="modal-body">
+          <p class="recipient"></p>
+        </div>
+      </div> <!-- /.modal-content -->
+    </div> <!-- /.modal-dialog -->
+  </div> <!-- /.modal -->
 @endsection

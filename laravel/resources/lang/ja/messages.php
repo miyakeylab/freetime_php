@@ -106,5 +106,6 @@ return [
     'group_ng_Button' => ' 拒否',
     'group_add_Button' => " グループ参加",
     'group_admin' => "管理者：",
-
+    'group_modal_title' => "グループ新規作成",
+    'group_modal_close_button' => "閉じる", 
 ];
