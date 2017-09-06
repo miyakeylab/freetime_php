@@ -1,4 +1,4 @@
-<!-- resources/views/user_schedule.blade.php -->
+<!-- resources/views/group_schedule.blade.php -->
 
 @extends('layouts.app')
 @include('layouts.head', ['page' => 1])
@@ -8,18 +8,22 @@
 @section('content')
   
     <div class="panel-body">
-        <!-- ユーザー詳細 -->
+        <!-- グループ詳細 -->
         <div class="media">
             <!-- 1.画像の配置 -->
             <a class="media-left" href="#">
-                <img class="media-object" src="{{url($user->user_img)}}">
+                <img class="media-object" src="{{url($group->group_img)}}">
             </a>
             <!-- 2.画像の説明 -->
             <div class="media-body">
-                <h4 class="media-heading">{{ $user->name }}</h4>
-                <p>{{ $user->user_content."/".$user->user_sex."/".$user->user_birthday }}</p>
+                <h4 class="media-heading">{{ $group->group_name }}</h4>
+                <button type="submit" class="btn btn-success" id="staticModalButton">
+                <i class="fa fa-btn fa-calendar"></i>{{ __('messages.gr_sche_cre_button') }}</button>
+                <button type="submit" class="btn btn-success" id="staticModalButton">
+                <i class="fa fa-btn fa-calendar"></i>{{ __('messages.gr_user_add_button') }}</button>
             </div>
         </div>
+
         <div class='table-responsive'>
         <table class="table table-striped sticky-header" style="font-size : 5px;">
             <thead>

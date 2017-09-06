@@ -16,7 +16,7 @@ class GroupController extends Controller
     
     /**
      *  グループ画面表示 
-     **/
+     */
     public function MainView() {
         Log::info('グループ画面表示 ID:'.Auth::user()->id);
         $groups = Groupuser::where('groupusers.user_id',Auth::user()->id)->join('groups', 'groupusers.user_group_id', '=', 'groups.id')->get();
@@ -25,9 +25,11 @@ class GroupController extends Controller
     
     /**
      * グループ作成
-     **/
-    public function GroupCreate($group_name) 
+     */
+    public function GroupCreate(Request $request) 
     {
-        return redirect('group'); 
+        return redirect('group_schedule'); 
     }
+    
+
 }

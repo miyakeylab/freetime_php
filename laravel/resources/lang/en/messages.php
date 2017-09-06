@@ -110,4 +110,11 @@ return [
     'group_modal_close_button' => "Close",
     'group_modal_content' => "Contents",
     'group_modal_name' => "Group Name", 
+    /*
+    |--------------------------------------------------------------------------
+    | resources/views/group_schedule.blade.php
+    |--------------------------------------------------------------------------
+    */
+    'gr_sche_cre_button' => ' Create new schedule',
+    'gr_user_add_button' => ' Add User',
 ];

@@ -57,8 +57,11 @@ Route::get('/group','GroupController@MainView');
 /**
  * グループ作成
  */ 
-Route::get('/group/{group_name}','GroupController@GroupCreate');
-
+Route::post('/group/create','GroupController@GroupCreate');
+/**
+ * グループスケジュール表示 
+ */ 
+Route::get('/group_schedule/{group_id}','ScheduleController@GroupScheduleView');
 /** 
 * オファー表示 
 */ 

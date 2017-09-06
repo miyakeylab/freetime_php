@@ -110,4 +110,11 @@ return [
     'group_modal_close_button' => "閉じる", 
     'group_modal_content' => "内容",
     'group_modal_name' => "グループ名", 
+    /*
+    |--------------------------------------------------------------------------
+    | resources/views/group_schedule.blade.php
+    |--------------------------------------------------------------------------
+    */
+    'gr_sche_cre_button' => ' スケジュール新規作成',
+    'gr_user_add_button' => ' ユーザー招待',
 ];

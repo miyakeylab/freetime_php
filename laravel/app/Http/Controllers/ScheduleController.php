@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Auth;
 use App\User;
 use App\Friend;
+use App\Group;
 use Illuminate\Support\Facades\Log;
 
 class ScheduleController extends Controller
@@ -42,6 +43,16 @@ class ScheduleController extends Controller
         Log::info('ユーザースケジュール画面表示 ID:'.Auth::user()->id.' 表示ユーザーID:'.$id.' 月:'.$month);
         return view('user_schedule',['month' => $month,'day' => $day, 'user' =>$user]);
     }
+    
+    /**
+     * グループスケジュール表示
+     */
+    public function GroupScheduleView($group_id) 
+    {
+        $group = Group::where('id','=',$group_id)->first();
+        
+        return redirect('group_schedule',['group' => $group]); 
+    }    
     
      /**
      *  スケジュール登録 
