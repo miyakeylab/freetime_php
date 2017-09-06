@@ -49,9 +49,12 @@ class ScheduleController extends Controller
      */
     public function GroupScheduleView($group_id) 
     {
+        $dt = Carbon::now();
+        $month = $dt->month;
+        $day = $dt->day;    
         $group = Group::where('id','=',$group_id)->first();
         
-        return redirect('group_schedule',['group' => $group]); 
+        return view('group_schedule',['month' => $month,'day' => $day, 'group' => $group]); 
     }    
     
      /**

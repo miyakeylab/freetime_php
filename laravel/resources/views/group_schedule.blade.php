@@ -20,7 +20,7 @@
                 <button type="submit" class="btn btn-success" id="staticModalButton">
                 <i class="fa fa-btn fa-calendar"></i>{{ __('messages.gr_sche_cre_button') }}</button>
                 <button type="submit" class="btn btn-success" id="staticModalButton">
-                <i class="fa fa-btn fa-calendar"></i>{{ __('messages.gr_user_add_button') }}</button>
+                <i class="fa fa-btn fa-user-plus"></i>{{ __('messages.gr_user_add_button') }}</button>
             </div>
         </div>
 

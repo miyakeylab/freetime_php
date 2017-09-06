@@ -29,7 +29,7 @@
             <?php $i++; ?>
             <div class="media">
                 <!-- 1.画像の配置 -->
-                <a class="media-left" href="#">
+                <a class="media-left" href="{{ url('/group_schedule',$group->id) }}">
                    <img class="media-object" src="{{url($group->group_img)}}">
                 </a>
                 <!-- 2.画像の説明 -->
