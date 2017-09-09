@@ -54,6 +54,8 @@ return [
     |--------------------------------------------------------------------------
     */
     'nav_welcome' => 'Welcome, :name',
+    'nav_lang' => 'Language:',
+    'nav_time' => 'Timezone:',
      /*
     |--------------------------------------------------------------------------
     | resources/views/my_schedule.blade.php

@@ -36,7 +36,7 @@
             </tr>
             </thead>
             <tbody>
-            @for ($i=1;$i<31;$i++)
+            @for ($i=1;$i <= $maxDay;$i++)
             <tr>
                 <td colspan="1" align="center">
                     {{ $month."/".$i }} 

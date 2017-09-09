@@ -35,7 +35,7 @@
                 <!-- 2.画像の説明 -->
                 <div class="media-body">
                     @if($group->group_name !== "")
-                    <h4 class="media-heading">{{ $group->group_name }}</h4>
+                    <h4 class="media-heading"><a href="{{ url('/group_schedule',$group->id) }}">{{ $group->group_name }}</a></h4>
                     <p>{{ __('messages.group_admin') }}</p>
                     @endif
                 </div>

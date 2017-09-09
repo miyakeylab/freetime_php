@@ -30,7 +30,9 @@
                 <!-- 2.画像の説明 -->
                 <div class="media-body">
                     @if($friend->name !== "")
+                    <a href="{{ url('/user_schedule',$friend->friend_user_id) }}">
                     <h4 class="media-heading">{{ $friend->name }}</h4>
+                    </a>
                     @endif
                     <p>{{ $friend->user_content."/".__('messages.user_sex')[$friend->user_sex]."/".$friend->user_birthday }}</p>
                 </div>
@@ -65,7 +67,9 @@
                 <!-- 2.画像の説明 -->
                 <div class="media-body">
                     @if($friendOffer->name !== "")
+                    <a href="{{ url('/user_schedule',$friendOffer->user_id) }}">
                     <h4 class="media-heading">{{ $friendOffer->name }}</h4>
+                    </a>
                     @endif
                     <p>{{ $friendOffer->content }}</p>
                 </div>
@@ -109,13 +113,15 @@
             <?php $i++; ?>
             <div class="media">
                 <!-- 1.画像の配置 -->
-                <a class="media-left" href="#">
+                <a class="media-left" href="{{ url('/user_schedule',$user->id) }}">
                     <img class="media-object" src="{{url($user->user_img)}}">
                 </a>
                 <!-- 2.画像の説明 -->
                 <div class="media-body">
                     @if($user->name !== "")
+                    <a href="{{ url('/user_schedule',$user->id) }}">
                     <h4 class="media-heading">{{ $user->name }}</h4>
+                    </a>
                     @endif
                 </div>
                 <div class="media-right">

@@ -10,6 +10,7 @@ use App\User;
 use App\Friend;
 use App\Group;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Config;
 
 class ScheduleController extends Controller
 {
@@ -46,24 +47,27 @@ class ScheduleController extends Controller
     
     /**
      * グループスケジュール表示
+     * @param group_id グループID
      */
     public function GroupScheduleView($group_id) 
     {
         $dt = Carbon::now();
         $month = $dt->month;
-        $day = $dt->day;    
+        $day = $dt->day; 
+        $maxDay = Config::get('const.MONTH_DAY_MAX')[$dt->month];
         $group = Group::where('id','=',$group_id)->first();
         
-        return view('group_schedule',['month' => $month,'day' => $day, 'group' => $group]); 
+        return view('group_schedule',['month' => $month,'day' => $day,'maxDay' => $maxDay,'group' => $group]); 
     }    
     
      /**
      *  スケジュール登録 
      **/
-    public function CreateSchedule() {
+    public function CreateSchedule(Request $request) {
         $dt = Carbon::now();
         $now = $dt->month."/".$dt->day;
         $hour = $dt->hour;
+        
         Log::info('スケジュール登録表示 ID:'.Auth::user()->id.' 日付:'.$now.' 時間:'.$hour);
         return view('my_schedule',['now' => $now,'hour' => $hour]);
     }
