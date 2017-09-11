@@ -56,8 +56,9 @@ class ScheduleController extends Controller
         $day = $dt->day; 
         $maxDay = Config::get('const.MONTH_DAY_MAX')[$dt->month];
         $group = Group::where('id','=',$group_id)->first();
-        
-        return view('group_schedule',['month' => $month,'day' => $day,'maxDay' => $maxDay,'group' => $group]); 
+        $friends = Friend::join('users', 'friends.friend_user_id', '=', 'users.id')->join('userdetails', 'friends.friend_user_id', '=', 'userdetails.user_id')->where('friends.user_id',Auth::user()->id)->get();
+    
+        return view('group_schedule',['month' => $month,'day' => $day,'maxDay' => $maxDay,'group' => $group,'friends' => $friends]); 
     }    
     
      /**

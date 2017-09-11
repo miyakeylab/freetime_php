@@ -119,4 +119,5 @@ return [
     */
     'gr_sche_cre_button' => ' スケジュール新規作成',
     'gr_user_add_button' => ' ユーザー招待',
+    'gr_user_add_title' => 'ユーザー招待',
 ];

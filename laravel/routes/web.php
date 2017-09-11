@@ -62,6 +62,10 @@ Route::post('/group/create','GroupController@GroupCreate');
  * グループスケジュール表示 
  */ 
 Route::get('/group_schedule/{group_id}','ScheduleController@GroupScheduleView');
+/**
+ * グループ友達追加 
+ */ 
+Route::post('/group_schedule/add_friend','GroupController@GroupAddFriend');
 /** 
 * オファー表示 
 */ 

@@ -14,12 +14,13 @@
         <i class="fa fa-btn fa-users"></i>{{ __('messages.group_create_button') }}</button>
         <div class="padding-top-10"></div>
         </div>
-        @if (count($groups) > 0)
+
         <div class="row">
         <div class="col-md-8 col-md-offset-2">  
         <div class="panel panel-default">
         <div class="panel-heading">{{ __('messages.group_list') }}</div>
         <div class="panel-body">
+            @if (count($groups) > 0)
             <!-- グループ一覧 -->
             <?php $i = 0; ?>
             @foreach ($groups as $group)
@@ -45,11 +46,12 @@
                 </div>
             </div>
             @endforeach
+            @endif
             </div>
             </div>           
             </div>
             </div>
-        @endif
+
         @if (count($groups) > 0)
         <div class="row">
         <div class="col-md-8 col-md-offset-2"> 
