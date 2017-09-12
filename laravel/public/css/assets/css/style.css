@@ -116,3 +116,9 @@ div#floating-menu {
         max-height: 200px;
         overflow-x: hidden;
 }
+/* panel */
+.fixed-panel {
+  min-height: 10;
+  max-height: 10;
+  overflow-y: scroll;
+}

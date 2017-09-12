@@ -66,6 +66,14 @@ Route::get('/group_schedule/{group_id}','ScheduleController@GroupScheduleView');
  * グループ友達追加 
  */ 
 Route::post('/group_schedule/add_friend','GroupController@GroupAddFriend');
+/**
+ * グループリクエストOK
+ */ 
+Route::post('/group/reaponse/ok', 'GroupController@GroupRequestOk');
+/**
+ * グループリクエストトNG
+ */ 
+Route::post('/group/reaponse/ng', 'GroupController@GroupRequestNg');
 /** 
 * オファー表示 
 */ 

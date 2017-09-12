@@ -79,7 +79,7 @@
           <div class="panel panel-default">
             <!-- 友達一覧 -->
             <div class="panel-heading">{{ __('messages.friend_user_list') }}</div>
-            <div class="panel-body">
+            <div class="panel-body fixed-panel">
             
         @if (count($friends) > 0)
             <?php $i=0; ?>
@@ -116,6 +116,7 @@
           <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('messages.group_modal_close_button') }}</button>
           <button type="submit" class="btn btn-primary">{{ __('messages.gr_user_add_button') }}</button>
         </div>
+        <input type="hidden" name="group_id" value="{{$group->id}}" >
         </form>
       </div> <!-- /.modal-content -->
     </div> <!-- /.modal-dialog -->

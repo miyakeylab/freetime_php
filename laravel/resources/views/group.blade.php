@@ -37,7 +37,7 @@
                 <div class="media-body">
                     @if($group->group_name !== "")
                     <h4 class="media-heading"><a href="{{ url('/group_schedule',$group->id) }}">{{ $group->group_name }}</a></h4>
-                    <p>{{ __('messages.group_admin') }}</p>
+                    <p>{{ __('messages.group_admin').$group->user_name }}</p>
                     @endif
                 </div>
                 <div class="media-right">
@@ -52,15 +52,16 @@
             </div>
             </div>
 
-        @if (count($groups) > 0)
+
         <div class="row">
         <div class="col-md-8 col-md-offset-2"> 
         <div class="panel panel-default">
         <div class="panel-heading">{{ __('messages.group_request_list') }}</div>
         <div class="panel-body">
+            @if (count($group_offer_count) > 0)
             <!-- グループ申請 -->
             <?php $i = 0; ?>
-            @foreach ($groups as $group)
+            @foreach ($group_offer_count as $group_offer)
             <?php if($i !== 0){ ?>
             <hr class="style-one">
             <?php } ?>
@@ -68,33 +69,42 @@
             <div class="media">
                 <!-- グループ画像 -->
                 <a class="media-left" href="#">
-                   <img class="media-object" src="{{url($group->group_img)}}">
+                   <img class="media-object" src="{{url($group_offer->group_img)}}">
                 </a>
                 <!-- グループ名・管理者 -->
                 <div class="media-body">
-                    @if($group->group_name !== "")
-                    <h4 class="media-heading">{{ $group->group_name }}</h4>
-                    <p>{{ __('messages.group_admin') }}</p>
+                    @if($group_offer->group_name !== "")
+                    <h4 class="media-heading">{{ $group_offer->group_name }}</h4>
                     @endif
                 </div>
                 <!-- ボタン -->
                 <div class="media-right">
-                    <!-- 拒否 -->
-                    <button type="submit" class="btn btn-success">
-                    <i class="fa fa-btn fa-users"></i>{{ __('messages.group_ng_Button') }}</button>
+                    <form class="form-horizontal" method="POST" action="{{ url('group/reaponse/ng') }}">
+                        {{ csrf_field() }}
+                        <!-- 拒否 -->
+                        <button type="submit" class="btn btn-success">
+                        <i class="fa fa-btn fa-users"></i>{{ __('messages.group_ng_Button') }}</button>
+                        <input type="hidden" name="group_res_ng_id" value="{{$group_offer->master_id}}" />  
+                    </form>
                     <div class="padding-top-10">
-                    <!-- グループ参加 -->
-                    <button type="submit" class="btn btn-danger">
-                    <i class="fa fa-btn fa-frown-o"></i>{{ __('messages.group_add_Button') }}</button>
+                        
+                    <form class="form-horizontal" method="POST" action="{{ url('group/reaponse/ok') }}">
+                        {{ csrf_field() }}
+                        <!-- グループ参加 -->
+                        <button type="submit" class="btn btn-danger">
+                        <i class="fa fa-btn fa-frown-o"></i>{{ __('messages.group_add_Button') }}</button>
+                        <input type="hidden" name="group_res_ok_id" value="{{$group_offer->master_id}}" />  
+                    </form>
                     </div>
                 </div>
             </div>
             @endforeach
+            @endif
             </div>
             </div>            
             </div>
             </div>
-        @endif
+
     </div>
   <!-- グループ作成ダイアログ -->
   <div class="modal" id="groupModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" >
