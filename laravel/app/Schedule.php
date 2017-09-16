@@ -6,6 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Schedule extends Model
 {
+    
+    /**
+     * The attributes that are mass assignable.
+     *
+     */
+    protected $fillable = [
+            'user_id',     //ユーザーID
+            'my_time_id',  //時間ID
+            'start_time',         //スケジュール開始時間
+            'end_time',           //スケジュール終了時間
+            'start_time_gmt',     //スケジュール開始時間(GMT)
+            'end_time_gmt',       //スケジュール終了時間(GMT)
+            'content',             //スケジュール内容
+            'category_id'//カテゴリーID
+    ];
     public function user()
     { 
         return $this->belongsTo('App\User'); 
