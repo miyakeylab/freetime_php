@@ -103,6 +103,10 @@ div#floating-menu {
   -webkit-text-overflow: ellipsis;  
   -o-text-overflow: ellipsis;  
 }
+.table td{
+  width: 32px;
+  height: 32px;
+}
 .table td img{
   width: 32px;
   height: 32px;
@@ -121,4 +125,16 @@ div#floating-menu {
   min-height: 10;
   max-height: 10;
   overflow-y: scroll;
+}
+.myFeed {
+  background-color: #F0F0F0;
+  }
+.friendFeed{
+  background-color: #F0F0F0;
+}
+.yobiFeed{
+  background-color: #ffffdd;
+}
+.my-timezone-size{
+    width: 320px;
 }

@@ -24,7 +24,8 @@ class ScheduleController extends Controller
      **/
     public function MainView() {
         $dt = Carbon::now();
-        $now = $dt->year."/".$dt->month."/".$dt->day;
+        $dt->addHour(Config::get('const.TIME_ZONE_MGT_DIFF')["0"]);
+        $now = $dt->year."/".str_pad($dt->month, 2, 0, STR_PAD_LEFT)."/".str_pad($dt->day, 2, 0, STR_PAD_LEFT);
         $hour = $dt->hour;
         $friends = Friend::join('users', 'friends.friend_user_id', '=', 'users.id')->join('userdetails', 'friends.friend_user_id', '=', 'userdetails.user_id')->where('friends.user_id',Auth::user()->id)->get();
         $user = User::find(Auth::user()->id)->userdetail()->first();

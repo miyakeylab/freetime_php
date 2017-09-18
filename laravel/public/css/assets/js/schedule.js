@@ -6,9 +6,10 @@ $(function () {
     $(document).ready(TableInit);
     
     // tdクリックイベント
-    $('.myFeed').on('click', function() {
-      $('#staticModal').modal();
-    });
+    // $('.myFeed').on('click', function() {
+    //   console.log("tes2");
+    //   $('#staticModal').modal();
+    // });
     
     /**
      * スケジュールボタン
@@ -16,15 +17,19 @@ $(function () {
 
     // JavaScript で表示
     $('#staticModalButton').on('click', function() {
+      console.log("tes");
       $('#staticModal').modal();
     });
     // ダイアログ表示前にJavaScriptで操作する
     $('#staticModal').on('show.bs.modal', function(event) {
       var button = $(event.relatedTarget);
-      var recipient = button.data('whatever');
+      var hour_start = button.data('start');
+      var hour_end = button.data('end');
+      console.log(hour_start);
       var modal = $(this);
-      modal.find('.modal-body .recipient').text(recipient);
-      //modal.find('.modal-body input').val(recipient);
+      modal.find('#schedule-start').val(hour_start);
+      modal.find('#schedule-end').val(hour_end);
+     
     });
     // ダイアログ表示直後にフォーカスを設定する
     $('#staticModal').on('shown.bs.modal', function(event) {

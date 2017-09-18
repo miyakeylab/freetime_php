@@ -20,7 +20,6 @@
                     @if (!Auth::guest())
                     <li><a>{{ __('messages.nav_welcome', ['name' => Auth::user()->name]) }}</a></li>
                     @endif
-                    <li><a><label for="nav-lang">{{ __('messages.nav_lang') }}</label></a></li>
                     <!-- 言語切り替え -->
                     <li class="dropdown" id="nav-lang">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -36,21 +35,6 @@
                             @endforeach
                         </ul>
                     </li>
-                    @if (!Auth::guest())
-                    <li><a><label for="nav-lang">{{ __('messages.nav_time') }}</label></a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            
-                        <span class="caret"></span></a>
-                        <ul class="dropdown-menu scrollable-menu">
-                            @foreach (Config::get('const.TIME_ZONE_NAME') as $timeName )
-                                <li>
-                                    <a href="#">{{$timeName}}</a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </li>
-                    @endif
                 </ul>
 
                 <!-- Right Side Of Navbar -->

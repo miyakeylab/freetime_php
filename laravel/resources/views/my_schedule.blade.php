@@ -6,11 +6,23 @@
 
 @section('content')
     <div class="panel-body">
-        <button type="submit" class="btn btn-success" id="staticModalButton">
+
+        <button type="submit" class="btn btn-success col-xs-6" data-toggle="modal" data-target="#staticModal" data-start="{{ $now.' '.str_pad($hour, 2, 0, STR_PAD_LEFT).':00' }}" data-end="{{ $now.' '.str_pad(($hour+1), 2, 0, STR_PAD_LEFT).':00' }}" style="width: 200px">
         <i class="fa fa-btn fa-calendar"></i>{{ __('messages.schedule_create_button') }}</button>
+
+        <div class="form-group col-xs-6">
+            <select class="form-control my-timezone-size" id="timezone" name="timezone" style="width: 200px">
+            @foreach (Config::get('const.TIME_ZONE_NAME') as $timeName )
+              <option value="1">{{$timeName}}</option>
+            @endforeach
+            </select>
+        </div>      
+        <div class="col-xs-12">
+          <i class="fa fa-btn fa-chevron-left"></i> {{ " "."$now"." " }}<i class="fa fa-btn fa-chevron-right"></i>
+        </div>
         <div class="padding-top-10">
 
-        <div class='table-responsive'>
+        <div class='table-responsive  col-xs-12'>
         <table class="table table-striped sticky-header" >
             <thead>
             <tr>
@@ -31,13 +43,12 @@
                     <img class="media-object user_icon_size" src="{{url($user->user_img)}}">
                   </a>
                 </td>
-                <td class="info" colspan="6" align="center"><a href="#staticModal" data-toggle="modal" data-whatever="睡眠">睡眠</a></td>
-                
-                @for ($n=0;$n<18;$n++)
+                 
+                @for ($n=0;$n<24;$n++)
                 @if ($n === 1)
-                <td class="myFeed" colspan="1" align="center" ><img class="media-object" src="{{url('css/assets/img/favicon.png')}}"></td>
+                <td class="myFeed" colspan="1" align="center" data-toggle="modal" data-target="#staticModal" data-start="{{ $now.' '.str_pad($n, 2, 0, STR_PAD_LEFT).':00' }}" data-end="{{ $now.' '.str_pad(($n+1), 2, 0, STR_PAD_LEFT).':00' }}"><img class="media-object" src="{{url('css/assets/img/favicon.png')}}"></td>
                 @else
-                <td class="myFeed" colspan="1" align="center" ></td>
+                <td class="myFeed" colspan="1" align="center" data-toggle="modal" data-target="#staticModal" data-start="{{ $now.' '.str_pad($n, 2, 0, STR_PAD_LEFT).':00' }}" data-end="{{ $now.' '.str_pad(($n+1), 2, 0, STR_PAD_LEFT).':00' }}"></td>
                 @endif
                 @endfor
             </tr>
@@ -49,11 +60,21 @@
                 </td>
                 @for ($n=0;$n<24;$n++)
                   @if($n % 2 === 0)
-                    <td colspan="1" align="center"></td>
+                    <td class="yobiFeed" colspan="1" align="center"></td>
                   @else
-                    <td colspan="1" align="center"></td>
+                    <td class="yobiFeed" colspan="1" align="center"></td>
                   @endif
                 @endfor
+            </tr>
+            <tr>
+                <td colspan="25" align="center">
+                  グループスケジュール
+                </td>
+            </tr>            
+            <tr>
+                <td colspan="25" align="center">
+                  友達スケジュール
+                </td>
             </tr>
             <!-- 友達  -->
             @if (count($friends) > 0)
@@ -64,7 +85,7 @@
                     <img class="media-object user_icon_size" src="{{url($friend->user_img)}}" >
                   </a>
                 </td>
-                <td class="info friendFeed" colspan="6" align="center">睡眠</td>
+                <td class="info friendFeed" colspan="6" align="center"  data-toggle="modal" data-target="#friendModal" data-="#friendModal">睡眠</td>
                 <td class="danger friendFeed" colspan="1" align="center">朝食</td>
                 <td class="friendFeed" colspan="1" align="center"></td>
                 <td class="info friendFeed" colspan="2" align="center">移動</td>
@@ -78,7 +99,7 @@
                   <a>
                 </td>
                 @for ($n=0;$n<24;$n++)
-                <td colspan="1" align="center"></td>
+                <td class="yobiFeed" colspan="1" align="center"></td>
                 @endfor
             </tr>
             @endforeach
@@ -121,8 +142,7 @@
           <div class="panel panel-default">
             <div class="panel-heading">{{ __('messages.schedule_modal_content_title') }}</div>
             <div class="panel-body">
-            <label for="schedule-content" class="col-md-4 control-label">{{ __('messages.schedule_modal_content') }}</label>
-            <div class="col-md-6"  >
+            <div class="col-xs-offset-2 col-md-8 col-xs-offset-2"  >
                 <textarea class="form-control" id="schedule-content" name="schedule-content" cols="45" rows="8" ></textarea>
             </div>
             </div>
@@ -155,7 +175,7 @@
     </div> <!-- /.modal-dialog -->
   </div> <!-- /.modal -->
   <!--(フローティングメニューに載せたいHTMLコード)-->
-  <div id="floating-menu">
-     <i class="fa fa-btn fa-chevron-left"></i> {{ " "."$now"." " }}<i class="fa fa-btn fa-chevron-right"></i>
-  </div>
+  <!--<div id="floating-menu">-->
+  <!--   <i class="fa fa-btn fa-chevron-left"></i> {{ " "."$now"." " }}<i class="fa fa-btn fa-chevron-right"></i>-->
+  <!--</div>-->
 @endsection
