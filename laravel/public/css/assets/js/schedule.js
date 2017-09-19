@@ -25,11 +25,12 @@ $(function () {
       var button = $(event.relatedTarget);
       var hour_start = button.data('start');
       var hour_end = button.data('end');
+      var title = button.data('title');
       console.log(hour_start);
       var modal = $(this);
       modal.find('#schedule-start').val(hour_start);
       modal.find('#schedule-end').val(hour_end);
-     
+      modal.find('#schedule-title').val(title);   
     });
     // ダイアログ表示直後にフォーカスを設定する
     $('#staticModal').on('shown.bs.modal', function(event) {

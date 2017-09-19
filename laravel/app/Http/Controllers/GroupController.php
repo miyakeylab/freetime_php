@@ -42,7 +42,7 @@ class GroupController extends Controller
         $group = new Group;
         $group->administrator_id = Auth::user()->id;  //管理者ID
         $group->group_name = $request->group_name;     //グループ名
-        $group->group_img = "css/assets/img/user_icon/no_icon.jpg";       // グループ画像(default:no_image)         
+        $group->group_img = "css/assets/img/group_icon/g_no_icon.png";       // グループ画像(default:no_image)         
         $group->save();
         
         // グループユーザー作成

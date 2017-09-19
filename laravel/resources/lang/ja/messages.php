@@ -72,6 +72,8 @@ return [
     'schedule_modal_close_button' => "閉じる", 
     'schedule_modal_reg_button' => "登録",
     'schedule_modal_disp' => 'スケジュール表示',
+    'schedule_friend_list' => '友達スケジュール',
+    'schedule_group_list' => 'グループスケジュール',
     /*
     |--------------------------------------------------------------------------
     | resources/views/friend.blade.php

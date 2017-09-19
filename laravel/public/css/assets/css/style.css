@@ -138,3 +138,31 @@ div#floating-menu {
 .my-timezone-size{
     width: 320px;
 }
+.schedule-tr-head{
+  background-color: #0CA5B0;
+  color: #ffffff;
+}
+.badge-default{
+  background-color: #0CA5B0;
+    color: #ffffff;
+}
+.badge-primary{
+  background-color: #4E3F30;
+    color: #ffffff;
+}
+.badge-success{
+  background-color: #5cb85c;
+    color: #ffffff;
+}
+.badge-info{
+  background-color: #5bc0de;
+    color: #ffffff;
+}
+.badge-warning{
+  background-color: #f0ad4e;
+    color: #ffffff;
+}
+.badge-danger{
+  background-color: #d9534f;
+    color: #ffffff;
+}
