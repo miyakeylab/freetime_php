@@ -28,6 +28,14 @@ Route::get('/user_schedule/{id}','ScheduleController@UserScheduleView');
 * スケジュール登録 
 */ 
 Route::post('/my_schedule/set','ScheduleController@CreateSchedule');
+/** 
+* スケジュール前日 
+*/ 
+Route::post('/my_schedule/prev','ScheduleController@PrevScheduleView');
+/** 
+* スケジュール翌日 
+*/ 
+Route::post('/my_schedule/next','ScheduleController@NextScheduleView');
 
 Auth::routes();
 /** 

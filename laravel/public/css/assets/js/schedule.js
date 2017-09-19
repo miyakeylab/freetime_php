@@ -46,16 +46,22 @@ $(function () {
     /**
      * 友達スケジュールボタン
      */
-    $('.friendFeed').on('click', function() {
-      $('#friendModal').modal();
-    });     
+    // $('.friendFeed').on('click', function() {
+    //   $('#friendModal').modal();
+    // });     
         // ダイアログ表示前にJavaScriptで操作する
     $('#friendModal').on('show.bs.modal', function(event) {
       var button = $(event.relatedTarget);
-      var recipient = button.data('whatever');
+      var hour_start = button.data('start');
+      var hour_end = button.data('end');
+      var title = button.data('title');
+      var content = button.data('content');
+      console.log(hour_start);
       var modal = $(this);
-      modal.find('.modal-body .recipient').text(recipient);
-      //modal.find('.modal-body input').val(recipient);
+      modal.find('#friend-schedule-start').val(hour_start);
+      modal.find('#friend-schedule-end').val(hour_end);
+      modal.find('#friend-schedule-title').val(title);  
+      modal.find('#friend-schedule-content').val(content); 
     });
     // ダイアログ表示直後にフォーカスを設定する
     $('#friendModal').on('shown.bs.modal', function(event) {

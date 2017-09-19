@@ -104,6 +104,7 @@ div#floating-menu {
   -o-text-overflow: ellipsis;  
 }
 .table td{
+  max-width: 32px;
   width: 32px;
   height: 32px;
 }
@@ -165,4 +166,199 @@ div#floating-menu {
 .badge-danger{
   background-color: #d9534f;
     color: #ffffff;
+}
+
+.overflowStr_1 {
+  width: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.overflowStr_2 {
+  width: 40px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.overflowStr_3 {
+  width: 60px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.overflowStr_4 {
+  width: 80px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.overflowStr_5 {
+  width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.overflowStr_6 {
+  width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.overflowStr_7 {
+  width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.overflowStr_8 {
+  width: 160px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.overflowStr_9 {
+  width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.overflowStr_10 {
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+
+.overflowStr_11 {
+  width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.overflowStr_12 {
+  width: 240px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.overflowStr_13 {
+  width: 260px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.overflowStr_14 {
+  width: 280px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+
+.overflowStr_15 {
+  width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.overflowStr_16 {
+  width: 320px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.overflowStr_17 {
+  width: 340px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.overflowStr_18 {
+  width: 360px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.overflowStr_19 {
+  width: 380px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.overflowStr_20 {
+  width: 400px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.overflowStr_21 {
+  width: 420px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.overflowStr_22 {
+  width: 440px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.overflowStr_23 {
+  width: 460px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.overflowStrName {
+  width: 60px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
 }

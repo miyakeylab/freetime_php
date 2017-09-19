@@ -27,26 +27,8 @@ class ScheduleController extends Controller
     public function MainView() {
         $dt = Carbon::now();
         $dt->addHour(Config::get('const.TIME_ZONE_MGT_DIFF')["0"]);
-        $now = $dt->year."/".str_pad($dt->month, 2, 0, STR_PAD_LEFT)."/".str_pad($dt->day, 2, 0, STR_PAD_LEFT);
         $hour = $dt->hour;
-        $friends = Friend::join('users', 'friends.friend_user_id', '=', 'users.id')->join('userdetails', 'friends.friend_user_id', '=', 'userdetails.user_id')->where('friends.user_id',Auth::user()->id)->get();
-        $user = User::find(Auth::user()->id)->userdetail()->first();
-        $mySchedule = Schedule::where('user_id','=',Auth::user()->id)
-        ->whereDate('start_time', $dt->toDateString())
-        ->whereDate('end_time', $dt->toDateString())
-        ->get();
-        $groups = Groupuser::where('groupusers.user_id',Auth::user()->id)
-        ->join('groups', 'groupusers.user_group_id', '=', 'groups.id')
-        ->join('userdetails', 'userdetails.user_id', '=', 'groups.administrator_id')
-        ->get(["groups.id as master_id","group_img","group_name"]);
-        
-        Log::info('スケジュール画面表示 ID:'.Auth::user()->id.' 日付:'.$now.' 時間:'.$hour);
-        return view('my_schedule',['now' => $now,
-        'hour' => $hour,
-        'friends' => $friends,
-        'user' => $user, 
-        'mySchedule' => $mySchedule, 
-        'groups' => $groups]);
+        return $this->ScheduleDisp($dt,$hour);
     }
     
     /**
@@ -155,5 +137,75 @@ class ScheduleController extends Controller
         
         return $this->MainView();
     }
-    
+    /**
+     *  スケジュール前日表示 
+     **/
+    public function PrevScheduleView(Request $request) {
+        $dt = new Carbon($request->now_day);
+        $dt->subDay(1);
+        $dt_now = Carbon::now();
+        $dt_now->addHour(Config::get('const.TIME_ZONE_MGT_DIFF')["0"]);
+        if($dt->diffInDays($dt_now) == 0)
+        {
+            $hour = $dt_now->hour;
+        }else
+        {
+            $hour = 25;
+        }
+        return $this->ScheduleDisp($dt,$hour);
+    }
+    /**
+     *  スケジュール翌日表示 
+     **/
+    public function NextScheduleView(Request $request) {
+        $dt = new Carbon($request->now_day);
+        $dt->addDay(1);
+        $dt_now = Carbon::now();
+        $dt_now->addHour(Config::get('const.TIME_ZONE_MGT_DIFF')["0"]);
+        if($dt->diffInDays($dt_now) == 0)
+        {
+            $hour = $dt_now->hour;
+        }else
+        {
+            $hour = 25;
+        }
+        return $this->ScheduleDisp($dt,$hour);
+    } 
+    /**
+     *  スケジュール表示 
+     **/
+    public function ScheduleDisp($dt,$setHour) { 
+        $now = $dt->year."/".str_pad($dt->month, 2, 0, STR_PAD_LEFT)."/".str_pad($dt->day, 2, 0, STR_PAD_LEFT);
+        $hour = $setHour;
+        $friends = Friend::join('users', 'friends.friend_user_id', '=', 'users.id')->join('userdetails', 'friends.friend_user_id', '=', 'userdetails.user_id')->where('friends.user_id',Auth::user()->id)->get();
+        $user = User::find(Auth::user()->id)->userdetail()->first();
+        $mySchedule = Schedule::where('user_id','=',Auth::user()->id)
+        ->whereDate('start_time', $dt->toDateString())
+        ->whereDate('end_time', $dt->toDateString())
+        ->get();
+                
+        //友達スケジュール一覧
+        $friendSchedule = array();
+        // ID抽出
+        foreach($friends as $friend)
+        {
+            $friendSchedule[] = Schedule::where('user_id','=',$friend->friend_user_id)
+                ->whereDate('start_time', $dt->toDateString())
+                ->whereDate('end_time', $dt->toDateString())
+                ->get();
+        }
+        $groups = Groupuser::where('groupusers.user_id',Auth::user()->id)
+        ->join('groups', 'groupusers.user_group_id', '=', 'groups.id')
+        ->join('userdetails', 'userdetails.user_id', '=', 'groups.administrator_id')
+        ->get(["groups.id as master_id","group_img","group_name"]);
+        
+        Log::info('スケジュール画面表示 ID:'.Auth::user()->id.' 日付:'.$now.' 時間:'.$hour);
+        return view('my_schedule',['now' => $now,
+        'hour' => $hour,
+        'friends' => $friends,
+        'user' => $user, 
+        'mySchedule' => $mySchedule, 
+        'groups' => $groups,
+        'friendSchedule' => $friendSchedule]);     
+    }
 }
