@@ -13,6 +13,7 @@
         data-start="{{ $now.' '.str_pad($hour, 2, 0, STR_PAD_LEFT).':00' }}" 
         data-end="{{ $now.' '.str_pad(($hour+1), 2, 0, STR_PAD_LEFT).':00' }}" 
         data-title=""
+        data-content=""
         style="width: 200px">
         <i class="fa fa-btn fa-calendar"></i>{{ __('messages.schedule_create_button') }}</button>
 
@@ -50,55 +51,67 @@
                   </a>
                 </td>
                  
+                <?php $hourDiff = 0; ?>
                 @for ($n=0; $n<24; $n++)
                    <?php  $str_1 = new \Carbon\Carbon($now.' '.str_pad($n, 2, 0, STR_PAD_LEFT).':00'); 
                           $str_2 = new \Carbon\Carbon($now.' '.str_pad($n+1, 2, 0, STR_PAD_LEFT).':00'); 
                           $result = 0; ?>
-    
-                    <!-- スケジュール -->
-                    @foreach( $mySchedule as $schedule)
-                      <?php $now_start = new \Carbon\Carbon($schedule->start_time); ?>                    
-                      @if ($now_start->gte($str_1)=== true && $now_start->lt($str_2)===true)
-                        @if($result === 0)
-                          <?php $result = 1; 
-                          $color= "badge-default";
-                          switch($schedule->category_id)
-                          {
-                          case 0:
+                    @if($hourDiff <= 0)
+                      <!-- スケジュール -->
+                      @foreach( $mySchedule as $schedule)
+                        <?php $now_start = new \Carbon\Carbon($schedule->start_time); ?>                    
+                        @if ($now_start->gte($str_1)=== true && $now_start->lt($str_2)===true)
+                          <?php $now_end = new \Carbon\Carbon($schedule->end_time); 
+                            $hourDiff = $now_start->diffInHours($now_end);
+                          ?>   
+                          @if($result === 0)
+                            <?php $result = 1; 
                             $color= "badge-default";
-                            break;
-                          case 1:
-                            $color= "badge-primary";
-                            break;
-                          case 2:
-                            $color= "badge-success";
-                            break;
-                          case 3:
-                            $color= "badge-info";
-                            break;
-                          case 4:
-                            $color= "badge-warning";
-                            break;
-                          case 5:
-                            $color= "badge-danger";
-                            break;
-                          }
-                          ?>
-                        <td class="myFeed {{  $color  }}" colspan="1" align="center" data-toggle="modal" 
-                        data-target="#staticModal" 
-                        data-start="{{ $schedule->start_time }}" 
-                        data-end="{{ $schedule->end_time }}"
-                        data-title="{{ $schedule->title }}"><span>{{ $schedule->title }}</span></td>
+                            switch($schedule->category_id)
+                            {
+                            case 0:
+                              $color= "badge-default";
+                              break;
+                            case 1:
+                              $color= "badge-primary";
+                              break;
+                            case 2:
+                              $color= "badge-success";
+                              break;
+                            case 3:
+                              $color= "badge-info";
+                              break;
+                            case 4:
+                              $color= "badge-warning";
+                              break;
+                            case 5:
+                              $color= "badge-danger";
+                              break;
+                            }
+                            ?>
+                          <td class="myFeed {{  $color  }}" colspan="{{ $hourDiff }}" align="center" data-toggle="modal" 
+                          data-target="#staticModal" 
+                          data-start="{{ $schedule->start_time }}" 
+                          data-end="{{ $schedule->end_time }}"
+                          data-title="{{ $schedule->title }}"
+                          data-content="{{ $schedule->content }}"><span>{{ $schedule->title }}</span></td>
+                          
+                          <?php $hourDiff -= 1; ?>
+                          @endif
                         @endif
-                      @endif
-                    @endforeach
+                      @endforeach
+                    
                     @if($result === 0)
                       <td class="myFeed" colspan="1" align="center" data-toggle="modal" 
                       data-target="#staticModal" 
                       data-start="{{ $now.' '.str_pad($n, 2, 0, STR_PAD_LEFT).':00' }}" 
                       data-end="{{ $now.' '.str_pad(($n+1), 2, 0, STR_PAD_LEFT).':00' }}"
-                      data-title=""></td>
+                      data-title=""
+                      data-content=""></td>
                     @endif
+                  @else
+                    <?php $hourDiff -= 1; ?>
+                  @endif
                 @endfor
             </tr>
             <tr>
