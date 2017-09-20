@@ -177,7 +177,7 @@
           <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('messages.schedule_close') }}</button>
           <button type="submit" class="btn btn-primary">{{ __('messages.friend_request_Button') }}</button>
         </div>
-        <form>
+        </form>
       </div> <!-- /.modal-content -->
     </div> <!-- /.modal-dialog -->
   </div> <!-- /.modal -->
