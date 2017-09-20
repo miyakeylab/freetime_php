@@ -12,6 +12,7 @@ use App\Group;
 use App\Groupuser;
 use App\Groupschedule;
 use App\Schedule;
+use App\Offer;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Config;
 
@@ -164,8 +165,105 @@ class ScheduleController extends Controller
         $schedule->schedule_img="";        //スタンプレイアウト      
         $schedule->save();
         
-        return $this->MainView();
+        $dt = new Carbon($request->now_day);
+        $dt_now = Carbon::now();
+        $dt_now->addHour(Config::get('const.TIME_ZONE_MGT_DIFF')["0"]);
+        if($dt->diffInDays($dt_now) == 0)
+        {
+            $hour = $dt_now->hour;
+        }else
+        {
+            $hour = 25;
+        }
+        return $this->ScheduleDisp($dt,$hour);
     }
+    
+     /**
+     *  グループスケジュール登録 
+     **/
+    public function GroupScheduleCreate(Request $request) {
+        
+        Log::info('グループスケジュール登録表示 ID:'.Auth::user()->id.' 開始日付:'.$request->schedule_start.' 終了日付:'.$request->schedule_end);
+        
+        $dt_start = new Carbon($request->schedule_start);
+        $dt_end = new Carbon($request->schedule_end);
+        $dt_start_gmt = new Carbon($request->schedule_start);
+        $dt_end_gmt = new Carbon($request->schedule_end);        
+        $timeId = 0;
+        $diff = Config::get('const.TIME_ZONE_MGT_DIFF')[$timeId];
+        if($diff > 0)
+        {   $dt_start_gmt->subHour($diff);
+            $dt_end_gmt->subHour($diff);  
+
+        }else {
+                    
+            $diff *= -1;
+            $dt_start_gmt->addHour($diff);
+            $dt_end_gmt->addHour($diff);
+        }
+        
+        $schedule = new Groupschedule;
+        $schedule->group_id = $request->group_id;      //ユーザーID
+        $schedule->my_time_id = $timeId;            //時間ID
+        $schedule->start_time = $dt_start;         //スケジュール開始時間
+        $schedule->end_time=$dt_end;                //スケジュール終了時間
+        $schedule->start_time_gmt = $dt_start_gmt;     //スケジュール開始時間(GMT)
+        $schedule->end_time_gmt = $dt_end_gmt;       //スケジュール終了時間(GMT)
+        if($request->schedule_content === null)
+        {
+            $schedule->content = "";            //スケジュール内容
+        }else{
+            $schedule->content = $request->schedule_content;            //スケジュール内容
+        }
+        
+        
+        if($request->colors == "Default")
+        {
+            $schedule->category_id=0;        //カテゴリーID
+        }else if($request->colors == "Primary")
+        {
+            $schedule->category_id=1;        //カテゴリーID
+        }else if($request->colors == "Success")
+        {
+            $schedule->category_id=2;        //カテゴリーID
+        }else if($request->colors == "Info")
+        {
+            $schedule->category_id=3;        //カテゴリーID
+        }else if($request->colors == "Warning")
+        {
+            $schedule->category_id=4;        //カテゴリーID
+        }else if($request->colors == "Danger")
+        {
+            $schedule->category_id=5;        //カテゴリーID
+        }else
+        {
+            $schedule->category_id=0;        //カテゴリーID
+        }
+        
+        if($request->schedule_title === null)
+        {
+            $schedule->title="";              //スケジュールタイトル
+        }else{
+            $schedule->title=$request->schedule_title;              //スケジュールタイトル
+            
+        }
+        $schedule->pat_id=0;                //パターンID
+        $schedule->schedule_img="";        //スタンプレイアウト      
+        $schedule->save();
+        
+        $dt = new Carbon($request->now_day);
+        $dt_now = Carbon::now();
+        $dt_now->addHour(Config::get('const.TIME_ZONE_MGT_DIFF')["0"]);
+        if($dt->diffInDays($dt_now) == 0)
+        {
+            $hour = $dt_now->hour;
+        }else
+        {
+            $hour = 25;
+        }
+        return $this->ScheduleDisp($dt,$hour);
+    }    
+
      /**
      *  スケジュール取り込み 
      **/
@@ -242,7 +340,17 @@ class ScheduleController extends Controller
         $schedule->schedule_img="";        //スタンプレイアウト      
         $schedule->save();
         
-        return $this->MainView();
+        $dt = new Carbon($request->now_day);
+        $dt_now = Carbon::now();
+        $dt_now->addHour(Config::get('const.TIME_ZONE_MGT_DIFF')["0"]);
+        if($dt->diffInDays($dt_now) == 0)
+        {
+            $hour = $dt_now->hour;
+        }else
+        {
+            $hour = 25;
+        }
+        return $this->ScheduleDisp($dt,$hour);
     }
     /**
      *  スケジュール前日表示 
@@ -362,5 +470,93 @@ class ScheduleController extends Controller
         'mySchedule' => $mySchedule, 
         'group' => $group,
         'friendSchedule' => $friendSchedule]);     
+    }
+    
+    /**
+     * オファー作成
+     **/
+    public function OfferCreate(Request $request) 
+    {
+        Log::info('オファー作成 ID:'.Auth::user()->id);
+    
+        $dt_start = new Carbon($request->schedule_start);
+        $dt_end = new Carbon($request->schedule_end);
+        $dt_start_gmt = new Carbon($request->schedule_start);
+        $dt_end_gmt = new Carbon($request->schedule_end);        
+        $timeId = 0;
+        $diff = Config::get('const.TIME_ZONE_MGT_DIFF')[$timeId];
+        if($diff > 0)
+        {   $dt_start_gmt->subHour($diff);
+            $dt_end_gmt->subHour($diff);  
+
+        }else {
+                    
+            $diff *= -1;
+            $dt_start_gmt->addHour($diff);
+            $dt_end_gmt->addHour($diff);
+        }
+        
+        $offer = new Offer;
+        $offer->master_user_id = Auth::user()->id;//オファーユーザーID
+        $offer->client_user_id = $request->offer_friend_id;//オファークライアントユーザーID
+        $offer->state = Config::get('const.OFFER_REQ');         //オファー状況
+        $offer->my_time_id = $timeId;            //時間ID
+        $offer->start_time = $dt_start;         //スケジュール開始時間
+        $offer->end_time=$dt_end;                //スケジュール終了時間
+        $offer->start_time_gmt = $dt_start_gmt;     //スケジュール開始時間(GMT)
+        $offer->end_time_gmt = $dt_end_gmt;       //スケジュール終了時間(GMT)
+        if($request->schedule_content === null)
+        {
+            $offer->content = "";            //スケジュール内容
+        }else{
+            $offer->content = $request->schedule_content;            //スケジュール内容
+        }
+        
+        
+        if($request->colors == "Default")
+        {
+            $offer->category_id=0;        //カテゴリーID
+        }else if($request->colors == "Primary")
+        {
+            $offer->category_id=1;        //カテゴリーID
+        }else if($request->colors == "Success")
+        {
+            $offer->category_id=2;        //カテゴリーID
+        }else if($request->colors == "Info")
+        {
+            $offer->category_id=3;        //カテゴリーID
+        }else if($request->colors == "Warning")
+        {
+            $offer->category_id=4;        //カテゴリーID
+        }else if($request->colors == "Danger")
+        {
+            $offer->category_id=5;        //カテゴリーID
+        }else
+        {
+            $offer->category_id=0;        //カテゴリーID
+        }
+        
+        if($request->schedule_title === null)
+        {
+            $offer->title="";              //スケジュールタイトル
+        }else{
+            $offer->title=$request->schedule_title;              //スケジュールタイトル
+            
+        }
+        $offer->pat_id=0;                //パターンID
+        $offer->schedule_img="";        //スタンプレイアウト      
+        $offer->save();
+
+        $dt = new Carbon($request->now_day);
+        $dt_now = Carbon::now();
+        $dt_now->addHour(Config::get('const.TIME_ZONE_MGT_DIFF')["0"]);
+        if($dt->diffInDays($dt_now) == 0)
+        {
+            $hour = $dt_now->hour;
+        }else
+        {
+            $hour = 25;
+        }
+        return $this->ScheduleDisp($dt,$hour);
     }
 }

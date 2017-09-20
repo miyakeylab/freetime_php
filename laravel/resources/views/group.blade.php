@@ -41,8 +41,14 @@
                     @endif
                 </div>
                 <div class="media-right">
-                    <button type="submit" class="btn btn-danger">
-                    <i class="fa fa-btn fa-frown-o"></i>{{ __('messages.group_leave_button') }}</button>
+                    <form class="form-horizontal" method="POST" action="{{ url('group/out') }}">
+                        {{ csrf_field() }}
+                        <!-- グループ退会 -->
+                        <button type="submit" class="btn btn-danger">
+                        <i class="fa fa-btn fa-frown-o"></i>{{ __('messages.group_leave_button') }}</button>
+                        <input type="hidden" name="group_out_id" value="{{ $group->id }}" />  
+                    </form>
+
                 </div>
             </div>
             @endforeach
@@ -69,7 +75,7 @@
             <div class="media">
                 <!-- グループ画像 -->
                 <a class="media-left" href="#">
-                   <img class="media-object" src="{{url($group_offer->group_img)}}">
+                   <img class="media-object user_icon_size" src="{{url($group_offer->group_img)}}">
                 </a>
                 <!-- グループ名・管理者 -->
                 <div class="media-body">
@@ -79,21 +85,21 @@
                 </div>
                 <!-- ボタン -->
                 <div class="media-right">
-                    <form class="form-horizontal" method="POST" action="{{ url('group/reaponse/ng') }}">
-                        {{ csrf_field() }}
-                        <!-- 拒否 -->
-                        <button type="submit" class="btn btn-success">
-                        <i class="fa fa-btn fa-users"></i>{{ __('messages.group_ng_Button') }}</button>
-                        <input type="hidden" name="group_res_ng_id" value="{{$group_offer->master_id}}" />  
-                    </form>
-                    <div class="padding-top-10">
-                        
+
                     <form class="form-horizontal" method="POST" action="{{ url('group/reaponse/ok') }}">
                         {{ csrf_field() }}
                         <!-- グループ参加 -->
-                        <button type="submit" class="btn btn-danger">
-                        <i class="fa fa-btn fa-frown-o"></i>{{ __('messages.group_add_Button') }}</button>
+                        <button type="submit" class="btn btn-success">
+                        <i class="fa fa-btn fa-users"></i>{{ __('messages.group_add_Button') }}</button>
                         <input type="hidden" name="group_res_ok_id" value="{{$group_offer->master_id}}" />  
+                    </form>
+                    <div class="padding-top-10">
+                    <form class="form-horizontal" method="POST" action="{{ url('group/reaponse/ng') }}">
+                        {{ csrf_field() }}
+                        <!-- 拒否 -->
+                        <button type="submit" class="btn btn-danger">
+                        <i class="fa fa-btn fa-frown-o"></i>{{ __('messages.group_ng_Button') }}</button>
+                        <input type="hidden" name="group_res_ng_id" value="{{$group_offer->master_id}}" />  
                     </form>
                     </div>
                 </div>

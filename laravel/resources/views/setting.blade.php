@@ -1,4 +1,4 @@
-<!-- resources/views/google_api.blade.php -->
+<!-- resources/views/setting.blade.php -->
 
 @extends('layouts.app')
 @include('layouts.head', ['page' => 1])
@@ -9,7 +9,7 @@
     <div class="container">    
       <div class="row">
           <div class="panel panel-default">
-          <div class="panel-heading">  <h4 >ユーザープロフィール</h4></div>
+          <div class="panel-heading">  <h4 >{{ __('messages.setting_title') }}</h4></div>
            <div class="panel-body">
           <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
            <img alt="User Pic" src="{{ url($userdetail->user_img) }}" id="profile-image1" class="img-circle user_setting_size"> 
@@ -27,8 +27,7 @@
                 <li><p><span class="glyphicon glyphicon-envelope one"></span> {{$user->email}}</p></li>
               </ul>
               <hr>
-              <div class="col-sm-5 col-xs-6 tital">{{"BirthDay: ".$birthday->format('Y年m月d日 ')}}</div>
-              <div class="col-sm-5 col-xs-6 tital">{{"Age: ".$birthday->age}}</div>
+              <div class="col-sm-5 col-xs-6 tital">{{ $birthday }}</div>
           </div>
     </div>
 </div>

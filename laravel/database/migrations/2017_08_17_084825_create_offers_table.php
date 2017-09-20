@@ -23,8 +23,11 @@ class CreateOffersTable extends Migration
             $table->datetime('end_time');           //スケジュール終了時間
             $table->datetime('start_time_gmt');     //スケジュール開始時間(GMT)
             $table->datetime('end_time_gmt');       //スケジュール終了時間(GMT)
-            $table->string('content');                //内容
+            $table->string('title');                //スケジュールタイトル
+            $table->string('content');              //内容
             $table->unsignedInteger('category_id'); //カテゴリーID
+            $table->unsignedInteger('pat_id');      //パターンID
+            $table->string('schedule_img');         //スタンプレイアウト
             $table->timestamps();
         });
     }

@@ -96,11 +96,13 @@
                           }
                           ?>
                         <td class="myFeed {{  $color  }}" colspan="{{ $hourDiff }}" align="center" data-toggle="modal" 
-                        data-target="#staticModal" 
+                        data-target="#groupModal" 
                         data-start="{{ $schedule->start_time }}" 
                         data-end="{{ $schedule->end_time }}"
                         data-title="{{ $schedule->title }}"
-                        data-content="{{ $schedule->content }}"><span class="{{ 'overflowStr_'.$hourDiff }}" style="display:block;">{{ $schedule->title }}</span></td>
+                        data-content="{{ $schedule->content }}"
+                        data-category="{{ $schedule->category_id }}"
+                        data-groupid="{{ $group->id }}"><span class="{{ 'overflowStr_'.$hourDiff }}" style="display:block;">{{ $schedule->title }}</span></td>
                         
                         @else
                          <?php $count[$n] +=1; ?>
@@ -110,11 +112,13 @@
                     
                     @if($result === 0)
                       <td class="myFeed" colspan="1" align="center" data-toggle="modal" 
-                      data-target="#staticModal" 
+                      data-target="#groupModal" 
                       data-start="{{ $now.' '.str_pad($n, 2, 0, STR_PAD_LEFT).':00' }}" 
                       data-end="{{ $now.' '.str_pad(($n+1), 2, 0, STR_PAD_LEFT).':00' }}"
                       data-title=""
-                      data-content=""></td>
+                      data-content=""
+                      data-category="0"
+                      data-groupid="{{ $group->id }}"></td>
                     @else
                      <?php $hourDiff -= 1; ?>
                     @endif
@@ -290,7 +294,7 @@
             <div class="media">
                 <!-- 1.画像の配置 -->
                 <a class="media-left">
-                    <img class="media-object" src="{{url($friend->user_img)}}">
+                    <img class="media-object user_icon_size" src="{{url($friend->user_img)}}">
                 </a>
                 <!-- 2.画像の説明 -->
                 <div class="media-body">
@@ -322,11 +326,11 @@
     </div> <!-- /.modal-dialog -->
   </div> <!-- /.modal -->
   
-  <!-- 自モーダルダイアログ -->
-  <div class="modal" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
+  <!-- グループモーダルダイアログ -->
+  <div class="modal" id="groupModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form class="form-horizontal" method="POST" action="{{ url('my_schedule/set') }}">
+        <form class="form-horizontal" method="POST" action="{{ url('group_schedule/group_set') }}">
             {{ csrf_field() }}
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">
@@ -364,28 +368,28 @@
             <div class="col-xs-offset-2 col-md-8 col-xs-offset-2"  >
             
             <div class="checkbox-inline">
-              <input type="radio" value="Default" name="colors" id="colors_default" checked="checked">
-                <label for="colors_default" ><span class="badge badge-default">Default</span></label>
+              <input type="radio" value="Default" name="colors" id="colors_default" >
+                <label for="colors_default" ><span class="badge badge-default">FreeTime</span></label>
             </div>
             <div class="checkbox-inline">
               <input type="radio" value="Primary" name="colors" id="colors_primary">
-                <label for="colors_primary"><span class="badge badge-primary">Primary</span></label>
+                <label for="colors_primary"><span class="badge badge-primary">Work</span></label>
             </div>
             <div class="checkbox-inline">
               <input type="radio" value="Success" name="colors" id="colors_success">
-                <label for="colors_success"><span class="badge badge-success">Success</span></label>
+                <label for="colors_success"><span class="badge badge-success">Play</span></label>
             </div>
             <div class="checkbox-inline">
               <input type="radio" value="Info" name="colors" id="colors_info">
-                <label for="colors_info"><span class="badge badge-info">Info</span></label>
+                <label for="colors_info"><span class="badge badge-info">Sleep</span></label>
             </div>
             <div class="checkbox-inline">
               <input type="radio" value="Warning" name="colors" id="colors_warning">
-                <label for="colors_warning"><span class="badge badge-warning">Warning</span></label>
+                <label for="colors_warning"><span class="badge badge-warning">Etc</span></label>
             </div>
             <div class="checkbox-inline">
               <input type="radio" value="Danger" name="colors" id="colors_danger">
-                <label for="colors_danger"><span class="badge badge-danger">Danger</span></label>
+                <label for="colors_danger"><span class="badge badge-danger">Block</span></label>
             </div> 
             </div>
             </div>
@@ -395,8 +399,10 @@
           <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('messages.schedule_modal_close_button') }}</button>
           <button type="submit" class="btn btn-primary">{{ __('messages.schedule_modal_reg_button') }}</button>
         </div>
-        <form>
+        <input type="hidden" name="now_day" value="{{ $now }}" /> 
+        <input type="hidden" id="group_id" name="group_id" /> 
+        </form>
       </div> <!-- /.modal-content -->
     </div> <!-- /.modal-dialog -->
-  </div> <!-- /.modal -->  
+  </div> <!-- /.modal -->
 @endsection

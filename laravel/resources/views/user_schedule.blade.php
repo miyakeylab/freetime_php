@@ -13,7 +13,7 @@
         <div class="media">
             <!-- 1.画像の配置 -->
             <a class="media-left" href="#">
-                <img class="media-object" src="{{url($user->user_img)}}">
+                <img class="media-object user_icon_size" src="{{url($user->user_img)}}">
             </a>
             <!-- 2.画像の説明 -->
             <div class="media-body">

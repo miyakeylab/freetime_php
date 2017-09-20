@@ -155,17 +155,17 @@
             {{ csrf_field() }}
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">
-            <span aria-hidden="true">&#215;</span><span class="sr-only">閉じる</span>
+            <span aria-hidden="true">&#215;</span><span class="sr-only">{{ __('messages.schedule_close') }}</span>
           </button>
-          <h4 class="modal-title">友達リクエスト</h4>
+          <h4 class="modal-title">{{ __('messages.friend_request_Button') }}</h4>
         </div><!-- /modal-header -->
 
         <div class="modal-body">
           <div class="panel panel-default">
-            <div class="panel-heading">内容</div>
+            <div class="panel-heading">{{ __('messages.schedule_modal_content_title') }}</div>
             <div class="panel-body">
             <p class="friend_user_name"></p>
-            <label for="friend-offer-content" class="col-md-4 control-label">メッセージ</label>
+            <label for="friend-offer-content" class="col-md-4 control-label">{{ __('messages.friend_request_message') }}</label>
             <div class="col-md-6"  >
                 <textarea class="form-control" id="friend-offer-content" name="friendoffer_content" cols="45" rows="3" ></textarea>
             </div>
@@ -174,8 +174,8 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
-          <button type="submit" class="btn btn-primary">リクエスト</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('messages.schedule_close') }}</button>
+          <button type="submit" class="btn btn-primary">{{ __('messages.friend_request_Button') }}</button>
         </div>
         <form>
       </div> <!-- /.modal-content -->

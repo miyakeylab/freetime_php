@@ -87,7 +87,8 @@ return [
     'friend_user_list' => "User List",
     'friend_request_Button' => " Request",
     'friend_request_receiving' => " Request Reciving", 
-    'friend_request_pending' => " Request Pending",   
+    'friend_request_pending' => " Request Pending", 
+    'friend_request_message' => "message",
     /*
     |--------------------------------------------------------------------------
     | resources/views/offer.blade.php
@@ -98,7 +99,9 @@ return [
     'offerTimeStart' => 'Start：',
     'offerTimeEnd' => 'End：',
     'offerNgButton' => ' Reject',
+    'offerOkButton' => " Approve",
     'reqOfferList' => 'Pending Offer List',
+    'offerCheck' => "offer",
     /*
     |--------------------------------------------------------------------------
     | resources/views/group.blade.php
@@ -124,4 +127,10 @@ return [
     'gr_user_add_button' => ' Add User',
     'gr_user_add_title' => 'Add User',
     'gr_user_list' => 'Group Users List',
+    /*
+    |--------------------------------------------------------------------------
+    | resources/views/setting.blade.php 
+    |--------------------------------------------------------------------------
+    */
+    'setting_title' => 'User Profile',
 ];

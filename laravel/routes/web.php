@@ -75,6 +75,11 @@ Route::post('/group/create','GroupController@GroupCreate');
  */ 
 Route::get('/group_schedule/{group_id}','ScheduleController@GroupScheduleView');
 /**
+ * グループスケジュール作成 
+ */ 
+Route::post('/my_schedule/group_set','ScheduleController@GroupScheduleCreate');
+Route::post('/group_schedule/group_set','GroupController@GroupScheduleCreate');
+/**
  * グループ友達追加 
  */ 
 Route::post('/group_schedule/add_friend','GroupController@GroupAddFriend');
@@ -86,6 +91,10 @@ Route::post('/group/reaponse/ok', 'GroupController@GroupRequestOk');
  * グループリクエストトNG
  */ 
 Route::post('/group/reaponse/ng', 'GroupController@GroupRequestNg');
+/**
+ * グループ退会
+ */ 
+Route::post('/group/out', 'GroupController@GroupOut');
 /** 
 * オファー表示 
 */ 
@@ -93,8 +102,16 @@ Route::get('/offer','OfferController@MainView');
 /**
  * オファー作成
  */ 
-Route::get('/offer/{content}','OfferController@OfferCreate');
-
+Route::post('/offer/set','OfferController@OfferCreate');
+Route::post('/my_schedule/offer','ScheduleController@OfferCreate');
+/**
+ * オファーリクエストOK
+ */ 
+Route::post('/offer/reaponse/ok', 'OfferController@OfferRequestOk');
+/**
+ * オファーリクエストNG
+ */ 
+Route::post('/offer/reaponse/ng', 'OfferController@OfferRequestNg');
 /** 
 * 連携表示 
 */ 

@@ -88,6 +88,7 @@ return [
     'friend_request_Button' => " 友達リクエスト",
     'friend_request_receiving' => " リクエスト受信中", 
     'friend_request_pending' => " リクエスト申請中",
+    'friend_request_message' => "メッセージ",
     /*
     |--------------------------------------------------------------------------
     | resources/views/offer.blade.php
@@ -98,7 +99,9 @@ return [
     'offerTimeStart' => '開始：',
     'offerTimeEnd' => '終了：',
     'offerNgButton' => " 拒否",
+    'offerOkButton' => " 承認",
     'reqOfferList' => "申請中オファー一覧",
+    'offerCheck' => "オファー",
     /*
     |--------------------------------------------------------------------------
     | resources/views/group.blade.php
@@ -124,4 +127,10 @@ return [
     'gr_user_add_button' => ' ユーザー招待',
     'gr_user_add_title' => 'ユーザー招待',
     'gr_user_list' => 'グループユーザーリスト',
+    /*
+    |--------------------------------------------------------------------------
+    | resources/views/setting.blade.php 
+    |--------------------------------------------------------------------------
+    */
+    'setting_title' => 'ユーザープロフィール',
 ];
