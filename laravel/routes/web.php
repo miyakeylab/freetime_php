@@ -41,7 +41,7 @@ Auth::routes();
 /** 
 * HOME表示 
 */ 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'ScheduleController@MainView');
 /** 
 * 友達表示 
 */ 

@@ -5,21 +5,9 @@ $(function () {
     // テーブル処理
     $(document).ready(TableInit);
     
-    // tdクリックイベント
-    // $('.myFeed').on('click', function() {
-    //   console.log("tes2");
-    //   $('#staticModal').modal();
-    // });
-    
     /**
      * スケジュールボタン
      */
-
-    // JavaScript で表示
-    $('#staticModalButton').on('click', function() {
-      console.log("tes");
-      $('#staticModal').modal();
-    });
     // ダイアログ表示前にJavaScriptで操作する
     $('#staticModal').on('show.bs.modal', function(event) {
       var button = $(event.relatedTarget);

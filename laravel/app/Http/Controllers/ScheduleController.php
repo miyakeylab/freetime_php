@@ -36,11 +36,41 @@ class ScheduleController extends Controller
      **/
     public function UserScheduleView($id) {
         $dt = Carbon::now();
+        $dt->addHour(Config::get('const.TIME_ZONE_MGT_DIFF')["0"]);
         $month = $dt->month;
-        $day = $dt->day;
+        $year = $dt->year;
+        $maxMonth = $dt->daysInMonth;
+        $getDate = Carbon::create($dt->year, $dt->month, 1);
+        
         $user = User::join('userdetails', 'users.id', '=', 'userdetails.user_id')->where('users.id','=',$id)->first();
+        for ($i=1;$i<=$maxMonth;$i++)
+        {
+            $mySchedule[] = Schedule::where('user_id','=',$id)
+            ->whereDate('start_time', $getDate->toDateString())
+            ->whereDate('end_time', $getDate->toDateString())
+            ->get();
+            $getDate->addDay();
+        }
+        
+        if(Auth::user()->id == $id)
+        {
+            $feed ="myFeed";
+            $modal = "staticModal";
+        }else
+        {
+            $feed ="friendFeed";
+            $modal = "friendModal";
+            
+        }
+        
         Log::info('ユーザースケジュール画面表示 ID:'.Auth::user()->id.' 表示ユーザーID:'.$id.' 月:'.$month);
-        return view('user_schedule',['month' => $month,'day' => $day, 'user' =>$user]);
+        return view('user_schedule',['year' => $year,
+                                        'month' => $month, 
+                                        'user' =>$user,
+                                        'maxMonth' => $maxMonth,
+                                        'mySchedule' => $mySchedule,
+                                        'feed' => $feed,
+                                        'modal' => $modal]);
     }
     
     /**
