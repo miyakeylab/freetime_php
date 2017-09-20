@@ -122,4 +122,5 @@ return [
     'gr_sche_cre_button' => ' Create new schedule',
     'gr_user_add_button' => ' Add User',
     'gr_user_add_title' => 'Add User',
+    'gr_user_list' => 'Group Users List',
 ];

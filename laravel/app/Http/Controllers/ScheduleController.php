@@ -253,7 +253,9 @@ class ScheduleController extends Controller
         $now = $dt->year."/".str_pad($dt->month, 2, 0, STR_PAD_LEFT)."/".str_pad($dt->day, 2, 0, STR_PAD_LEFT);
         $hour = $setHour;
         $friends = Friend::join('users', 'friends.friend_user_id', '=', 'users.id')->join('userdetails', 'friends.friend_user_id', '=', 'userdetails.user_id')->where('friends.user_id',Auth::user()->id)->get();
-        
+        $groupfriends = Groupuser::where('groupusers.user_group_id',$group_id)
+        ->join('userdetails', 'userdetails.user_id', '=', 'groupusers.user_id')
+        ->get();
         $mySchedule = Groupschedule::where('group_id','=',$group_id)
         ->whereDate('start_time', $dt->toDateString())
         ->whereDate('end_time', $dt->toDateString())
@@ -262,9 +264,9 @@ class ScheduleController extends Controller
         //友達スケジュール一覧
         $friendSchedule = array();
         // ID抽出
-        foreach($friends as $friend)
+        foreach($groupfriends as $groupfriend)
         {
-            $friendSchedule[] = Schedule::where('user_id','=',$friend->friend_user_id)
+            $friendSchedule[] = Schedule::where('user_id','=',$groupfriend->user_id)
                 ->whereDate('start_time', $dt->toDateString())
                 ->whereDate('end_time', $dt->toDateString())
                 ->get();
@@ -275,6 +277,7 @@ class ScheduleController extends Controller
         
         return view('group_schedule',['now' => $now,
         'hour' => $hour,
+        'groupfriends' => $groupfriends,
         'friends' => $friends,
         'mySchedule' => $mySchedule, 
         'group' => $group,
