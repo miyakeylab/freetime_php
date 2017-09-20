@@ -10,6 +10,7 @@ use App\User;
 use App\Friend;
 use App\Group;
 use App\Groupuser;
+use App\Groupschedule;
 use App\Schedule;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Config;
@@ -80,13 +81,11 @@ class ScheduleController extends Controller
     public function GroupScheduleView($group_id) 
     {
         $dt = Carbon::now();
-        $month = $dt->month;
-        $day = $dt->day; 
-        $maxDay = Config::get('const.MONTH_DAY_MAX')[$dt->month];
-        $group = Group::where('id','=',$group_id)->first();
-        $friends = Friend::join('users', 'friends.friend_user_id', '=', 'users.id')->join('userdetails', 'friends.friend_user_id', '=', 'userdetails.user_id')->where('friends.user_id',Auth::user()->id)->get();
-    
-        return view('group_schedule',['month' => $month,'day' => $day,'maxDay' => $maxDay,'group' => $group,'friends' => $friends]); 
+        $dt->addHour(Config::get('const.TIME_ZONE_MGT_DIFF')["0"]);
+        $hour = $dt->hour;
+        return $this->GroupScheduleDisp($dt,$hour,$group_id);
+        
+ 
     }    
     
      /**
@@ -224,11 +223,19 @@ class ScheduleController extends Controller
                 ->whereDate('end_time', $dt->toDateString())
                 ->get();
         }
+        
         $groups = Groupuser::where('groupusers.user_id',Auth::user()->id)
         ->join('groups', 'groupusers.user_group_id', '=', 'groups.id')
         ->join('userdetails', 'userdetails.user_id', '=', 'groups.administrator_id')
         ->get(["groups.id as master_id","group_img","group_name"]);
-        
+        // ID抽出
+        foreach($groups as $group)
+        {
+            $groupSchedule[] = Groupschedule::where('group_id','=',$group->master_id)
+                ->whereDate('start_time', $dt->toDateString())
+                ->whereDate('end_time', $dt->toDateString())
+                ->get();
+        }        
         Log::info('スケジュール画面表示 ID:'.Auth::user()->id.' 日付:'.$now.' 時間:'.$hour);
         return view('my_schedule',['now' => $now,
         'hour' => $hour,
@@ -236,6 +243,41 @@ class ScheduleController extends Controller
         'user' => $user, 
         'mySchedule' => $mySchedule, 
         'groups' => $groups,
+        'friendSchedule' => $friendSchedule,
+        'groupSchedule' => $groupSchedule]);     
+    }
+    /**
+     *  スケジュール表示 
+     **/
+    public function GroupScheduleDisp($dt,$setHour,$group_id) { 
+        $now = $dt->year."/".str_pad($dt->month, 2, 0, STR_PAD_LEFT)."/".str_pad($dt->day, 2, 0, STR_PAD_LEFT);
+        $hour = $setHour;
+        $friends = Friend::join('users', 'friends.friend_user_id', '=', 'users.id')->join('userdetails', 'friends.friend_user_id', '=', 'userdetails.user_id')->where('friends.user_id',Auth::user()->id)->get();
+        
+        $mySchedule = Groupschedule::where('group_id','=',$group_id)
+        ->whereDate('start_time', $dt->toDateString())
+        ->whereDate('end_time', $dt->toDateString())
+        ->get();
+                
+        //友達スケジュール一覧
+        $friendSchedule = array();
+        // ID抽出
+        foreach($friends as $friend)
+        {
+            $friendSchedule[] = Schedule::where('user_id','=',$friend->friend_user_id)
+                ->whereDate('start_time', $dt->toDateString())
+                ->whereDate('end_time', $dt->toDateString())
+                ->get();
+        }
+        
+        $group = Group::where('id','=',$group_id)->first();       
+        Log::info('グループスケジュール画面表示 ID:'.Auth::user()->id.' 日付:'.$now.' 時間:'.$hour);
+        
+        return view('group_schedule',['now' => $now,
+        'hour' => $hour,
+        'friends' => $friends,
+        'mySchedule' => $mySchedule, 
+        'group' => $group,
         'friendSchedule' => $friendSchedule]);     
     }
 }

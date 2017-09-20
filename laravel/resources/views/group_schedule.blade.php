@@ -32,38 +32,123 @@
             </div>
         </div>
 
-        <div class='table-responsive'>
-        <table class="table table-striped sticky-header" style="font-size : 5px;">
+        <div class='table-responsive  col-xs-12'>
+        <table class="table table-striped sticky-header" >
             <thead>
             <tr>
-                <th colspan="1" align="center">{{ $month."月" }}</th>
+                <th colspan="1" align="center"><b>{{ $now }}</b></th>
                 @for ($i=0;$i<24;$i++)
-
-                <th colspan="1" align="center">{{ $i.":00" }}</th>
+                @if ($i === $hour )
+                <th colspan="1" align="center"><font color="#FF0000"><b>{{"NOW"}}</b></font></th>
+                @else
+                <th colspan="1" align="center" ><b>{{ $i.":00" }}</b></th>
+                @endif
                 @endfor
             </tr>
             </thead>
             <tbody>
-            @for ($i=1;$i <= $maxDay;$i++)
-            <tr>
                 <td colspan="1" align="center">
-                    {{ $month."/".$i }} 
+                  <a href="{{ url('/group_schedule',$group->id) }}">
+                    <img class="media-object user_icon_size" src="{{url($group->group_img)}}">
+                  </a>
                 </td>
-                <td class="info" colspan="6" align="center">睡眠</td>
-                <td colspan="1" align="center">朝食</td>
-                <td colspan="1" align="center"></td>
-                <td colspan="2" align="center">移動</td>
-                <td class="danger" colspan="6" align="center">仕事</td>
-                <td colspan="8" align="center"></td>
-            </tr>
-            <tr>
-                <td colspan="1" align="center">
-                </td>
-                @for ($n=0;$n<24;$n++)
-                <th class="yobiFeed" colspan="1" align="center"></th>
+           <?php $hourDiff = 0; ?>
+                @for ($n=0; $n<24; $n++)
+                   <?php  $str_1 = new \Carbon\Carbon($now.' '.str_pad($n, 2, 0, STR_PAD_LEFT).':00'); 
+                          $str_2 = new \Carbon\Carbon($now.' '.str_pad($n+1, 2, 0, STR_PAD_LEFT).':00'); 
+                          $result = 0; 
+                          $count[$n] = 0; ?>
+                  @if($hourDiff <= 0 )
+                    <!-- スケジュール -->
+                    @foreach( $mySchedule as $schedule)
+                      
+                      <?php $now_start = new \Carbon\Carbon($schedule->start_time); ?>                    
+                      
+                      @if ($now_start->gte($str_1)=== true && $now_start->lt($str_2)===true)
+                        
+                        <?php $now_end = new \Carbon\Carbon($schedule->end_time); 
+                          $hourDiff = $now_start->diffInHours($now_end);
+                        ?>   
+                        
+                        @if($result === 0)
+                          <?php $result = 1;
+                          $color= "badge-default";
+                          switch($schedule->category_id)
+                          {
+                          case 0:
+                            $color= "badge-default";
+                            break;
+                          case 1:
+                            $color= "badge-primary";
+                            break;
+                          case 2:
+                            $color= "badge-success";
+                            break;
+                          case 3:
+                            $color= "badge-info";
+                            break;
+                          case 4:
+                            $color= "badge-warning";
+                            break;
+                          case 5:
+                            $color= "badge-danger";
+                            break;
+                          }
+                          ?>
+                        <td class="myFeed {{  $color  }}" colspan="{{ $hourDiff }}" align="center" data-toggle="modal" 
+                        data-target="#staticModal" 
+                        data-start="{{ $schedule->start_time }}" 
+                        data-end="{{ $schedule->end_time }}"
+                        data-title="{{ $schedule->title }}"
+                        data-content="{{ $schedule->content }}"><span class="{{ 'overflowStr_'.$hourDiff }}" style="display:block;">{{ $schedule->title }}</span></td>
+                        
+                        @else
+                         <?php $count[$n] +=1; ?>
+                        @endif
+                      @endif
+                    @endforeach
+                    
+                    @if($result === 0)
+                      <td class="myFeed" colspan="1" align="center" data-toggle="modal" 
+                      data-target="#staticModal" 
+                      data-start="{{ $now.' '.str_pad($n, 2, 0, STR_PAD_LEFT).':00' }}" 
+                      data-end="{{ $now.' '.str_pad(($n+1), 2, 0, STR_PAD_LEFT).':00' }}"
+                      data-title=""
+                      data-content=""></td>
+                    @else
+                     <?php $hourDiff -= 1; ?>
+                    @endif
+                  @else
+                    <?php $hourDiff -= 1; ?>
+                    <!-- スケジュールカウント処理 -->
+                    @foreach( $mySchedule as $schedule)
+                      <?php $now_start = new \Carbon\Carbon($schedule->start_time); ?>
+                      @if ($now_start->gte($str_1)=== true && $now_start->lt($str_2)===true)
+                         <?php $count[$n] +=1; ?>
+                      @endif
+                    @endforeach
+                  @endif
                 @endfor
             </tr>
-            @endfor
+            <tr>
+                <td colspan="1" align="center">
+                  <a href="{{ url('/group_schedule',$group->id) }}">
+                    <span class="overflowStrName" style="display:block;">{{ $group->group_name }}</span>
+                  </a>
+                </td>
+                @for ($n=0;$n<24;$n++)
+                  @if($count[$n] != 0)
+                    <td class="yobiFeed" colspan="1" align="center">{{ "+".$count[$n] }}</td>
+                  @else
+                    <td class="yobiFeed" colspan="1" align="center"></td>
+                  @endif
+                @endfor
+            </tr>
+            <tr>
+                <td class="schedule-tr-head" colspan="25" align="center">
+                  {{ __('messages.schedule_group_list') }}
+            </td>
+            </tr>
             </tbody>
         </table>
         </div>

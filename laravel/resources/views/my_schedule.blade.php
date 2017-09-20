@@ -159,19 +159,92 @@
             </tr>
             <!-- グループ一覧  -->
             @if (count($groups) > 0)
+            <?php $groupCount = 0 ?>
             @foreach ($groups as $group)
+            <?php $groupTempSch =  $groupSchedule[$groupCount] ?>
             <tr>
                 <td colspan="1" align="center">
                   <a href="{{ url('/group_schedule',$group->master_id) }}">
                     <img class="media-object user_icon_size" src="{{url($group->group_img)}}" >
                   </a>
                 </td>
-                <td class="info friendFeed" colspan="6" align="center"  data-toggle="modal" data-target="#friendModal" data-="#friendModal">睡眠</td>
-                <td class="danger friendFeed" colspan="1" align="center">朝食</td>
-                <td class="friendFeed" colspan="1" align="center"></td>
-                <td class="info friendFeed" colspan="2" align="center">移動</td>
-                <td class="danger friendFeed" colspan="6" align="center">仕事</td>
-                <td class="friendFeed" colspan="8" align="center"></td>
+              <?php $hourDiff = 0; ?>
+                @for ($n=0; $n<24; $n++)
+                   <?php  $str_1 = new \Carbon\Carbon($now.' '.str_pad($n, 2, 0, STR_PAD_LEFT).':00'); 
+                          $str_2 = new \Carbon\Carbon($now.' '.str_pad($n+1, 2, 0, STR_PAD_LEFT).':00'); 
+                          $result = 0; 
+                          $count_group[$n] = 0; ?>
+                  @if($hourDiff <= 0 )
+                    <!-- スケジュール -->
+                    @foreach( $groupTempSch as $schedule)
+                      
+                      <?php $now_start = new \Carbon\Carbon($schedule->start_time); ?>                    
+                      
+                      @if ($now_start->gte($str_1)=== true && $now_start->lt($str_2)===true)
+                        
+                        <?php $now_end = new \Carbon\Carbon($schedule->end_time); 
+                          $hourDiff = $now_start->diffInHours($now_end);
+                        ?>   
+                        
+                        @if($result === 0)
+                          <?php $result = 1;
+                                $color= "badge-default";
+                                switch($schedule->category_id)
+                                {
+                                case 0:
+                                  $color= "badge-default";
+                                  break;
+                                case 1:
+                                  $color= "badge-primary";
+                                  break;
+                                case 2:
+                                  $color= "badge-success";
+                                  break;
+                                case 3:
+                                  $color= "badge-info";
+                                  break;
+                                case 4:
+                                  $color= "badge-warning";
+                                  break;
+                                case 5:
+                                  $color= "badge-danger";
+                                  break;
+                                }
+                                ?>
+                        <td class="friendFeed {{  $color  }}" colspan="{{ $hourDiff }}" align="center" data-toggle="modal" 
+                        data-target="#friendModal" 
+                        data-start="{{ $schedule->start_time }}" 
+                        data-end="{{ $schedule->end_time }}"
+                        data-title="{{ $schedule->title }}"
+                        data-content="{{ $schedule->content }}"><span class="{{ 'overflowStr_'.$hourDiff }}" style="display:block;">{{ $schedule->title }}</span></td>
+                        
+                        @else
+                         <?php $count_group[$n] +=1; ?>
+                        @endif
+                      @endif
+                    @endforeach
+                    
+                    @if($result === 0)
+                      <td class="friendFeed" colspan="1" align="center" data-toggle="modal" 
+                      data-target="#friendModal" 
+                      data-start="{{ $now.' '.str_pad($n, 2, 0, STR_PAD_LEFT).':00' }}" 
+                      data-end="{{ $now.' '.str_pad(($n+1), 2, 0, STR_PAD_LEFT).':00' }}"
+                      data-title=""
+                      data-content=""></td>
+                    @else
+                     <?php $hourDiff -= 1; ?>
+                    @endif
+                  @else
+                    <?php $hourDiff -= 1; ?>
+                    <!-- スケジュールカウント処理 -->
+                    @foreach( $groupTempSch as $schedule)
+                      <?php $now_start = new \Carbon\Carbon($schedule->start_time); ?>
+                      @if ($now_start->gte($str_1)=== true && $now_start->lt($str_2)===true)
+                         <?php $count_group[$n] +=1; ?>
+                      @endif
+                    @endforeach
+                  @endif
+                @endfor
             </tr>
             <tr>
                 <td class="overflow" colspan="1" align="center">
@@ -180,9 +253,14 @@
                   <a>
                 </td>
                 @for ($n=0;$n<24;$n++)
-                <td class="yobiFeed" colspan="1" align="center"></td>
+                  @if($count_group[$n] != 0)
+                    <td class="yobiFeed" colspan="1" align="center">{{ "+".$count_group[$n] }}</td>
+                  @else
+                    <td class="yobiFeed" colspan="1" align="center"></td>
+                  @endif
                 @endfor
             </tr>
+            <?php $groupCount++; ?>
             @endforeach
             @endif
             <tr>
