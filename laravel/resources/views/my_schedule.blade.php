@@ -14,6 +14,7 @@
         data-end="{{ $now.' '.str_pad(($hour+1), 2, 0, STR_PAD_LEFT).':00' }}" 
         data-title=""
         data-content=""
+        data-category="0"
         style="width: 200px">
         <i class="fa fa-btn fa-calendar"></i>{{ __('messages.schedule_create_button') }}</button>
 
@@ -108,7 +109,8 @@
                         data-start="{{ $schedule->start_time }}" 
                         data-end="{{ $schedule->end_time }}"
                         data-title="{{ $schedule->title }}"
-                        data-content="{{ $schedule->content }}"><span class="{{ 'overflowStr_'.$hourDiff }}" style="display:block;">{{ $schedule->title }}</span></td>
+                        data-content="{{ $schedule->content }}"
+                        data-category="{{ $schedule->category_id }}"><span class="{{ 'overflowStr_'.$hourDiff }}" style="display:block;">{{ $schedule->title }}</span></td>
                         
                         @else
                          <?php $count[$n] +=1; ?>
@@ -122,7 +124,8 @@
                       data-start="{{ $now.' '.str_pad($n, 2, 0, STR_PAD_LEFT).':00' }}" 
                       data-end="{{ $now.' '.str_pad(($n+1), 2, 0, STR_PAD_LEFT).':00' }}"
                       data-title=""
-                      data-content=""></td>
+                      data-content=""
+                      data-category="0"></td>
                     @else
                      <?php $hourDiff -= 1; ?>
                     @endif
@@ -327,7 +330,8 @@
                         data-start="{{ $schedule->start_time }}" 
                         data-end="{{ $schedule->end_time }}"
                         data-title="{{ $schedule->title }}"
-                        data-content="{{ $schedule->content }}"><span class="{{ 'overflowStr_'.$hourDiff }}" style="display:block;">{{ $schedule->title }}</span></td>
+                        data-content="{{ $schedule->content }}"
+                        data-category="{{ $schedule->category_id }}"><span class="{{ 'overflowStr_'.$hourDiff }}" style="display:block;">{{ $schedule->title }}</span></td>
                         
                         @else
                          <?php $count_friend[$n] +=1; ?>
@@ -341,7 +345,8 @@
                       data-start="{{ $now.' '.str_pad($n, 2, 0, STR_PAD_LEFT).':00' }}" 
                       data-end="{{ $now.' '.str_pad(($n+1), 2, 0, STR_PAD_LEFT).':00' }}"
                       data-title=""
-                      data-content=""></td>
+                      data-content=""
+                      data-category="0"></td>
                     @else
                      <?php $hourDiff -= 1; ?>
                     @endif
@@ -421,28 +426,28 @@
             <div class="col-xs-offset-2 col-md-8 col-xs-offset-2"  >
             
             <div class="checkbox-inline">
-              <input type="radio" value="Default" name="colors" id="colors_default" checked="checked">
-                <label for="colors_default" ><span class="badge badge-default">Default</span></label>
+              <input type="radio" value="Default" name="colors" id="colors_default" >
+                <label for="colors_default" ><span class="badge badge-default">FreeTime</span></label>
             </div>
             <div class="checkbox-inline">
               <input type="radio" value="Primary" name="colors" id="colors_primary">
-                <label for="colors_primary"><span class="badge badge-primary">Primary</span></label>
+                <label for="colors_primary"><span class="badge badge-primary">Work</span></label>
             </div>
             <div class="checkbox-inline">
               <input type="radio" value="Success" name="colors" id="colors_success">
-                <label for="colors_success"><span class="badge badge-success">Success</span></label>
+                <label for="colors_success"><span class="badge badge-success">Play</span></label>
             </div>
             <div class="checkbox-inline">
               <input type="radio" value="Info" name="colors" id="colors_info">
-                <label for="colors_info"><span class="badge badge-info">Info</span></label>
+                <label for="colors_info"><span class="badge badge-info">Sleep</span></label>
             </div>
             <div class="checkbox-inline">
               <input type="radio" value="Warning" name="colors" id="colors_warning">
-                <label for="colors_warning"><span class="badge badge-warning">Warning</span></label>
+                <label for="colors_warning"><span class="badge badge-warning">Etc</span></label>
             </div>
             <div class="checkbox-inline">
               <input type="radio" value="Danger" name="colors" id="colors_danger">
-                <label for="colors_danger"><span class="badge badge-danger">Danger</span></label>
+                <label for="colors_danger"><span class="badge badge-danger">Block</span></label>
             </div> 
             </div>
             </div>
@@ -452,7 +457,7 @@
           <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('messages.schedule_modal_close_button') }}</button>
           <button type="submit" class="btn btn-primary">{{ __('messages.schedule_modal_reg_button') }}</button>
         </div>
-        <form>
+        </form>
       </div> <!-- /.modal-content -->
     </div> <!-- /.modal-dialog -->
   </div> <!-- /.modal -->
@@ -461,7 +466,8 @@
   <div class="modal" id="friendModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" >
     <div class="modal-dialog">
       <div class="modal-content">
-
+        <form class="form-horizontal" method="POST" action="{{ url('my_schedule/share') }}">
+            {{ csrf_field() }}
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">
             <span aria-hidden="true">&#215;</span><span class="sr-only">{{ __('messages.schedule_modal_close') }}</span>
@@ -474,12 +480,12 @@
          <div class="padding-top-5"></div>
           <label for="schedule-start" class="col-md-4 control-label">{{ __('messages.schedule_modal_start') }}</label>
           <div class="col-md-5 input-group date" >
-              <input class="form-control" type="text" id="friend-schedule-start"  readonly="readonly" />
+              <input class="form-control" type="text" id="friend-schedule-start" name="friend_schedule_start" readonly="readonly" />
           </div>
           <div class="padding-top-5"></div>
           <label for="schedule-end" class="col-md-4 control-label">{{ __('messages.schedule_modal_end') }}</label>
           <div class="col-md-5 input-group date" >
-              <input class="form-control" type="text" id="friend-schedule-end"  readonly="readonly" />
+              <input class="form-control" type="text" id="friend-schedule-end" name="friend_schedule_end" readonly="readonly" />
           </div>
           </div>
           </div>
@@ -488,14 +494,46 @@
             <div class="panel-heading">{{ __('messages.schedule_modal_content_title') }}</div>
             <div class="panel-body">
             <div class="col-xs-offset-2 col-md-8 col-xs-offset-2"  >
-                <input type="text" class="form-control" id="friend-schedule-title"  readonly="readonly" ></textarea>
+                <input type="text" class="form-control" id="friend-schedule-title" name="friend_schedule_title" readonly="readonly" ></textarea>
             </div>
             <div class="col-xs-offset-2 col-md-8 col-xs-offset-2"  >
-                <textarea class="form-control" id="friend-schedule-content"  cols="45" rows="4" readonly="readonly" ></textarea>
+                <textarea class="form-control" id="friend-schedule-content" name="friend_schedule_content" cols="45" rows="4" readonly="readonly" ></textarea>
+            </div>
+            <div class="col-xs-offset-2 col-md-8 col-xs-offset-2"  >
+            
+            <div class="checkbox-inline">
+              <input type="radio" value="Default" name="friend_colors" id="friend-colors_default">
+                <label for="colors_default" ><span class="badge badge-default">FreeTime</span></label>
+            </div>
+            <div class="checkbox-inline">
+              <input type="radio" value="Primary" name="friend_colors" id="friend-colors_primary" >
+                <label for="colors_primary"><span class="badge badge-primary">Work</span></label>
+            </div>
+            <div class="checkbox-inline">
+              <input type="radio" value="Success" name="friend_colors" id="friend-colors_success" >
+                <label for="colors_success"><span class="badge badge-success">Play</span></label>
+            </div>
+            <div class="checkbox-inline">
+              <input type="radio" value="Info" name="friend_colors" id="friend-colors_info" >
+                <label for="colors_info"><span class="badge badge-info">Sleep</span></label>
+            </div>
+            <div class="checkbox-inline">
+              <input type="radio" value="Warning" name="friend_colors" id="friend-colors_warning" >
+                <label for="colors_warning"><span class="badge badge-warning">Etc</span></label>
+            </div>
+            <div class="checkbox-inline">
+              <input type="radio" value="Danger" name="friend_colors" id="friend-colors_danger" >
+                <label for="colors_danger"><span class="badge badge-danger">Block</span></label>
+            </div> 
             </div>
             </div>
-          </div>
-        </div>
+            </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('messages.schedule_modal_close_button') }}</button>
+              <button type="submit" class="btn btn-primary">{{ __('messages.schedule_modal_share') }}</button>
+            </div>
+          </form>
       </div> <!-- /.modal-content -->
     </div> <!-- /.modal-dialog -->
   </div> <!-- /.modal -->

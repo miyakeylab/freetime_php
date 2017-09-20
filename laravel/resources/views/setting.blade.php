@@ -12,7 +12,7 @@
           <div class="panel-heading">  <h4 >ユーザープロフィール</h4></div>
            <div class="panel-body">
           <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
-           <img alt="User Pic" src="{{ url('css/assets/img/user_icon/no_icon.jpg') }}" id="profile-image1" class="img-circle user_setting_size"> 
+           <img alt="User Pic" src="{{ url($userdetail->user_img) }}" id="profile-image1" class="img-circle user_setting_size"> 
          
      
           </div>

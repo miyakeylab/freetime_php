@@ -15,12 +15,38 @@ $(function () {
       var hour_end = button.data('end');
       var title = button.data('title');
       var content = button.data('content');
-      console.log(hour_start);
+      var category = button.data('category');
+      console.log(category);
       var modal = $(this);
       modal.find('#schedule-start').val(hour_start);
       modal.find('#schedule-end').val(hour_end);
       modal.find('#schedule-title').val(title);  
-      modal.find('#schedule-content').val(content); 
+      modal.find('#schedule-content').val(content);
+      
+      switch (category) {
+        case 0:
+          modal.find('#colors_default').prop('checked','checked');
+          break;
+        case 1:
+          modal.find('#colors_primary').prop('checked','checked');
+          break;
+        case 2:
+          modal.find('#colors_success').prop('checked','checked');
+          break;
+        case 3:
+          modal.find('#colors_info').prop('checked','checked');
+          break;
+        case 4:
+          modal.find('#colors_warning').prop('checked','checked');
+          break;
+        case 5:
+          modal.find('#colors_danger').prop('checked','checked');
+          break;
+        default:
+          modal.find('#colors_default').prop('checked','checked');
+          break;
+      }
+      
     });
     // ダイアログ表示直後にフォーカスを設定する
     $('#staticModal').on('shown.bs.modal', function(event) {
@@ -44,12 +70,37 @@ $(function () {
       var hour_end = button.data('end');
       var title = button.data('title');
       var content = button.data('content');
+      var category = button.data('category');
       console.log(hour_start);
       var modal = $(this);
       modal.find('#friend-schedule-start').val(hour_start);
       modal.find('#friend-schedule-end').val(hour_end);
       modal.find('#friend-schedule-title').val(title);  
-      modal.find('#friend-schedule-content').val(content); 
+      modal.find('#friend-schedule-content').val(content);
+      
+      switch (category) {
+        case 0:
+          modal.find('#friend-colors_default').prop('checked','checked');
+          break;
+        case 1:
+          modal.find('#friend-colors_primary').prop('checked','checked');
+          break;
+        case 2:
+          modal.find('#friend-colors_success').prop('checked','checked');
+          break;
+        case 3:
+          modal.find('#friend-colors_info').prop('checked','checked');
+          break;
+        case 4:
+          modal.find('#friend-colors_warning').prop('checked','checked');
+          break;
+        case 5:
+          modal.find('#friend-colors_danger').prop('checked','checked');
+          break;
+        default:
+          modal.find('#friend-colors_default').prop('checked','checked');
+          break;
+      }
     });
     // ダイアログ表示直後にフォーカスを設定する
     $('#friendModal').on('shown.bs.modal', function(event) {

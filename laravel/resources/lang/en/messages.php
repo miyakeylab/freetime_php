@@ -74,6 +74,7 @@ return [
     'schedule_modal_disp' => 'Scheduled Display',
     'schedule_friend_list' => 'Friend Schedule List',
     'schedule_group_list' => 'Group Schedule List',
+    'schedule_modal_share' => 'Share',
     /*
     |--------------------------------------------------------------------------
     | resources/views/friend.blade.php

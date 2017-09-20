@@ -166,6 +166,84 @@ class ScheduleController extends Controller
         
         return $this->MainView();
     }
+     /**
+     *  スケジュール取り込み 
+     **/
+    public function CreateShareSchedule(Request $request) {
+        
+        
+        Log::info('スケジュール取り込み表示 ID:'.Auth::user()->id.' 開始日付:'.$request->friend_schedule_start.' 終了日付:'.$request->friend_schedule_end.' colors:'.$request->friend_colors);
+        
+        $dt_start = new Carbon($request->friend_schedule_start);
+        $dt_end = new Carbon($request->friend_schedule_end);
+        $dt_start_gmt = new Carbon($request->friend_schedule_start);
+        $dt_end_gmt = new Carbon($request->friend_schedule_end);        
+        $timeId = 0;
+        $diff = Config::get('const.TIME_ZONE_MGT_DIFF')[$timeId];
+        if($diff > 0)
+        {   $dt_start_gmt->subHour($diff);
+            $dt_end_gmt->subHour($diff);  
+
+        }else {
+                    
+            $diff *= -1;
+            $dt_start_gmt->addHour($diff);
+            $dt_end_gmt->addHour($diff);
+        }
+        
+        
+        $schedule = new Schedule;
+        $schedule->user_id = Auth::user()->id;      //ユーザーID
+        $schedule->my_time_id = $timeId;            //時間ID
+        $schedule->start_time = $dt_start;         //スケジュール開始時間
+        $schedule->end_time=$dt_end;                //スケジュール終了時間
+        $schedule->start_time_gmt = $dt_start_gmt;     //スケジュール開始時間(GMT)
+        $schedule->end_time_gmt = $dt_end_gmt;       //スケジュール終了時間(GMT)
+        if($request->friend_schedule_content === null)
+        {
+            $schedule->content = "";            //スケジュール内容
+        }else{
+            $schedule->content = $request->friend_schedule_content;            //スケジュール内容
+        }
+        
+        
+        if($request->friend_colors == "Default")
+        {
+            $schedule->category_id=0;        //カテゴリーID
+        }else if($request->friend_colors == "Primary")
+        {
+            $schedule->category_id=1;        //カテゴリーID
+        }else if($request->friend_colors == "Success")
+        {
+            $schedule->category_id=2;        //カテゴリーID
+        }else if($request->friend_colors == "Info")
+        {
+            $schedule->category_id=3;        //カテゴリーID
+        }else if($request->friend_colors == "Warning")
+        {
+            $schedule->category_id=4;        //カテゴリーID
+        }else if($request->friend_colors == "Danger")
+        {
+            $schedule->category_id=5;        //カテゴリーID
+        }else
+        {
+            $schedule->category_id=0;        //カテゴリーID
+        }
+        
+        
+        if($request->friend_schedule_title === null)
+        {
+            $schedule->title="";              //スケジュールタイトル
+        }else{
+            $schedule->title=$request->friend_schedule_title;              //スケジュールタイトル
+            
+        }
+        $schedule->pat_id=0;             //パターンID
+        $schedule->schedule_img="";        //スタンプレイアウト      
+        $schedule->save();
+        
+        return $this->MainView();
+    }
     /**
      *  スケジュール前日表示 
      **/
@@ -228,6 +306,8 @@ class ScheduleController extends Controller
         ->join('groups', 'groupusers.user_group_id', '=', 'groups.id')
         ->join('userdetails', 'userdetails.user_id', '=', 'groups.administrator_id')
         ->get(["groups.id as master_id","group_img","group_name"]);
+        
+        $groupSchedule = array();
         // ID抽出
         foreach($groups as $group)
         {

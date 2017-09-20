@@ -29,6 +29,10 @@ Route::get('/user_schedule/{id}','ScheduleController@UserScheduleView');
 */ 
 Route::post('/my_schedule/set','ScheduleController@CreateSchedule');
 /** 
+* スケジュール取り込み 
+*/ 
+Route::post('/my_schedule/share','ScheduleController@CreateShareSchedule');
+/** 
 * スケジュール前日 
 */ 
 Route::post('/my_schedule/prev','ScheduleController@PrevScheduleView');

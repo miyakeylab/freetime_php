@@ -74,6 +74,7 @@ return [
     'schedule_modal_disp' => 'スケジュール表示',
     'schedule_friend_list' => '友達スケジュール',
     'schedule_group_list' => 'グループスケジュール',
+    'schedule_modal_share' => '取り込む',
     /*
     |--------------------------------------------------------------------------
     | resources/views/friend.blade.php

@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Auth;
 use Socialite;
+use Illuminate\Support\Facades\Config;
 
 class AuthController extends Controller
 {
@@ -59,7 +60,7 @@ class AuthController extends Controller
                 'user_name' => $user->name,                 // ユーザー名
                 'user_content' => "",                       // ユーザーコメント
                 'user_sex' => 0,                            // ユーザー性別(0:無し/1:男/2:女)
-                'user_img' => "css/assets/img/user_icon/no_icon.jpg",   // ユーザー画像(default:no_image)
+                'user_img' =>  Config::get('const.DEF_ICON'),   // ユーザー画像(default:no_image)
                 'user_birthday' =>  Carbon::now(),             // ユーザー生年月日
                 'user_privacy' => 0,        // ユーザープライバシー(0:ロック/666:全表示)
                                 ]);

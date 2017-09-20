@@ -7,6 +7,7 @@ return array(
   'OFFER_REQ'=>0,             // オファー申請中
   'OFFER_OK'=>1,              // オファー申請OK
   'OFFER_NG'=>2,              // オファー申請NG
+  'DEF_ICON'=>"css/assets/img/user_icon/no_icon.png",
   'MONTH_DAY_MAX' => [
                     '1' => '31',
                     '2' => '28',
