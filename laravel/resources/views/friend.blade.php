@@ -174,7 +174,7 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('messages.schedule_close') }}</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('messages.schedule_modal_close') }}</button>
           <button type="submit" class="btn btn-primary">{{ __('messages.friend_request_Button') }}</button>
         </div>
         </form>
