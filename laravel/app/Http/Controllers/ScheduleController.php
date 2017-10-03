@@ -13,6 +13,7 @@ use App\Groupuser;
 use App\Groupschedule;
 use App\Schedule;
 use App\Offer;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Config;
 
@@ -30,7 +31,7 @@ class ScheduleController extends Controller
         $dt = Carbon::now();
         $dt->addHour(Config::get('const.TIME_ZONE_MGT_DIFF')["0"]);
         $hour = $dt->hour;
-        return $this->ScheduleDisp($dt,$hour);
+        return $this->ScheduleDisp($dt,$hour,0);
     }
     
     /**
@@ -175,7 +176,9 @@ class ScheduleController extends Controller
         {
             $hour = 25;
         }
-        return $this->ScheduleDisp($dt,$hour);
+        $my_timezone = 0;
+        
+        return $this->ScheduleDisp($dt,$hour,$my_timezone);
     }
     
      /**
@@ -261,7 +264,9 @@ class ScheduleController extends Controller
         {
             $hour = 25;
         }
-        return $this->ScheduleDisp($dt,$hour);
+        $my_timezone = 0;
+        
+        return $this->ScheduleDisp($dt,$hour,$my_timezone);
     }    
 
      /**
@@ -350,7 +355,9 @@ class ScheduleController extends Controller
         {
             $hour = 25;
         }
-        return $this->ScheduleDisp($dt,$hour);
+        $my_timezone = 0;
+        
+        return $this->ScheduleDisp($dt,$hour,$my_timezone);
     }
     /**
      *  スケジュール前日表示 
@@ -367,7 +374,9 @@ class ScheduleController extends Controller
         {
             $hour = 25;
         }
-        return $this->ScheduleDisp($dt,$hour);
+        $my_timezone = 0;
+        
+        return $this->ScheduleDisp($dt,$hour,$my_timezone);
     }
     /**
      *  スケジュール翌日表示 
@@ -384,12 +393,15 @@ class ScheduleController extends Controller
         {
             $hour = 25;
         }
-        return $this->ScheduleDisp($dt,$hour);
+        $my_timezone = 0;
+        
+        return $this->ScheduleDisp($dt,$hour,$my_timezone);
     } 
     /**
      *  スケジュール表示 
      **/
-    public function ScheduleDisp($dt,$setHour) { 
+    public function ScheduleDisp($dt,$setHour,$my_timezone) { 
+        
         $now = $dt->year."/".str_pad($dt->month, 2, 0, STR_PAD_LEFT)."/".str_pad($dt->day, 2, 0, STR_PAD_LEFT);
         $hour = $setHour;
         $friends = Friend::join('users', 'friends.friend_user_id', '=', 'users.id')->join('userdetails', 'friends.friend_user_id', '=', 'userdetails.user_id')->where('friends.user_id',Auth::user()->id)->get();
@@ -424,7 +436,7 @@ class ScheduleController extends Controller
                 ->whereDate('end_time', $dt->toDateString())
                 ->get();
         }        
-        Log::info('スケジュール画面表示 ID:'.Auth::user()->id.' 日付:'.$now.' 時間:'.$hour);
+        Log::info('スケジュール画面表示 ID:'.Auth::user()->id.' 日付:'.$now.' 時間:'.$hour.' TimeZone:'.$my_timezone);
         return view('my_schedule',['now' => $now,
         'hour' => $hour,
         'friends' => $friends,
@@ -432,7 +444,8 @@ class ScheduleController extends Controller
         'mySchedule' => $mySchedule, 
         'groups' => $groups,
         'friendSchedule' => $friendSchedule,
-        'groupSchedule' => $groupSchedule]);     
+        'groupSchedule' => $groupSchedule,
+        'my_timezone' => $my_timezone]);     
     }
     /**
      *  スケジュール表示 
@@ -557,6 +570,31 @@ class ScheduleController extends Controller
         {
             $hour = 25;
         }
-        return $this->ScheduleDisp($dt,$hour);
+        $my_timezone = 0;
+        
+        return $this->ScheduleDisp($dt,$hour,$my_timezone);
+    }
+    
+
+    public function switchTimezone(Request $request)
+    {
+        Log::info('タイムゾーン切り替え TimeZone:'.$request->timezone);
+        $my_timezone = $request->timezone;
+        $dt = Carbon::now();
+        
+        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$request->timezone]['0'] == true)
+        {
+            $dt->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$request->timezone]['1']);
+            $dt->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$request->timezone]['2']);
+        }
+        else
+        {
+            $dt->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$request->timezone]['1']);
+            $dt->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$request->timezone]['2']);
+        }
+        
+        $hour = $dt->hour;
+
+        return $this->ScheduleDisp($dt,$hour,$my_timezone);
     }
 }

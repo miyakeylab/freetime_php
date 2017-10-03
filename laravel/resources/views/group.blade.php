@@ -8,7 +8,7 @@
 @section('content')
     <!-- グループ -->
     <div class="container" >
-        <div class="col-md-8 col-md-offset-2">  
+        <div class="col-md-8">  
         <!-- グループ作成ボタン -->
         <button type="submit" class="btn btn-success" id="groupModalButton">
         <i class="fa fa-btn fa-users"></i>{{ __('messages.group_create_button') }}</button>
@@ -16,7 +16,7 @@
         </div>
 
         <div class="row">
-        <div class="col-md-8 col-md-offset-2">  
+        <div class="col-md-6">  
         <div class="panel panel-default">
         <div class="panel-heading">{{ __('messages.group_list') }}</div>
         <div class="panel-body">
@@ -56,11 +56,9 @@
             </div>
             </div>           
             </div>
-            </div>
 
 
-        <div class="row">
-        <div class="col-md-8 col-md-offset-2"> 
+        <div class="col-md-6"> 
         <div class="panel panel-default">
         <div class="panel-heading">{{ __('messages.group_request_list') }}</div>
         <div class="panel-body">

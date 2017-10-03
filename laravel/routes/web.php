@@ -135,3 +135,7 @@ Route::get('auth/{provide}/callback','Auth\AuthController@handleProviderCallback
  * 言語切替
  */
 Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
+/**
+ * 時刻切替
+ */
+Route::post('/timezone','ScheduleController@switchTimezone');

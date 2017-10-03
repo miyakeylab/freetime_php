@@ -19,22 +19,34 @@
         <i class="fa fa-btn fa-calendar"></i>{{ __('messages.schedule_create_button') }}</button>
 
         <div class="form-group col-xs-6">
-            <select class="form-control my-timezone-size" id="timezone" name="timezone" style="width: 200px">
+          <form method="POST" action="{{ url('timezone') }}" style="display: inline" name="prevForm">
+            {{ csrf_field() }}
+            <select class="form-control my-timezone-size" id="timezone" name="timezone" style="width: 200px" onChange="this.form.submit()">
+            <?php $timezone = 0; ?> 
             @foreach (Config::get('const.TIME_ZONE_NAME') as $timeName )
-              <option value="1">{{$timeName}}</option>
+             @if ($timezone != $my_timezone)
+              <option value="{{ $timezone }}">{{$timeName}}</option>
+              @else
+              <option value="{{ $timezone }}" selected>{{$timeName}}</option>
+              @endif
+              <?php $timezone++; ?> 
             @endforeach
             </select>
+            <input type="hidden" name="now_day" value="{{ $now }}" /> 
+          </form>
         </div>      
         <div class="col-xs-12">
           <form method="POST" action="{{ url('my_schedule/prev') }}" style="display: inline" name="prevForm">
             {{ csrf_field() }}
             <a href="javascript:document.prevForm.submit()"><i class="fa fa-btn fa-chevron-left"></i></a>
             <input type="hidden" name="now_day" value="{{ $now }}" /> 
+            <input type="hidden" name="my_timezone" value="{{ $my_timezone }}" /> 
           </form>{{ " "."$now"." " }}
           <form method="POST" action="{{ url('my_schedule/next') }}" style="display: inline" name="nextForm">
             {{ csrf_field() }}
             <a href="javascript:document.nextForm.submit()"><i class="fa fa-btn fa-chevron-right"></i></a>
             <input type="hidden" name="now_day" value="{{ $now }}" /> 
+            <input type="hidden" name="my_timezone" value="{{ $my_timezone }}" /> 
           </form>
         </div>
         <div class="padding-top-10" />
@@ -463,7 +475,8 @@
           <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('messages.schedule_modal_close_button') }}</button>
           <button type="submit" class="btn btn-primary">{{ __('messages.schedule_modal_reg_button') }}</button>
         </div>
-        <input type="hidden" name="now_day" value="{{ $now }}" /> 
+        <input type="hidden" name="now_day" value="{{ $now }}" />
+        <input type="hidden" name="my_timezone" value="{{ $my_timezone }}" /> 
         </form>
       </div> <!-- /.modal-content -->
     </div> <!-- /.modal-dialog -->
@@ -542,7 +555,8 @@
           <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('messages.schedule_modal_close_button') }}</button>
           <button type="submit" class="btn btn-primary">{{ __('messages.schedule_modal_reg_button') }}</button>
         </div>
-        <input type="hidden" name="now_day" value="{{ $now }}" /> 
+        <input type="hidden" name="now_day" value="{{ $now }}" />
+        <input type="hidden" name="my_timezone" value="{{ $my_timezone }}" /> 
         <input type="hidden" id="group_id" name="group_id" /> 
         </form>
       </div> <!-- /.modal-content -->
@@ -620,7 +634,8 @@
               <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('messages.schedule_modal_close_button') }}</button>
               <button type="submit" class="btn btn-primary">{{ __('messages.schedule_modal_share') }}</button>
             </div>
-            <input type="hidden" name="now_day" value="{{ $now }}" /> 
+            <input type="hidden" name="now_day" value="{{ $now }}" />
+            <input type="hidden" name="my_timezone" value="{{ $my_timezone }}" /> 
           </form>
       </div> <!-- /.modal-content -->
     </div> <!-- /.modal-dialog -->

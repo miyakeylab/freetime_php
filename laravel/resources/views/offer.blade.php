@@ -7,7 +7,7 @@
 @section('content')
     <!-- オファー -->
     <div class="container" >
-        <div class="col-md-8 col-md-offset-2"> 
+        <div class="col-md-8"> 
         <button type="submit" class="btn btn-success" 
         data-toggle="modal" 
         data-target="#staticModal" 
@@ -21,7 +21,7 @@
         <div class="padding-top-10"></div>
         </div>
         <div class="row">
-        <div class="col-md-8 col-md-offset-2">  
+        <div class="col-md-6">  
         <div class="panel panel-default">
         <div class="panel-heading">{{ __('messages.recOfferList') }}</div>
         <div class="panel-body">
@@ -66,10 +66,8 @@
         </div>
         </div>           
         </div>
-        </div>
 
-        <div class="row">
-        <div class="col-md-8 col-md-offset-2">  
+        <div class="col-md-6">  
         <div class="panel panel-default">
         <div class="panel-heading">{{ __('messages.reqOfferList') }}</div>
         <div class="panel-body">

@@ -10,7 +10,7 @@
     <div class="container" >
 
         <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-4">
         <div class="panel panel-default">
         <div class="panel-heading">{{ __('messages.friend_list') }}</div>
         <div class="panel-body">
@@ -43,11 +43,11 @@
         </div>
         </div>
         </div>
-        </div>
+
         
         <!--　友達申請　-->
-        <div class="row">
-        <div class="col-md-8 col-md-offset-2">        
+
+        <div class="col-md-4">        
         <div class="panel panel-default">
         <div class="panel-heading">{{ __('messages.friend_request_list') }}</div>
         <div class="panel-body">
@@ -96,10 +96,10 @@
         </div>
         </div>            
         </div>
-        </div>
+
         <!--　ユーザー一覧　-->
-        <div class="row">
-        <div class="col-md-8 col-md-offset-2">          
+
+        <div class="col-md-4">          
         <div class="panel panel-default">
         <div class="panel-heading">{{ __('messages.friend_user_list') }}</div>
         <div class="panel-body">
