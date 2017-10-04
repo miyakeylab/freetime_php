@@ -49,8 +49,8 @@ class ScheduleController extends Controller
         for ($i=1;$i<=$maxMonth;$i++)
         {
             $mySchedule[] = Schedule::where('user_id','=',$id)
-            ->whereDate('start_time', $getDate->toDateString())
-            ->whereDate('end_time', $getDate->toDateString())
+            ->whereDate('start_time_gmt', $getDate->toDateString())
+            ->whereDate('end_time_gmt', $getDate->toDateString())
             ->get();
             $getDate->addDay();
         }
@@ -102,17 +102,22 @@ class ScheduleController extends Controller
         $dt_end = new Carbon($request->schedule_end);
         $dt_start_gmt = new Carbon($request->schedule_start);
         $dt_end_gmt = new Carbon($request->schedule_end);        
-        $timeId = 0;
-        $diff = Config::get('const.TIME_ZONE_MGT_DIFF')[$timeId];
-        if($diff > 0)
-        {   $dt_start_gmt->subHour($diff);
-            $dt_end_gmt->subHour($diff);  
-
-        }else {
-                    
-            $diff *= -1;
-            $dt_start_gmt->addHour($diff);
-            $dt_end_gmt->addHour($diff);
+        $timeId =  $request->my_timezone;
+        
+        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['0'] == true)
+        {
+            // GMTにするためマイナス
+            $dt_start_gmt->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_start_gmt->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+            $dt_end_gmt->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_end_gmt->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
+        else
+        {
+            $dt_start_gmt->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_start_gmt->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+            $dt_end_gmt->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_end_gmt->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
         }
         
         
@@ -168,7 +173,16 @@ class ScheduleController extends Controller
         
         $dt = new Carbon($request->now_day);
         $dt_now = Carbon::now();
-        $dt_now->addHour(Config::get('const.TIME_ZONE_MGT_DIFF')["0"]);
+        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['0'] == true)
+        {
+            $dt_now->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_now->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
+        else
+        {
+            $dt_now->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_now->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
         if($dt->diffInDays($dt_now) == 0)
         {
             $hour = $dt_now->hour;
@@ -176,7 +190,8 @@ class ScheduleController extends Controller
         {
             $hour = 25;
         }
-        $my_timezone = 0;
+        
+        $my_timezone = $timeId;
         
         return $this->ScheduleDisp($dt,$hour,$my_timezone);
     }
@@ -192,17 +207,23 @@ class ScheduleController extends Controller
         $dt_end = new Carbon($request->schedule_end);
         $dt_start_gmt = new Carbon($request->schedule_start);
         $dt_end_gmt = new Carbon($request->schedule_end);        
-        $timeId = 0;
-        $diff = Config::get('const.TIME_ZONE_MGT_DIFF')[$timeId];
-        if($diff > 0)
-        {   $dt_start_gmt->subHour($diff);
-            $dt_end_gmt->subHour($diff);  
-
-        }else {
-                    
-            $diff *= -1;
-            $dt_start_gmt->addHour($diff);
-            $dt_end_gmt->addHour($diff);
+        
+        $timeId =  $request->my_timezone;
+        
+        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['0'] == true)
+        {
+            // GMTにするためマイナス
+            $dt_start_gmt->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_start_gmt->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+            $dt_end_gmt->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_end_gmt->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
+        else
+        {
+            $dt_start_gmt->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_start_gmt->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+            $dt_end_gmt->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_end_gmt->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
         }
         
         $schedule = new Groupschedule;
@@ -256,7 +277,18 @@ class ScheduleController extends Controller
         
         $dt = new Carbon($request->now_day);
         $dt_now = Carbon::now();
-        $dt_now->addHour(Config::get('const.TIME_ZONE_MGT_DIFF')["0"]);
+        
+        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['0'] == true)
+        {
+            $dt_now->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_now->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
+        else
+        {
+            $dt_now->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_now->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
+        
         if($dt->diffInDays($dt_now) == 0)
         {
             $hour = $dt_now->hour;
@@ -281,17 +313,22 @@ class ScheduleController extends Controller
         $dt_end = new Carbon($request->friend_schedule_end);
         $dt_start_gmt = new Carbon($request->friend_schedule_start);
         $dt_end_gmt = new Carbon($request->friend_schedule_end);        
-        $timeId = 0;
-        $diff = Config::get('const.TIME_ZONE_MGT_DIFF')[$timeId];
-        if($diff > 0)
-        {   $dt_start_gmt->subHour($diff);
-            $dt_end_gmt->subHour($diff);  
-
-        }else {
-                    
-            $diff *= -1;
-            $dt_start_gmt->addHour($diff);
-            $dt_end_gmt->addHour($diff);
+        $timeId =  $request->my_timezone;
+        
+        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['0'] == true)
+        {
+            // GMTにするためマイナス
+            $dt_start_gmt->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_start_gmt->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+            $dt_end_gmt->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_end_gmt->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
+        else
+        {
+            $dt_start_gmt->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_start_gmt->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+            $dt_end_gmt->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_end_gmt->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
         }
         
         
@@ -347,7 +384,18 @@ class ScheduleController extends Controller
         
         $dt = new Carbon($request->now_day);
         $dt_now = Carbon::now();
-        $dt_now->addHour(Config::get('const.TIME_ZONE_MGT_DIFF')["0"]);
+        
+        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['0'] == true)
+        {
+            $dt_now->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_now->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
+        else
+        {
+            $dt_now->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_now->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
+        
         if($dt->diffInDays($dt_now) == 0)
         {
             $hour = $dt_now->hour;
@@ -365,8 +413,19 @@ class ScheduleController extends Controller
     public function PrevScheduleView(Request $request) {
         $dt = new Carbon($request->now_day);
         $dt->subDay(1);
-        $dt_now = Carbon::now();
-        $dt_now->addHour(Config::get('const.TIME_ZONE_MGT_DIFF')["0"]);
+        $dt_now = Carbon::now();        
+        
+        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$request->my_timezone]['0'] == true)
+        {
+            $dt_now->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$request->my_timezone]['1']);
+            $dt_now->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$request->my_timezone]['2']);
+        }
+        else
+        {
+            $dt_now->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$request->my_timezone]['1']);
+            $dt_now->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$request->my_timezone]['2']);
+        }
+        
         if($dt->diffInDays($dt_now) == 0)
         {
             $hour = $dt_now->hour;
@@ -374,7 +433,7 @@ class ScheduleController extends Controller
         {
             $hour = 25;
         }
-        $my_timezone = 0;
+        $my_timezone = $request->my_timezone;
         
         return $this->ScheduleDisp($dt,$hour,$my_timezone);
     }
@@ -385,7 +444,18 @@ class ScheduleController extends Controller
         $dt = new Carbon($request->now_day);
         $dt->addDay(1);
         $dt_now = Carbon::now();
-        $dt_now->addHour(Config::get('const.TIME_ZONE_MGT_DIFF')["0"]);
+        
+        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$request->my_timezone]['0'] == true)
+        {
+            $dt_now->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$request->my_timezone]['1']);
+            $dt_now->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$request->my_timezone]['2']);
+        }
+        else
+        {
+            $dt_now->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$request->my_timezone]['1']);
+            $dt_now->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$request->my_timezone]['2']);
+        }        
+        
         if($dt->diffInDays($dt_now) == 0)
         {
             $hour = $dt_now->hour;
@@ -393,7 +463,8 @@ class ScheduleController extends Controller
         {
             $hour = 25;
         }
-        $my_timezone = 0;
+        
+        $my_timezone = $request->my_timezone;
         
         return $this->ScheduleDisp($dt,$hour,$my_timezone);
     } 
@@ -403,12 +474,17 @@ class ScheduleController extends Controller
     public function ScheduleDisp($dt,$setHour,$my_timezone) { 
         
         $now = $dt->year."/".str_pad($dt->month, 2, 0, STR_PAD_LEFT)."/".str_pad($dt->day, 2, 0, STR_PAD_LEFT);
+        $dt_where_pre = Carbon::now();
+        $dt_where_pre = $dt_where_pre->subDay();
+        $dt_where_nex = Carbon::now();
+        $dt_where_nex = $dt_where_nex->addDay();
+        
         $hour = $setHour;
         $friends = Friend::join('users', 'friends.friend_user_id', '=', 'users.id')->join('userdetails', 'friends.friend_user_id', '=', 'userdetails.user_id')->where('friends.user_id',Auth::user()->id)->get();
         $user = User::find(Auth::user()->id)->userdetail()->first();
         $mySchedule = Schedule::where('user_id','=',Auth::user()->id)
-        ->whereDate('start_time', $dt->toDateString())
-        ->whereDate('end_time', $dt->toDateString())
+        ->whereBetween('start_time_gmt', array($dt_where_pre->toDateString(),$dt_where_nex->toDateString()))
+        ->whereBetween('end_time_gmt', array($dt_where_pre->toDateString(),$dt_where_nex->toDateString()))
         ->get();
                 
         //友達スケジュール一覧
@@ -417,8 +493,8 @@ class ScheduleController extends Controller
         foreach($friends as $friend)
         {
             $friendSchedule[] = Schedule::where('user_id','=',$friend->friend_user_id)
-                ->whereDate('start_time', $dt->toDateString())
-                ->whereDate('end_time', $dt->toDateString())
+                ->whereBetween('start_time_gmt', array($dt_where_pre->toDateString(),$dt_where_nex->toDateString()))
+                ->whereBetween('end_time_gmt', array($dt_where_pre->toDateString(),$dt_where_nex->toDateString()))
                 ->get();
         }
         
@@ -432,8 +508,8 @@ class ScheduleController extends Controller
         foreach($groups as $group)
         {
             $groupSchedule[] = Groupschedule::where('group_id','=',$group->master_id)
-                ->whereDate('start_time', $dt->toDateString())
-                ->whereDate('end_time', $dt->toDateString())
+                ->whereBetween('start_time_gmt', array($dt_where_pre->toDateString(),$dt_where_nex->toDateString()))
+                ->whereBetween('end_time_gmt', array($dt_where_pre->toDateString(),$dt_where_nex->toDateString()))
                 ->get();
         }        
         Log::info('スケジュール画面表示 ID:'.Auth::user()->id.' 日付:'.$now.' 時間:'.$hour.' TimeZone:'.$my_timezone);
@@ -458,8 +534,8 @@ class ScheduleController extends Controller
         ->join('userdetails', 'userdetails.user_id', '=', 'groupusers.user_id')
         ->get();
         $mySchedule = Groupschedule::where('group_id','=',$group_id)
-        ->whereDate('start_time', $dt->toDateString())
-        ->whereDate('end_time', $dt->toDateString())
+        ->whereDate('start_time_gmt', $dt->toDateString())
+        ->whereDate('end_time_gmt', $dt->toDateString())
         ->get();
                 
         //友達スケジュール一覧
@@ -468,8 +544,8 @@ class ScheduleController extends Controller
         foreach($groupfriends as $groupfriend)
         {
             $friendSchedule[] = Schedule::where('user_id','=',$groupfriend->user_id)
-                ->whereDate('start_time', $dt->toDateString())
-                ->whereDate('end_time', $dt->toDateString())
+                ->whereDate('start_time_gmt', $dt->toDateString())
+                ->whereDate('end_time_gmt', $dt->toDateString())
                 ->get();
         }
         
@@ -496,19 +572,23 @@ class ScheduleController extends Controller
         $dt_end = new Carbon($request->schedule_end);
         $dt_start_gmt = new Carbon($request->schedule_start);
         $dt_end_gmt = new Carbon($request->schedule_end);        
-        $timeId = 0;
-        $diff = Config::get('const.TIME_ZONE_MGT_DIFF')[$timeId];
-        if($diff > 0)
-        {   $dt_start_gmt->subHour($diff);
-            $dt_end_gmt->subHour($diff);  
 
-        }else {
-                    
-            $diff *= -1;
-            $dt_start_gmt->addHour($diff);
-            $dt_end_gmt->addHour($diff);
+        $timeId =  $request->my_timezone;        
+        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['0'] == true)
+        {
+            // GMTにするためマイナス
+            $dt_start_gmt->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_start_gmt->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+            $dt_end_gmt->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_end_gmt->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
         }
-        
+        else
+        {
+            $dt_start_gmt->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_start_gmt->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+            $dt_end_gmt->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_end_gmt->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }        
         $offer = new Offer;
         $offer->master_user_id = Auth::user()->id;//オファーユーザーID
         $offer->client_user_id = $request->offer_friend_id;//オファークライアントユーザーID
@@ -562,7 +642,18 @@ class ScheduleController extends Controller
 
         $dt = new Carbon($request->now_day);
         $dt_now = Carbon::now();
-        $dt_now->addHour(Config::get('const.TIME_ZONE_MGT_DIFF')["0"]);
+        
+        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['0'] == true)
+        {
+            $dt_now->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_now->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
+        else
+        {
+            $dt_now->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_now->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
+        
         if($dt->diffInDays($dt_now) == 0)
         {
             $hour = $dt_now->hour;

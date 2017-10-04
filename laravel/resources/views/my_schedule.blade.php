@@ -19,7 +19,7 @@
         <i class="fa fa-btn fa-calendar"></i>{{ __('messages.schedule_create_button') }}</button>
 
         <div class="form-group col-xs-6">
-          <form method="POST" action="{{ url('timezone') }}" style="display: inline" name="prevForm">
+          <form method="POST" action="{{ url('timezone') }}" style="display: inline" name="timezoneForm">
             {{ csrf_field() }}
             <select class="form-control my-timezone-size" id="timezone" name="timezone" style="width: 200px" onChange="this.form.submit()">
             <?php $timezone = 0; ?> 
@@ -40,7 +40,7 @@
             {{ csrf_field() }}
             <a href="javascript:document.prevForm.submit()"><i class="fa fa-btn fa-chevron-left"></i></a>
             <input type="hidden" name="now_day" value="{{ $now }}" /> 
-            <input type="hidden" name="my_timezone" value="{{ $my_timezone }}" /> 
+            <input type="hidden" name="my_timezone" value="{{ $my_timezone }}"/> 
           </form>{{ " "."$now"." " }}
           <form method="POST" action="{{ url('my_schedule/next') }}" style="display: inline" name="nextForm">
             {{ csrf_field() }}
@@ -82,13 +82,37 @@
                   @if($hourDiff <= 0 )
                     <!-- スケジュール -->
                     @foreach( $mySchedule as $schedule)
+                      <!-- 時間処理  -->
+                      <?php 
+                       $now_start = new \Carbon\Carbon($schedule->start_time_gmt);
+                        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['0'] == true)
+                        {
+                            $now_start->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                            $now_start->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                        }
+                        else
+                        {
+                            $now_start->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                            $now_start->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                        }
                       
-                      <?php $now_start = new \Carbon\Carbon($schedule->start_time); ?>                    
+                       ?>                    
                       
                       @if ($now_start->gte($str_1)=== true && $now_start->lt($str_2)===true)
                         
-                        <?php $now_end = new \Carbon\Carbon($schedule->end_time); 
-                          $hourDiff = $now_start->diffInHours($now_end);
+                        <?php $now_end = new \Carbon\Carbon($schedule->end_time_gmt); 
+                            if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['0'] == true)
+                            {
+                                $now_end->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                                $now_end->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                            }
+                            else
+                            {
+                                $now_end->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                                $now_end->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                            }
+                      
+                            $hourDiff = $now_start->diffInHours($now_end);
                         ?>   
                         
                         @if($result === 0)
@@ -118,8 +142,8 @@
                           ?>
                         <td class="myFeed {{  $color  }}" colspan="{{ $hourDiff }}" align="center" data-toggle="modal" 
                         data-target="#staticModal" 
-                        data-start="{{ $schedule->start_time }}" 
-                        data-end="{{ $schedule->end_time }}"
+                        data-start="{{ $now_start }}" 
+                        data-end="{{ $now_end }}"
                         data-title="{{ $schedule->title }}"
                         data-content="{{ $schedule->content }}"
                         data-category="{{ $schedule->category_id }}"><span class="{{ 'overflowStr_'.$hourDiff }}" style="display:block;">{{ $schedule->title }}</span></td>
@@ -145,7 +169,18 @@
                     <?php $hourDiff -= 1; ?>
                     <!-- スケジュールカウント処理 -->
                     @foreach( $mySchedule as $schedule)
-                      <?php $now_start = new \Carbon\Carbon($schedule->start_time); ?>
+                      <?php $now_start = new \Carbon\Carbon($schedule->start_time_gmt);
+                        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['0'] == true)
+                        {
+                            $now_start->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                            $now_start->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                        }
+                        else
+                        {
+                            $now_start->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                            $now_start->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                        }
+                      ?>
                       @if ($now_start->gte($str_1)=== true && $now_start->lt($str_2)===true)
                          <?php $count[$n] +=1; ?>
                       @endif
@@ -192,14 +227,37 @@
                   @if($hourDiff <= 0 )
                     <!-- スケジュール -->
                     @foreach( $groupTempSch as $schedule)
+                                         
+                      <?php 
+                       $now_start = new \Carbon\Carbon($schedule->start_time_gmt);
+                        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['0'] == true)
+                        {
+                            $now_start->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                            $now_start->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                        }
+                        else
+                        {
+                            $now_start->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                            $now_start->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                        }
                       
-                      <?php $now_start = new \Carbon\Carbon($schedule->start_time); ?>                    
-                      
+                       ?>                      
                       @if ($now_start->gte($str_1)=== true && $now_start->lt($str_2)===true)
                         
-                        <?php $now_end = new \Carbon\Carbon($schedule->end_time); 
-                          $hourDiff = $now_start->diffInHours($now_end);
-                        ?>   
+                         <?php $now_end = new \Carbon\Carbon($schedule->end_time_gmt); 
+                            if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['0'] == true)
+                            {
+                                $now_end->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                                $now_end->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                            }
+                            else
+                            {
+                                $now_end->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                                $now_end->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                            }
+                      
+                            $hourDiff = $now_start->diffInHours($now_end);
+                        ?>
                         
                         @if($result === 0)
                           <?php $result = 1;
@@ -228,8 +286,8 @@
                                 ?>
                         <td class="friendFeed {{  $color  }}" colspan="{{ $hourDiff }}" align="center" data-toggle="modal" 
                         data-target="#groupModal" 
-                        data-start="{{ $schedule->start_time }}" 
-                        data-end="{{ $schedule->end_time }}"
+                        data-start="{{ $now_start }}" 
+                        data-end="{{ $now_end }}"
                         data-title="{{ $schedule->title }}"
                         data-content="{{ $schedule->content }}"
                         data-category="{{ $schedule->category_id }}"
@@ -257,7 +315,20 @@
                     <?php $hourDiff -= 1; ?>
                     <!-- スケジュールカウント処理 -->
                     @foreach( $groupTempSch as $schedule)
-                      <?php $now_start = new \Carbon\Carbon($schedule->start_time); ?>
+                      <?php 
+                       $now_start = new \Carbon\Carbon($schedule->start_time_gmt);
+                        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['0'] == true)
+                        {
+                            $now_start->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                            $now_start->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                        }
+                        else
+                        {
+                            $now_start->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                            $now_start->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                        }
+                      
+                       ?>                        
                       @if ($now_start->gte($str_1)=== true && $now_start->lt($str_2)===true)
                          <?php $count_group[$n] +=1; ?>
                       @endif
@@ -307,14 +378,36 @@
                   @if($hourDiff <= 0 )
                     <!-- スケジュール -->
                     @foreach( $friendTempSch as $schedule)
+                                       
+                      <?php 
+                       $now_start = new \Carbon\Carbon($schedule->start_time_gmt);
+                        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['0'] == true)
+                        {
+                            $now_start->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                            $now_start->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                        }
+                        else
+                        {
+                            $now_start->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                            $now_start->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                        }
                       
-                      <?php $now_start = new \Carbon\Carbon($schedule->start_time); ?>                    
-                      
+                       ?>                        
                       @if ($now_start->gte($str_1)=== true && $now_start->lt($str_2)===true)
-                        
-                        <?php $now_end = new \Carbon\Carbon($schedule->end_time); 
-                          $hourDiff = $now_start->diffInHours($now_end);
-                        ?>   
+                         <?php $now_end = new \Carbon\Carbon($schedule->end_time_gmt); 
+                            if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['0'] == true)
+                            {
+                                $now_end->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                                $now_end->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                            }
+                            else
+                            {
+                                $now_end->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                                $now_end->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                            }
+                      
+                            $hourDiff = $now_start->diffInHours($now_end);
+                        ?>
                         
                         @if($result === 0)
                           <?php $result = 1;
@@ -343,8 +436,8 @@
                                 ?>
                         <td class="friendFeed {{  $color  }}" colspan="{{ $hourDiff }}" align="center" data-toggle="modal" 
                         data-target="#friendModal" 
-                        data-start="{{ $schedule->start_time }}" 
-                        data-end="{{ $schedule->end_time }}"
+                        data-start="{{ $now_start }}" 
+                        data-end="{{ $now_end }}"
                         data-title="{{ $schedule->title }}"
                         data-content="{{ $schedule->content }}"
                         data-category="{{ $schedule->category_id }}"><span class="{{ 'overflowStr_'.$hourDiff }}" style="display:block;">{{ $schedule->title }}</span></td>
@@ -372,7 +465,20 @@
                     <?php $hourDiff -= 1; ?>
                     <!-- スケジュールカウント処理 -->
                     @foreach( $friendTempSch as $schedule)
-                      <?php $now_start = new \Carbon\Carbon($schedule->start_time); ?>
+                      <?php 
+                       $now_start = new \Carbon\Carbon($schedule->start_time_gmt);
+                        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['0'] == true)
+                        {
+                            $now_start->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                            $now_start->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                        }
+                        else
+                        {
+                            $now_start->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                            $now_start->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                        }
+                      
+                       ?>
                       @if ($now_start->gte($str_1)=== true && $now_start->lt($str_2)===true)
                          <?php $count_friend[$n] +=1; ?>
                       @endif
