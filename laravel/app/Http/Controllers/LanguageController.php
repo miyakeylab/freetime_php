@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Config;
@@ -10,6 +11,11 @@ use Illuminate\Support\Facades\Session;
 
 class LanguageController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+        
     /**
      *  言語切り替え処理 
      */
@@ -19,6 +25,17 @@ class LanguageController extends Controller
             Log::info('言語切り替え 言語:'.$lang);
             Session::put('applocale', $lang);
         }
-        return Redirect::back();
+        
+        Log::info('テスト');
+        if (Auth::guest())
+        {
+            Log::info('ログイン前');
+            return redirect()->back();
+        }
+        else
+        {
+            Log::info('ログイン後');
+            return redirect()->action('ScheduleController@MainView');
+        }
     }
 }

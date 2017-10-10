@@ -1,4 +1,4 @@
-<!-- resources/views/my_schedule.blade.php -->
+<!-- resources/views/marge_schedule.blade.php -->
 
 @extends('layouts.app')
 @include('layouts.head', ['page' => 1])
@@ -6,34 +6,24 @@
 
 @section('content')
     <div class="panel-body">
+
         <div class="col-xs-12 padding-bottom-10">
-          <form method="POST" action="{{ url('my_schedule/prev') }}" style="display: inline" name="prevForm">
+          <form method="POST" action="{{ url('marge/prev') }}" style="display: inline" name="prevForm">
             {{ csrf_field() }}
             <a href="javascript:document.prevForm.submit()"><i class="fa fa-btn fa-chevron-left"></i></a>
             <input type="hidden" name="now_day" value="{{ $now }}" /> 
             <input type="hidden" name="my_timezone" value="{{ $my_timezone }}"/> 
           </form>{{ " "."$now"." " }}
-          <form method="POST" action="{{ url('my_schedule/next') }}" style="display: inline" name="nextForm">
+          <form method="POST" action="{{ url('marge/next') }}" style="display: inline" name="nextForm">
             {{ csrf_field() }}
             <a href="javascript:document.nextForm.submit()"><i class="fa fa-btn fa-chevron-right"></i></a>
             <input type="hidden" name="now_day" value="{{ $now }}" /> 
             <input type="hidden" name="my_timezone" value="{{ $my_timezone }}" /> 
           </form>
         </div>
-        <button type="submit" class="btn btn-success col-xs-6" 
-        data-toggle="modal" 
-        data-target="#staticModal" 
-        data-start="{{ $now.' '.str_pad($hour, 2, 0, STR_PAD_LEFT).':00' }}" 
-        data-end="{{ $now.' '.str_pad(($hour+1), 2, 0, STR_PAD_LEFT).':00' }}" 
-        data-title=""
-        data-content=""
-        data-category="0"
-        style="width: 200px">
-          <!-- スケジュール作成ボタン -->
-        <i class="fa fa-btn fa-calendar"></i>{{ __('messages.schedule_create_button') }}</button>
         <!-- タイムゾーン -->
-        <div class="form-group col-xs-6">
-          <form method="POST" action="{{ url('timezone') }}" style="display: inline" name="timezoneForm">
+        <div class="form-group col-sm-10 col-sm-push-2">
+          <form method="POST" action="{{ url('timezone/marge') }}" style="display: inline" name="timezoneForm">
             {{ csrf_field() }}
             <select class="form-control my-timezone-size" id="timezone" name="timezone" style="width: 200px" onChange="this.form.submit()">
             <?php $timezone = 0; ?> 
@@ -48,8 +38,14 @@
             </select>
             <input type="hidden" name="now_day" value="{{ $now }}" /> 
           </form>
-        </div>      
-
+        </div>
+   
+      <form method="POST" action="{{ url('marge') }}" style="display: inline" name="margeForm">
+        {{ csrf_field() }}
+        <button type="submit" class="btn btn-success col-sm-2 col-sm-pull-10" style="width: 200px">
+          <!-- マージスケジュール -->
+        <i class="fa fa-btn fa-calendar-plus-o"></i>{{ __('messages.marge') }}</button>
+        
         <div class="padding-top-10" />
 
         <div class='table-responsive  col-xs-12'>
@@ -68,10 +64,129 @@
             </thead>
             <tbody>
             <tr>
+                <td class="schedule-tr-head" colspan="25" align="center">
+                  {{ __('messages.marge_schedule') }}
+                </td>
+            </tr>
+            <!-- マージスケジュール  -->
+          @if(count($margeSchedule) > 0)
+            <tr>  
+            <td colspan="1" align="center">
+            </td>
+            <?php $hourDiff = 0; ?>
+            @for ($n=0; $n<24; $n++)
+               <?php  $str_1 = new \Carbon\Carbon($now.' '.str_pad($n, 2, 0, STR_PAD_LEFT).':00'); 
+                      $str_2 = new \Carbon\Carbon($now.' '.str_pad($n+1, 2, 0, STR_PAD_LEFT).':00'); 
+                      $result = 0; ?>
+              @if($hourDiff <= 0)
+                @foreach ($margeSchedule as $marge)
+                  @if($hourDiff <= 0)
+                    <?php $margeTempSch =  $marge ?>
+                    <!-- スケジュール -->
+                    @foreach( $margeTempSch as $margeTemp)
+                                         
+                      <?php 
+                       $now_start = new \Carbon\Carbon($margeTemp->start_time_gmt);
+                        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['0'] == true)
+                        {
+                            $now_start->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                            $now_start->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                        }
+                        else
+                        {
+                            $now_start->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                            $now_start->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                        }
+                       ?>                      
+                      @if ($now_start->gte($str_1)=== true && $now_start->lt($str_2)===true)
+                        
+                         <?php $now_end = new \Carbon\Carbon($margeTemp->end_time_gmt); 
+                            if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['0'] == true)
+                            {
+                                $now_end->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                                $now_end->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                            }
+                            else
+                            {
+                                $now_end->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                                $now_end->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                            }
+                      
+                            $hourDiff = $now_start->diffInHours($now_end);
+                        ?>
+                        
+                        @if($result === 0)
+                          <?php $result = 1;
+                                $color= "badge-default";
+                                switch($margeTemp->category_id)
+                                {
+                                case 0:
+                                  $color= "badge-default";
+                                  break;
+                                case 1:
+                                  $color= "badge-primary";
+                                  break;
+                                case 2:
+                                  $color= "badge-success";
+                                  break;
+                                case 3:
+                                  $color= "badge-info";
+                                  break;
+                                case 4:
+                                  $color= "badge-warning";
+                                  break;
+                                case 5:
+                                  $color= "badge-danger";
+                                  break;
+                                }
+                                ?>
+                        <td class="friendFeed shcedule-font {{  $color  }}" colspan="{{ $hourDiff }}" align="center" data-toggle="modal" 
+                        data-target="#groupModal" 
+                        data-start="{{ $now_start }}" 
+                        data-end="{{ $now_end }}"
+                        data-title="{{ $margeTemp->title }}"
+                        data-content="{{ $margeTemp->content }}"
+                        data-category="{{ $margeTemp->category_id }}"
+                        data-groupid="0"><span class="{{ 'overflowStr_'.$hourDiff }}" style="display:block;">{{ $margeTemp->title }}</span></td>
+                      
+                        @endif
+                      @endif
+                    @endforeach
+                  @endif
+                @endforeach
+                @if($hourDiff <= 0)
+                  <td class="friendFeed" colspan="1" align="center" data-toggle="modal" 
+                  data-target="#groupModal" 
+                  data-start="{{ $now.' '.str_pad($n, 2, 0, STR_PAD_LEFT).':00' }}" 
+                  data-end="{{ $now.' '.str_pad(($n+1), 2, 0, STR_PAD_LEFT).':00' }}"
+                  data-title=""
+                  data-content=""
+                  data-category="0"
+                  data-groupid="0"></td>
+                @else
+                   <?php $hourDiff -= 1; ?>
+                @endif
+              @else
+                 <?php $hourDiff -= 1; ?>
+              @endif
+            @endfor
+            </tr>
+          @endif
+
+       
+            <tr>
+                <td class="schedule-tr-head" colspan="25" align="center">
+                  {{ __('messages.my_schedule') }}
+                </td>
+            </tr>
+            <tr>
                 <td colspan="1" align="center">
-                  <a href="{{ url('/user_schedule',$user->user_id) }}">
                     <img class="media-object user_icon_size" src="{{url($user->user_img)}}">
-                  </a>
+                    @if(in_array( $user->user_id, $user_marge_check) === true)
+                      <input type="checkbox" name="user_marge[]" value="{{ $user->user_id }}" checked="checked"/>
+                    @else
+                      <input type="checkbox" name="user_marge[]" value="{{ $user->user_id }}"/>
+                    @endif
                 </td>
                  
                 <?php $hourDiff = 0; ?>
@@ -215,9 +330,12 @@
             <?php $groupTempSch =  $groupSchedule[$groupCount] ?>
             <tr>
                 <td colspan="1" align="center">
-                  <a href="{{ url('/group_schedule',$group->master_id) }}">
                     <img class="media-object user_icon_size" src="{{url($group->group_img)}}" >
-                  </a>
+                    @if(in_array( $group->master_id , $group_marge_check) === true)
+                      <input type="checkbox" name="group_marge[]" value="{{ $group->master_id }}" checked="checked"/>
+                    @else
+                      <input type="checkbox" name="group_marge[]" value="{{ $group->master_id }}">
+                    @endif
                 </td>
               <?php $hourDiff = 0; ?>
                 @for ($n=0; $n<24; $n++)
@@ -366,9 +484,12 @@
             <?php $friendTempSch =  $friendSchedule[$friendCount] ?>
             <tr>
                 <td colspan="1" align="center">
-                  <a href="{{ url('/user_schedule',$friend->friend_user_id) }}">
                     <img class="media-object user_icon_size" src="{{url($friend->user_img)}}" >
-                  </a>
+                    @if(in_array( $friend->friend_user_id, $user_marge_check) === true)
+                      <input type="checkbox" name="user_marge[]" value="{{ $friend->friend_user_id }}" checked="checked"/>
+                    @else
+                      <input type="checkbox" name="user_marge[]" value="{{ $friend->friend_user_id }}"/>
+                    @endif
                 </td>
                 <?php $hourDiff = 0; ?>
                 @for ($n=0; $n<24; $n++)
@@ -507,7 +628,11 @@
             </tbody>
         </table>
         </div>
+
         </div>
+        <input type="hidden" name="now_day" value="{{ $now }}" />
+        <input type="hidden" name="timezone" value="{{ $my_timezone }}" /> 
+      </form>
     </div>
   <!-- 自モーダルダイアログ -->
   <div class="modal" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">

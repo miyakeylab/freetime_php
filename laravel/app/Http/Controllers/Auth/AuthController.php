@@ -26,10 +26,15 @@ class AuthController extends Controller
      **/
     public function handleProviderCallback($provider) 
     {
-        $user = Socialite::driver($provider)->user();
-        $authUser = $this->findOrCreateUser($user, $provider);
-        Auth::login($authUser, true); //Authにソーシャル情報を預けてログイン
-        return redirect('/home'); //認証後に表示したいページを指定
+        try
+        {
+            $user = Socialite::driver($provider)->user();
+            $authUser = $this->findOrCreateUser($user, $provider);
+            Auth::login($authUser, true); //Authにソーシャル情報を預けてログイン
+            return redirect('/home'); //認証後に表示したいページを指定
+        }catch(\Exception $e){
+            return redirect('/login'); //認証前に表示したいページを指定
+        }
     }
     
     /**

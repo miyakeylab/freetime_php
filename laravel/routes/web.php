@@ -19,7 +19,7 @@ Route::get('/', 'ScheduleController@MainView');
 * スケジュール表示 
 */ 
 Route::get('/my_schedule','ScheduleController@MainView');
-
+Route::post('/my_schedule','ScheduleController@MainView');
 /**
  * ユーザースケジュール表示 
  */ 
@@ -32,6 +32,19 @@ Route::post('/my_schedule/set','ScheduleController@CreateSchedule');
 * スケジュール取り込み 
 */ 
 Route::post('/my_schedule/share','ScheduleController@CreateShareSchedule');
+
+/** 
+* スケジュール登録 
+*/ 
+Route::post('/my_schedule/user/set','ScheduleController@CreateScheduleUser');
+/** 
+* スケジュール取り込み 
+*/ 
+Route::post('/my_schedule/user/share','ScheduleController@CreateShareScheduleUser');
+
+
+Route::get('/marge_schedule','MargeScheduleController@MainView');
+Route::post('/marge','MargeScheduleController@MargeRequest');
 /** 
 * スケジュール前日 
 */ 
@@ -104,6 +117,7 @@ Route::get('/offer','OfferController@MainView');
  */ 
 Route::post('/offer/set','OfferController@OfferCreate');
 Route::post('/my_schedule/offer','ScheduleController@OfferCreate');
+Route::post('/my_schedule/user/offer','ScheduleController@OfferCreateUser');
 /**
  * オファーリクエストOK
  */ 
@@ -139,3 +153,20 @@ Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@swit
  * 時刻切替
  */
 Route::post('/timezone','ScheduleController@switchTimezone');
+/**
+ * 時刻切替(マージ) 
+ */
+Route::post('/timezone/marge','MargeScheduleController@switchTimezone');
+/**
+ * 時刻切替(ユーザースケジュール)
+ */
+Route::post('/timezone/user_schedule','ScheduleController@switchTimezoneUser');
+
+/** 
+* スケジュール前日(マージ)
+*/ 
+Route::post('/marge/prev','MargeScheduleController@PrevScheduleView');
+/** 
+* スケジュール翌日(マージ)
+*/ 
+Route::post('/marge/next','MargeScheduleController@NextScheduleView');

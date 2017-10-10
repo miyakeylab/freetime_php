@@ -5,6 +5,12 @@
   width: 130px;
 }
 /**
+ * padding 10
+ */
+.padding-bottom-10{
+  padding-bottom: 10px;
+}
+/**
  * padding 5
  */
 .padding-top-5{
@@ -94,7 +100,10 @@ div#floating-menu {
 {
       font-size: 20px;
 }
-
+.shcedule-font
+{
+  font-size: 12px;
+}
 .overflow {
   width: 32px;
   white-space: nowrap;
@@ -142,34 +151,61 @@ div#floating-menu {
 .schedule-tr-head{
   background-color: #0CA5B0;
   color: #ffffff;
+  font-size: 12px;
 }
+/*.badge-default{*/
+/*  background-color: #0CA5B0;*/
+/*    color: #ffffff;*/
+/*}*/
+/*.badge-primary{*/
+/*  background-color: #4E3F30;*/
+/*    color: #ffffff;*/
+/*}*/
+/*.badge-success{*/
+/*  background-color: #5cb85c;*/
+/*    color: #ffffff;*/
+/*}*/
+/*.badge-info{*/
+/*  background-color: #5bc0de;*/
+/*    color: #ffffff;*/
+/*}*/
+/*.badge-warning{*/
+/*  background-color: #f0ad4e;*/
+/*    color: #ffffff;*/
+/*}*/
+/*.badge-danger{*/
+/*  background-color: #d9534f;*/
+/*    color: #ffffff;*/
+/*}*/
+
 .badge-default{
-  background-color: #0CA5B0;
-    color: #ffffff;
+  background-color: #75edf5;
+    color: #000000;
 }
 .badge-primary{
-  background-color: #4E3F30;
-    color: #ffffff;
+  background-color: #a99179;
+    color: #000000;
 }
 .badge-success{
-  background-color: #5cb85c;
-    color: #ffffff;
+  background-color: #8acc8a;
+    color: #000000;
 }
 .badge-info{
-  background-color: #5bc0de;
-    color: #ffffff;
+  background-color: #92d4e7;
+    color: #000000;
 }
 .badge-warning{
-  background-color: #f0ad4e;
-    color: #ffffff;
+  background-color: #f6cd93;
+    color: #000000;
 }
 .badge-danger{
-  background-color: #d9534f;
-    color: #ffffff;
+  background-color: #e99390;
+    color: #000000;
 }
 
+
 .overflowStr_1 {
-  width: 20px;
+  width: 30px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -177,7 +213,7 @@ div#floating-menu {
   -o-text-overflow: ellipsis;  
 }
 .overflowStr_2 {
-  width: 40px;
+  width: 75px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -185,7 +221,7 @@ div#floating-menu {
   -o-text-overflow: ellipsis;  
 }
 .overflowStr_3 {
-  width: 60px;
+  width: 110px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -193,7 +229,7 @@ div#floating-menu {
   -o-text-overflow: ellipsis;  
 }
 .overflowStr_4 {
-  width: 80px;
+  width: 170px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -201,7 +237,7 @@ div#floating-menu {
   -o-text-overflow: ellipsis;  
 }
 .overflowStr_5 {
-  width: 100px;
+  width: 200px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -209,7 +245,7 @@ div#floating-menu {
   -o-text-overflow: ellipsis;  
 }
 .overflowStr_6 {
-  width: 120px;
+  width: 240px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -217,7 +253,7 @@ div#floating-menu {
   -o-text-overflow: ellipsis;  
 }
 .overflowStr_7 {
-  width: 140px;
+  width: 280px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -225,7 +261,7 @@ div#floating-menu {
   -o-text-overflow: ellipsis;  
 }
 .overflowStr_8 {
-  width: 160px;
+  width: 320px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -233,7 +269,7 @@ div#floating-menu {
   -o-text-overflow: ellipsis;  
 }
 .overflowStr_9 {
-  width: 180px;
+  width: 350px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -241,7 +277,7 @@ div#floating-menu {
   -o-text-overflow: ellipsis;  
 }
 .overflowStr_10 {
-  width: 200px;
+  width: 400px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -250,7 +286,7 @@ div#floating-menu {
 }
 
 .overflowStr_11 {
-  width: 220px;
+  width: 450px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -258,7 +294,7 @@ div#floating-menu {
   -o-text-overflow: ellipsis;  
 }
 .overflowStr_12 {
-  width: 240px;
+  width: 500px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -266,7 +302,7 @@ div#floating-menu {
   -o-text-overflow: ellipsis;  
 }
 .overflowStr_13 {
-  width: 260px;
+  width: 550px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -274,7 +310,7 @@ div#floating-menu {
   -o-text-overflow: ellipsis;  
 }
 .overflowStr_14 {
-  width: 280px;
+  width: 600px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -283,7 +319,7 @@ div#floating-menu {
 }
 
 .overflowStr_15 {
-  width: 300px;
+  width: 650px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -291,7 +327,7 @@ div#floating-menu {
   -o-text-overflow: ellipsis;  
 }
 .overflowStr_16 {
-  width: 320px;
+  width: 700px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -299,7 +335,7 @@ div#floating-menu {
   -o-text-overflow: ellipsis;  
 }
 .overflowStr_17 {
-  width: 340px;
+  width: 750px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -307,7 +343,7 @@ div#floating-menu {
   -o-text-overflow: ellipsis;  
 }
 .overflowStr_18 {
-  width: 360px;
+  width: 800px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -315,7 +351,7 @@ div#floating-menu {
   -o-text-overflow: ellipsis;  
 }
 .overflowStr_19 {
-  width: 380px;
+  width: 850px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -323,7 +359,7 @@ div#floating-menu {
   -o-text-overflow: ellipsis;  
 }
 .overflowStr_20 {
-  width: 400px;
+  width: 890px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -331,7 +367,7 @@ div#floating-menu {
   -o-text-overflow: ellipsis;  
 }
 .overflowStr_21 {
-  width: 420px;
+  width: 940px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -339,7 +375,7 @@ div#floating-menu {
   -o-text-overflow: ellipsis;  
 }
 .overflowStr_22 {
-  width: 440px;
+  width: 990px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -347,7 +383,15 @@ div#floating-menu {
   -o-text-overflow: ellipsis;  
 }
 .overflowStr_23 {
-  width: 460px;
+  width: 1040px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;  
+  -o-text-overflow: ellipsis;  
+}
+.overflowStr_24 {
+  width: 1090px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -361,4 +405,23 @@ div#floating-menu {
   text-overflow: ellipsis;
   -webkit-text-overflow: ellipsis;  
   -o-text-overflow: ellipsis;  
+}
+
+.arrow_box {
+	position: relative;
+	background: #f5f547;
+}
+.arrow_box:after {
+	right: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(245, 245, 71, 0);
+	border-right-color: #f5f547;
+	border-width: 8px;
+	margin-top: -8px;
 }

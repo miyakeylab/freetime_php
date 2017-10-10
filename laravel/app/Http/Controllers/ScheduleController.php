@@ -25,7 +25,7 @@ class ScheduleController extends Controller
     }
 
     /**
-     *  スケジュール画面表示 
+     *  スケジュール画面初期ルート
      **/
     public function MainView() {
         $dt = Carbon::now();
@@ -35,11 +35,17 @@ class ScheduleController extends Controller
     }
     
     /**
-     *  ユーザースケジュール画面表示 
+     *  ユーザースケジュール画面初期ルート 
      **/
     public function UserScheduleView($id) {
         $dt = Carbon::now();
         $dt->addHour(Config::get('const.TIME_ZONE_MGT_DIFF')["0"]);
+        return $this->UserScheduleDisp($id,$dt,0);
+    }
+     /**
+     *  ユーザースケジュール画面表示 
+     **/
+    public function UserScheduleDisp($id,$dt,$my_timezone) {       
         $month = $dt->month;
         $year = $dt->year;
         $maxMonth = $dt->daysInMonth;
@@ -50,7 +56,6 @@ class ScheduleController extends Controller
         {
             $mySchedule[] = Schedule::where('user_id','=',$id)
             ->whereDate('start_time_gmt', $getDate->toDateString())
-            ->whereDate('end_time_gmt', $getDate->toDateString())
             ->get();
             $getDate->addDay();
         }
@@ -66,14 +71,16 @@ class ScheduleController extends Controller
             
         }
         
-        Log::info('ユーザースケジュール画面表示 ID:'.Auth::user()->id.' 表示ユーザーID:'.$id.' 月:'.$month);
+        Log::info('ユーザースケジュール画面表示 ID:'.Auth::user()->id.' 表示ユーザーID:'.$id.' 月:'.$month.' スケジュール:'.count($mySchedule));
         return view('user_schedule',['year' => $year,
                                         'month' => $month, 
                                         'user' =>$user,
                                         'maxMonth' => $maxMonth,
                                         'mySchedule' => $mySchedule,
                                         'feed' => $feed,
-                                        'modal' => $modal]);
+                                        'modal' => $modal,
+                                        'myid'=> $id,
+                                        'my_timezone' => $my_timezone]);
     }
     
     /**
@@ -474,19 +481,25 @@ class ScheduleController extends Controller
     public function ScheduleDisp($dt,$setHour,$my_timezone) { 
         
         $now = $dt->year."/".str_pad($dt->month, 2, 0, STR_PAD_LEFT)."/".str_pad($dt->day, 2, 0, STR_PAD_LEFT);
-        $dt_where_pre = Carbon::now();
-        $dt_where_pre = $dt_where_pre->subDay();
-        $dt_where_nex = Carbon::now();
-        $dt_where_nex = $dt_where_nex->addDay();
+
+        $dt_where_pre = $dt->copy()->subDay();
+        $dt_where_nex = $dt->copy()->addDay();
+        
+        Log::info('$dt_where_pre'.$dt_where_pre->toDateString().' $dt_where_nex'.$dt_where_nex->toDateString());
+  
         
         $hour = $setHour;
         $friends = Friend::join('users', 'friends.friend_user_id', '=', 'users.id')->join('userdetails', 'friends.friend_user_id', '=', 'userdetails.user_id')->where('friends.user_id',Auth::user()->id)->get();
         $user = User::find(Auth::user()->id)->userdetail()->first();
         $mySchedule = Schedule::where('user_id','=',Auth::user()->id)
         ->whereBetween('start_time_gmt', array($dt_where_pre->toDateString(),$dt_where_nex->toDateString()))
-        ->whereBetween('end_time_gmt', array($dt_where_pre->toDateString(),$dt_where_nex->toDateString()))
         ->get();
                 
+        foreach($mySchedule as $schTemp)
+        {
+            Log::info('スケジュールID:'.$schTemp->id);
+
+        }        
         //友達スケジュール一覧
         $friendSchedule = array();
         // ID抽出
@@ -494,7 +507,6 @@ class ScheduleController extends Controller
         {
             $friendSchedule[] = Schedule::where('user_id','=',$friend->friend_user_id)
                 ->whereBetween('start_time_gmt', array($dt_where_pre->toDateString(),$dt_where_nex->toDateString()))
-                ->whereBetween('end_time_gmt', array($dt_where_pre->toDateString(),$dt_where_nex->toDateString()))
                 ->get();
         }
         
@@ -509,7 +521,6 @@ class ScheduleController extends Controller
         {
             $groupSchedule[] = Groupschedule::where('group_id','=',$group->master_id)
                 ->whereBetween('start_time_gmt', array($dt_where_pre->toDateString(),$dt_where_nex->toDateString()))
-                ->whereBetween('end_time_gmt', array($dt_where_pre->toDateString(),$dt_where_nex->toDateString()))
                 ->get();
         }        
         Log::info('スケジュール画面表示 ID:'.Auth::user()->id.' 日付:'.$now.' 時間:'.$hour.' TimeZone:'.$my_timezone);
@@ -535,7 +546,6 @@ class ScheduleController extends Controller
         ->get();
         $mySchedule = Groupschedule::where('group_id','=',$group_id)
         ->whereDate('start_time_gmt', $dt->toDateString())
-        ->whereDate('end_time_gmt', $dt->toDateString())
         ->get();
                 
         //友達スケジュール一覧
@@ -545,7 +555,6 @@ class ScheduleController extends Controller
         {
             $friendSchedule[] = Schedule::where('user_id','=',$groupfriend->user_id)
                 ->whereDate('start_time_gmt', $dt->toDateString())
-                ->whereDate('end_time_gmt', $dt->toDateString())
                 ->get();
         }
         
@@ -661,12 +670,111 @@ class ScheduleController extends Controller
         {
             $hour = 25;
         }
-        $my_timezone = 0;
+        
+        $my_timezone = $timeId;
         
         return $this->ScheduleDisp($dt,$hour,$my_timezone);
     }
+     /**
+     * オファー作成
+     **/
+    public function OfferCreateUser(Request $request) 
+    {
+        Log::info('オファー作成 ID:'.Auth::user()->id);
     
+        $dt_start = new Carbon($request->schedule_start);
+        $dt_end = new Carbon($request->schedule_end);
+        $dt_start_gmt = new Carbon($request->schedule_start);
+        $dt_end_gmt = new Carbon($request->schedule_end);        
 
+        $timeId =  $request->my_timezone;        
+        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['0'] == true)
+        {
+            // GMTにするためマイナス
+            $dt_start_gmt->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_start_gmt->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+            $dt_end_gmt->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_end_gmt->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
+        else
+        {
+            $dt_start_gmt->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_start_gmt->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+            $dt_end_gmt->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_end_gmt->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }        
+        $offer = new Offer;
+        $offer->master_user_id = Auth::user()->id;//オファーユーザーID
+        $offer->client_user_id = $request->offer_friend_id;//オファークライアントユーザーID
+        $offer->state = Config::get('const.OFFER_REQ');         //オファー状況
+        $offer->my_time_id = $timeId;            //時間ID
+        $offer->start_time = $dt_start;         //スケジュール開始時間
+        $offer->end_time=$dt_end;                //スケジュール終了時間
+        $offer->start_time_gmt = $dt_start_gmt;     //スケジュール開始時間(GMT)
+        $offer->end_time_gmt = $dt_end_gmt;       //スケジュール終了時間(GMT)
+        if($request->schedule_content === null)
+        {
+            $offer->content = "";            //スケジュール内容
+        }else{
+            $offer->content = $request->schedule_content;            //スケジュール内容
+        }
+        
+        
+        if($request->colors == "Default")
+        {
+            $offer->category_id=0;        //カテゴリーID
+        }else if($request->colors == "Primary")
+        {
+            $offer->category_id=1;        //カテゴリーID
+        }else if($request->colors == "Success")
+        {
+            $offer->category_id=2;        //カテゴリーID
+        }else if($request->colors == "Info")
+        {
+            $offer->category_id=3;        //カテゴリーID
+        }else if($request->colors == "Warning")
+        {
+            $offer->category_id=4;        //カテゴリーID
+        }else if($request->colors == "Danger")
+        {
+            $offer->category_id=5;        //カテゴリーID
+        }else
+        {
+            $offer->category_id=0;        //カテゴリーID
+        }
+        
+        if($request->schedule_title === null)
+        {
+            $offer->title="";              //スケジュールタイトル
+        }else{
+            $offer->title=$request->schedule_title;              //スケジュールタイトル
+            
+        }
+        $offer->pat_id=0;                //パターンID
+        $offer->schedule_img="";        //スタンプレイアウト      
+        $offer->save();
+
+        $dt = new Carbon($request->now_day);
+        $dt_now = Carbon::now();
+        
+        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['0'] == true)
+        {
+            $dt_now->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_now->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
+        else
+        {
+            $dt_now->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_now->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
+        
+        $my_timezone = $timeId;
+        $id = $request->offer_friend_id;
+        return $this->UserScheduleDisp($id,$dt,$my_timezone);
+    }   
+    /**
+     * タイムゾーン
+     **/
     public function switchTimezone(Request $request)
     {
         Log::info('タイムゾーン切り替え TimeZone:'.$request->timezone);
@@ -687,5 +795,29 @@ class ScheduleController extends Controller
         $hour = $dt->hour;
 
         return $this->ScheduleDisp($dt,$hour,$my_timezone);
+    }
+    /**
+     * タイムゾーン(ユーザー)
+     **/
+    public function switchTimezoneUser(Request $request)
+    {
+        Log::info('タイムゾーン切り替え TimeZone:'.$request->timezone);
+        $my_timezone = $request->timezone;
+        $dt = Carbon::now();
+        
+        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['0'] == true)
+        {
+            $dt->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+            $dt->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+        }
+        else
+        {
+            $dt->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+            $dt->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+        }
+        
+        $id = $request->my_id;
+
+        return $this->UserScheduleDisp($id,$dt,$my_timezone);
     }
 }
