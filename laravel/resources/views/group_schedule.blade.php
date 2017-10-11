@@ -68,6 +68,10 @@
                         
                         <?php $now_end = new \Carbon\Carbon($schedule->end_time); 
                           $hourDiff = $now_start->diffInHours($now_end);
+                          if(($hourDiff + $n) > 24)
+                            {
+                              $hourDiff = (24 - $n);
+                            }
                         ?>   
                         
                         @if($result === 0)

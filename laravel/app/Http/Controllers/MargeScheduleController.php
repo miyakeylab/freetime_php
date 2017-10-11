@@ -41,8 +41,8 @@ class MargeScheduleController extends Controller
     public function ScheduleDisp($dt,$setHour,$my_timezone,$user_marge_check,$group_marge_check) { 
         
         $now = $dt->year."/".str_pad($dt->month, 2, 0, STR_PAD_LEFT)."/".str_pad($dt->day, 2, 0, STR_PAD_LEFT);
-        $dt_where_pre = $dt->copy()->subDay();
-        $dt_where_nex = $dt->copy()->addDay();
+        $dt_where_pre = $dt->copy()->subDay(2);
+        $dt_where_nex = $dt->copy()->addDay(2);
         
         $hour = $setHour;
         $friends = Friend::join('users', 'friends.friend_user_id', '=', 'users.id')->join('userdetails', 'friends.friend_user_id', '=', 'userdetails.user_id')->where('friends.user_id',Auth::user()->id)->get();
@@ -206,7 +206,7 @@ class MargeScheduleController extends Controller
             $dt_now->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$request->my_timezone]['2']);
         }
         
-        if($dt->diffInDays($dt_now) == 0)
+        if($dt->isSameDay($dt_now) == true)
         {
             $hour = $dt_now->hour;
         }else
@@ -238,7 +238,7 @@ class MargeScheduleController extends Controller
             $dt_now->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$request->my_timezone]['2']);
         }        
         
-        if($dt->diffInDays($dt_now) == 0)
+        if($dt->isSameDay($dt_now) == true)
         {
             $hour = $dt_now->hour;
         }else
@@ -252,4 +252,121 @@ class MargeScheduleController extends Controller
         
         return $this->ScheduleDisp($dt,$hour,$my_timezone,$user_marge_check,$group_marge_check);
     } 
+    
+    
+    
+    /**
+     * オファー作成
+     **/
+    public function OfferCreate(Request $request) 
+    {
+        Log::info('オファー作成 ID:'.Auth::user()->id);
+    
+        $dt_start = new Carbon($request->schedule_start);
+        $dt_end = new Carbon($request->schedule_end);
+        $dt_start_gmt = new Carbon($request->schedule_start);
+        $dt_end_gmt = new Carbon($request->schedule_end);        
+
+        $timeId =  $request->my_timezone;        
+        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['0'] == true)
+        {
+            // GMTにするためマイナス
+            $dt_start_gmt->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_start_gmt->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+            $dt_end_gmt->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_end_gmt->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
+        else
+        {
+            $dt_start_gmt->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_start_gmt->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+            $dt_end_gmt->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_end_gmt->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }      
+        
+        // 存在チェック
+        if($request->has('addUser'))
+        {
+            foreach($request->addUser as $user)
+            {                
+                $offer = new Offer;
+                $offer->master_user_id = Auth::user()->id;//オファーユーザーID
+                $offer->client_user_id = $user;//オファークライアントユーザーID
+                $offer->state = Config::get('const.OFFER_REQ');         //オファー状況
+                $offer->my_time_id = $timeId;            //時間ID
+                $offer->start_time = $dt_start;         //スケジュール開始時間
+                $offer->end_time=$dt_end;                //スケジュール終了時間
+                $offer->start_time_gmt = $dt_start_gmt;     //スケジュール開始時間(GMT)
+                $offer->end_time_gmt = $dt_end_gmt;       //スケジュール終了時間(GMT)
+                if($request->schedule_content === null)
+                {
+                    $offer->content = "";            //スケジュール内容
+                }else{
+                    $offer->content = $request->schedule_content;            //スケジュール内容
+                }
+                
+                
+                if($request->colors == "Default")
+                {
+                    $offer->category_id=0;        //カテゴリーID
+                }else if($request->colors == "Primary")
+                {
+                    $offer->category_id=1;        //カテゴリーID
+                }else if($request->colors == "Success")
+                {
+                    $offer->category_id=2;        //カテゴリーID
+                }else if($request->colors == "Info")
+                {
+                    $offer->category_id=3;        //カテゴリーID
+                }else if($request->colors == "Warning")
+                {
+                    $offer->category_id=4;        //カテゴリーID
+                }else if($request->colors == "Danger")
+                {
+                    $offer->category_id=5;        //カテゴリーID
+                }else
+                {
+                    $offer->category_id=0;        //カテゴリーID
+                }
+                
+                if($request->schedule_title === null)
+                {
+                    $offer->title="";              //スケジュールタイトル
+                }else{
+                    $offer->title=$request->schedule_title;              //スケジュールタイトル
+                    
+                }
+                $offer->pat_id=0;                //パターンID
+                $offer->schedule_img="";        //スタンプレイアウト      
+                $offer->save();
+            }        
+        }
+
+        $dt = new Carbon($request->now_day);
+        $dt_now = Carbon::now();
+        
+        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['0'] == true)
+        {
+            $dt_now->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_now->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
+        else
+        {
+            $dt_now->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_now->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
+        
+        if($dt->isSameDay($dt_now) == true)
+        {
+            $hour = $dt_now->hour;
+        }else
+        {
+            $hour = 25;
+        }
+        
+        $my_timezone = $timeId;
+         $user_marge_check =  array();
+        $group_marge_check = array();       
+        return $this->ScheduleDisp($dt,$hour,$my_timezone,$user_marge_check,$group_marge_check);
+    }    
 }

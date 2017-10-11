@@ -12,7 +12,7 @@
             <a href="javascript:document.prevForm.submit()"><i class="fa fa-btn fa-chevron-left"></i></a>
             <input type="hidden" name="now_day" value="{{ $now }}" /> 
             <input type="hidden" name="my_timezone" value="{{ $my_timezone }}"/> 
-          </form>{{ " "."$now"." " }}
+          </form><b>{{ " "."$now"." " }}</b>
           <form method="POST" action="{{ url('my_schedule/next') }}" style="display: inline" name="nextForm">
             {{ csrf_field() }}
             <a href="javascript:document.nextForm.submit()"><i class="fa fa-btn fa-chevron-right"></i></a>
@@ -78,6 +78,8 @@
                 @for ($n=0; $n<24; $n++)
                    <?php  $str_1 = new \Carbon\Carbon($now.' '.str_pad($n, 2, 0, STR_PAD_LEFT).':00'); 
                           $str_2 = new \Carbon\Carbon($now.' '.str_pad($n+1, 2, 0, STR_PAD_LEFT).':00'); 
+                          $str_3 = new \Carbon\Carbon($now_pre.' '.str_pad(0, 2, 0, STR_PAD_LEFT).':00'); 
+                          $str_4 = new \Carbon\Carbon($now_pre.' '.str_pad(23, 2, 0, STR_PAD_LEFT).':00');
                           $result = 0; 
                           $count[$n] = 0; ?>
                   @if($hourDiff <= 0 )
@@ -114,7 +116,12 @@
                             }
                       
                             $hourDiff = $now_start->diffInHours($now_end);
-                        ?>   
+                            if(($hourDiff + $n) > 24)
+                            {
+                              $hourDiff = (24 - $n);
+                            }
+                        ?> 
+
                         
                         @if($result === 0)
                           <?php $result = 1;
@@ -152,6 +159,59 @@
                         @else
                          <?php $count[$n] +=1; ?>
                         @endif
+                      @elseif($now_start->gte($str_3)=== true && $now_start->lt($str_4)===true && $n == 0)
+                        <?php $now_end = new \Carbon\Carbon($schedule->end_time_gmt); 
+                            if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['0'] == true)
+                            {
+                                $now_end->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                                $now_end->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                            }
+                            else
+                            {
+                                $now_end->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                                $now_end->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                            }
+                            $now_start_pre = new \Carbon\Carbon($str_1);
+                            $hourDiff = $now_start_pre->diffInHours($now_end);
+                            if(($hourDiff + $n) > 24)
+                            {
+                              $hourDiff = (24 - $n);
+                            }
+                        ?>
+                        @if($result === 0)
+                          <?php $result = 1;
+                          $color= "badge-default";
+                          switch($schedule->category_id)
+                          {
+                          case 0:
+                            $color= "badge-default";
+                            break;
+                          case 1:
+                            $color= "badge-primary";
+                            break;
+                          case 2:
+                            $color= "badge-success";
+                            break;
+                          case 3:
+                            $color= "badge-info";
+                            break;
+                          case 4:
+                            $color= "badge-warning";
+                            break;
+                          case 5:
+                            $color= "badge-danger";
+                            break;
+                          }
+                          ?>
+                        <td class="myFeed shcedule-font {{  $color  }}" colspan="{{ $hourDiff }}" align="center" data-toggle="modal" 
+                        data-target="#staticModal" 
+                        data-start="{{ $now_start }}" 
+                        data-end="{{ $now_end }}"
+                        data-title="{{ $schedule->title }}"
+                        data-content="{{ $schedule->content }}"
+                        data-category="{{ $schedule->category_id }}"><span class="{{ 'overflowStr_'.$hourDiff }}" style="display:block;">{{ $schedule->title }}</span></td>
+                        
+                        @endif                        
                       @endif
                     @endforeach
                     
@@ -192,7 +252,7 @@
             <tr>
                 <td colspan="1" align="center">
                   <a href="{{ url('/user_schedule',$user->user_id) }}">
-                    <span class="overflowStrName" style="display:block;">{{ $user->user_name }}</span>
+                    <span class="overflowStrName" style="display:block;"><b>{{ $user->user_name }}</b></span>
                   </a>
                 </td>
                 @for ($n=0;$n<24;$n++)
@@ -223,6 +283,8 @@
                 @for ($n=0; $n<24; $n++)
                    <?php  $str_1 = new \Carbon\Carbon($now.' '.str_pad($n, 2, 0, STR_PAD_LEFT).':00'); 
                           $str_2 = new \Carbon\Carbon($now.' '.str_pad($n+1, 2, 0, STR_PAD_LEFT).':00'); 
+                          $str_3 = new \Carbon\Carbon($now_pre.' '.str_pad(0, 2, 0, STR_PAD_LEFT).':00'); 
+                          $str_4 = new \Carbon\Carbon($now_pre.' '.str_pad(23, 2, 0, STR_PAD_LEFT).':00');
                           $result = 0; 
                           $count_group[$n] = 0; ?>
                   @if($hourDiff <= 0 )
@@ -258,6 +320,10 @@
                             }
                       
                             $hourDiff = $now_start->diffInHours($now_end);
+                            if(($hourDiff + $n) > 24)
+                            {
+                              $hourDiff = (24 - $n);
+                            }
                         ?>
                         
                         @if($result === 0)
@@ -297,6 +363,60 @@
                         @else
                          <?php $count_group[$n] +=1; ?>
                         @endif
+                      @elseif($now_start->gte($str_3)=== true && $now_start->lt($str_4)===true && $n == 0)
+                        <?php $now_end = new \Carbon\Carbon($schedule->end_time_gmt); 
+                            if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['0'] == true)
+                            {
+                                $now_end->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                                $now_end->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                            }
+                            else
+                            {
+                                $now_end->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                                $now_end->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                            }
+                            $now_start_pre = new \Carbon\Carbon($str_1);
+                            $hourDiff = $now_start_pre->diffInHours($now_end);
+                            if(($hourDiff + $n) > 24)
+                            {
+                              $hourDiff = (24 - $n);
+                            }
+                        ?>
+                        @if($result === 0)
+                          <?php $result = 1;
+                          $color= "badge-default";
+                          switch($schedule->category_id)
+                          {
+                          case 0:
+                            $color= "badge-default";
+                            break;
+                          case 1:
+                            $color= "badge-primary";
+                            break;
+                          case 2:
+                            $color= "badge-success";
+                            break;
+                          case 3:
+                            $color= "badge-info";
+                            break;
+                          case 4:
+                            $color= "badge-warning";
+                            break;
+                          case 5:
+                            $color= "badge-danger";
+                            break;
+                          }
+                          ?>
+                        <td class="friendFeed shcedule-font {{  $color  }}" colspan="{{ $hourDiff }}" align="center" data-toggle="modal" 
+                        data-target="#groupModal" 
+                        data-start="{{ $now_start }}" 
+                        data-end="{{ $now_end }}"
+                        data-title="{{ $schedule->title }}"
+                        data-content="{{ $schedule->content }}"
+                        data-category="{{ $schedule->category_id }}"
+                        data-groupid="{{ $group->master_id }}"><span class="{{ 'overflowStr_'.$hourDiff }}" style="display:block;">{{ $schedule->title }}</span></td>
+                        
+                        @endif                        
                       @endif
                     @endforeach
                     
@@ -340,7 +460,7 @@
             <tr>
                 <td class="overflow" colspan="1" align="center">
                   <a href="{{ url('/group_schedule',$group->master_id) }}">
-                    {{ $group->group_name  }}
+                    <b>{{ $group->group_name  }}</b>
                   <a>
                 </td>
                 @for ($n=0;$n<24;$n++)
@@ -374,6 +494,8 @@
                 @for ($n=0; $n<24; $n++)
                    <?php  $str_1 = new \Carbon\Carbon($now.' '.str_pad($n, 2, 0, STR_PAD_LEFT).':00'); 
                           $str_2 = new \Carbon\Carbon($now.' '.str_pad($n+1, 2, 0, STR_PAD_LEFT).':00'); 
+                          $str_3 = new \Carbon\Carbon($now_pre.' '.str_pad(0, 2, 0, STR_PAD_LEFT).':00'); 
+                          $str_4 = new \Carbon\Carbon($now_pre.' '.str_pad(23, 2, 0, STR_PAD_LEFT).':00');
                           $result = 0; 
                           $count_friend[$n] = 0; ?>
                   @if($hourDiff <= 0 )
@@ -406,8 +528,12 @@
                                 $now_end->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
                                 $now_end->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
                             }
-                      
+                            
                             $hourDiff = $now_start->diffInHours($now_end);
+                            if(($hourDiff + $n) > 24)
+                            {
+                              $hourDiff = (24 - $n);
+                            }
                         ?>
                         
                         @if($result === 0)
@@ -446,6 +572,59 @@
                         @else
                          <?php $count_friend[$n] +=1; ?>
                         @endif
+                      @elseif($now_start->gte($str_3)=== true && $now_start->lt($str_4)===true && $n == 0)
+                        <?php $now_end = new \Carbon\Carbon($schedule->end_time_gmt); 
+                            if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['0'] == true)
+                            {
+                                $now_end->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                                $now_end->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                            }
+                            else
+                            {
+                                $now_end->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                                $now_end->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                            }
+                            $now_start_pre = new \Carbon\Carbon($str_1);
+                            $hourDiff = $now_start_pre->diffInHours($now_end);
+                            if(($hourDiff + $n) > 24)
+                            {
+                              $hourDiff = (24 - $n);
+                            }
+                        ?>
+                        @if($result === 0)
+                          <?php $result = 1;
+                          $color= "badge-default";
+                          switch($schedule->category_id)
+                          {
+                          case 0:
+                            $color= "badge-default";
+                            break;
+                          case 1:
+                            $color= "badge-primary";
+                            break;
+                          case 2:
+                            $color= "badge-success";
+                            break;
+                          case 3:
+                            $color= "badge-info";
+                            break;
+                          case 4:
+                            $color= "badge-warning";
+                            break;
+                          case 5:
+                            $color= "badge-danger";
+                            break;
+                          }
+                          ?>
+                        <td class="friendFeed shcedule-font {{  $color  }}" colspan="{{ $hourDiff }}" align="center" data-toggle="modal" 
+                        data-target="#friendModal" 
+                        data-start="{{ $now_start }}" 
+                        data-end="{{ $now_end }}"
+                        data-title="{{ $schedule->title }}"
+                        data-content="{{ $schedule->content }}"
+                        data-category="{{ $schedule->category_id }}"><span class="{{ 'overflowStr_'.$hourDiff }}" style="display:block;">{{ $schedule->title }}</span></td>
+                        
+                        @endif                        
                       @endif
                     @endforeach
                     
@@ -490,7 +669,7 @@
             <tr>
                 <td colspan="1" align="center">
                   <a href="{{ url('/user_schedule',$friend->friend_user_id) }}">
-                    <span class="overflowStrName" style="display:block;">{{ $friend->name  }}</span>
+                    <span class="overflowStrName" style="display:block;"><b>{{ $friend->name  }}</b></span>
                   <a>
                 </td>
                 @for ($n=0;$n<24;$n++)
@@ -827,6 +1006,7 @@
         </div>
         <input type="hidden" name="now_day" value="{{ $now }}" />
         <input type="hidden" id="offer_friend_id" name="offer_friend_id" /> 
+        <input type="hidden" name="my_timezone" value="{{ $my_timezone }}" /> 
         </form>
       </div> <!-- /.modal-content -->
     </div> <!-- /.modal-dialog -->

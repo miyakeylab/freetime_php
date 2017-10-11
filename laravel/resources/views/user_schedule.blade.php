@@ -60,7 +60,23 @@
                 <?php $hourDiff = 0; ?>
                 @for ($n=0; $n<24; $n++)
                    <?php  $str_1 = new \Carbon\Carbon($year.'/'.str_pad($month, 2, 0, STR_PAD_LEFT).'/'.str_pad($i, 2, 0, STR_PAD_LEFT).' '.str_pad($n, 2, 0, STR_PAD_LEFT).':00'); 
-                          $str_2 = new \Carbon\Carbon($year.'/'.str_pad($month, 2, 0, STR_PAD_LEFT).'/'.str_pad($i, 2, 0, STR_PAD_LEFT).' '.str_pad($n+1, 2, 0, STR_PAD_LEFT).':00'); 
+                          $str_2 = new \Carbon\Carbon($year.'/'.str_pad($month, 2, 0, STR_PAD_LEFT).'/'.str_pad($i, 2, 0, STR_PAD_LEFT).' '.str_pad($n+1, 2, 0, STR_PAD_LEFT).':00');
+                          if($i == 1)
+                          {
+                            if( $month == 1)
+                            {
+                              $str_3 = new \Carbon\Carbon(($year-1).'/'.str_pad(12, 2, 0, STR_PAD_LEFT).'/'.str_pad(31, 2, 0, STR_PAD_LEFT).' '.str_pad(0, 2, 0, STR_PAD_LEFT).':00'); 
+                              $str_4 = new \Carbon\Carbon(($year-1).'/'.str_pad(12, 2, 0, STR_PAD_LEFT).'/'.str_pad(31, 2, 0, STR_PAD_LEFT).' '.str_pad(23, 2, 0, STR_PAD_LEFT).':00');
+                            }else{
+                              $str_3 = new \Carbon\Carbon(($year).'/'.str_pad($month-1, 2, 0, STR_PAD_LEFT).'/'.str_pad(Config::get('const.MONTH_DAY_MAX')[$month-1], 2, 0, STR_PAD_LEFT).' '.str_pad(0, 2, 0, STR_PAD_LEFT).':00'); 
+                              $str_4 = new \Carbon\Carbon(($year).'/'.str_pad($month-1, 2, 0, STR_PAD_LEFT).'/'.str_pad(Config::get('const.MONTH_DAY_MAX')[$month-1], 2, 0, STR_PAD_LEFT).' '.str_pad(23, 2, 0, STR_PAD_LEFT).':00');
+                            }
+                          }else
+                          {
+                              $str_3 = new \Carbon\Carbon(($year).'/'.str_pad($month, 2, 0, STR_PAD_LEFT).'/'.str_pad($i-1, 2, 0, STR_PAD_LEFT).' '.str_pad(0, 2, 0, STR_PAD_LEFT).':00'); 
+                              $str_4 = new \Carbon\Carbon(($year).'/'.str_pad($month, 2, 0, STR_PAD_LEFT).'/'.str_pad($i-1, 2, 0, STR_PAD_LEFT).' '.str_pad(23, 2, 0, STR_PAD_LEFT).':00');
+                           
+                          }
                           $result = 0; 
                           $count[$n] = 0; ?>
                   @if($hourDiff <= 0 )
@@ -96,6 +112,10 @@
                             }
                       
                             $hourDiff = $now_start->diffInHours($now_end);
+                            if(($hourDiff + $n) > 24)
+                            {
+                              $hourDiff = (24 - $n);
+                            }
                         ?>                       
                         @if($result === 0)
                           <?php $result = 1;
@@ -133,6 +153,59 @@
                         @else
                          <?php $count[$n] +=1; ?>
                         @endif
+                      @elseif($now_start->gte($str_3)=== true && $now_start->lt($str_4)===true && $n == 0)
+                        <?php $now_end = new \Carbon\Carbon($schedule->end_time_gmt); 
+                            if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['0'] == true)
+                            {
+                                $now_end->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                                $now_end->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                            }
+                            else
+                            {
+                                $now_end->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['1']);
+                                $now_end->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
+                            }
+                            $now_start_pre = new \Carbon\Carbon($str_1);
+                            $hourDiff = $now_start_pre->diffInHours($now_end);
+                            if(($hourDiff + $n) > 24)
+                            {
+                              $hourDiff = (24 - $n);
+                            }
+                        ?>
+                        @if($result === 0)
+                          <?php $result = 1;
+                          $color= "badge-default";
+                          switch($schedule->category_id)
+                          {
+                          case 0:
+                            $color= "badge-default";
+                            break;
+                          case 1:
+                            $color= "badge-primary";
+                            break;
+                          case 2:
+                            $color= "badge-success";
+                            break;
+                          case 3:
+                            $color= "badge-info";
+                            break;
+                          case 4:
+                            $color= "badge-warning";
+                            break;
+                          case 5:
+                            $color= "badge-danger";
+                            break;
+                          }
+                          ?>
+                        <td class="{{  $feed.' '.$color  }} shcedule-font" colspan="{{ $hourDiff }}" align="center" data-toggle="modal" 
+                        data-target="{{ $modal }}" 
+                        data-start="{{ $now_start }}" 
+                        data-end="{{ $now_end }}"
+                        data-title="{{ $schedule->title }}"
+                        data-content="{{ $schedule->content }}"
+                        data-category="{{ $schedule->category_id }}"><span class="{{ 'overflowStr_'.$hourDiff }}" style="display:block;">{{ $schedule->title }}</span></td>
+                          
+                        @endif                        
                       @endif
                     @endforeach
                     

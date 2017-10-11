@@ -118,6 +118,7 @@ Route::get('/offer','OfferController@MainView');
 Route::post('/offer/set','OfferController@OfferCreate');
 Route::post('/my_schedule/offer','ScheduleController@OfferCreate');
 Route::post('/my_schedule/user/offer','ScheduleController@OfferCreateUser');
+Route::post('/marge/offer','MargeScheduleController@OfferCreate');
 /**
  * オファーリクエストOK
  */ 
@@ -170,3 +171,4 @@ Route::post('/marge/prev','MargeScheduleController@PrevScheduleView');
 * スケジュール翌日(マージ)
 */ 
 Route::post('/marge/next','MargeScheduleController@NextScheduleView');
+Route::post('/upload', 'SettingController@upload');

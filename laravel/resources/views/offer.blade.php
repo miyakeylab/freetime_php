@@ -24,7 +24,7 @@
         <div class="col-md-6">  
         <div class="panel panel-default">
         <div class="panel-heading">{{ __('messages.recOfferList') }}</div>
-        <div class="panel-body">
+        <div class="panel-body fixed-panel-user">
         @if (count($offers) > 0)
             <!-- 受領オファー一覧 -->
             <?php $i = 0; ?>
@@ -70,7 +70,7 @@
         <div class="col-md-6">  
         <div class="panel panel-default">
         <div class="panel-heading">{{ __('messages.reqOfferList') }}</div>
-        <div class="panel-body">
+        <div class="panel-body fixed-panel-user">
                     
         @if (count($offerReqs) > 0)
             <!-- 申請中オファー一覧 -->

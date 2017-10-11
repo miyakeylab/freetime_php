@@ -190,7 +190,7 @@ class ScheduleController extends Controller
             $dt_now->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
             $dt_now->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
         }
-        if($dt->diffInDays($dt_now) == 0)
+        if($dt->isSameDay($dt_now) == true)
         {
             $hour = $dt_now->hour;
         }else
@@ -296,7 +296,7 @@ class ScheduleController extends Controller
             $dt_now->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
         }
         
-        if($dt->diffInDays($dt_now) == 0)
+        if($dt->isSameDay($dt_now) == true)
         {
             $hour = $dt_now->hour;
         }else
@@ -403,7 +403,7 @@ class ScheduleController extends Controller
             $dt_now->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
         }
         
-        if($dt->diffInDays($dt_now) == 0)
+        if($dt->isSameDay($dt_now) == true)
         {
             $hour = $dt_now->hour;
         }else
@@ -433,7 +433,7 @@ class ScheduleController extends Controller
             $dt_now->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$request->my_timezone]['2']);
         }
         
-        if($dt->diffInDays($dt_now) == 0)
+        if($dt->isSameDay($dt_now) == true)
         {
             $hour = $dt_now->hour;
         }else
@@ -462,8 +462,8 @@ class ScheduleController extends Controller
             $dt_now->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$request->my_timezone]['1']);
             $dt_now->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$request->my_timezone]['2']);
         }        
-        
-        if($dt->diffInDays($dt_now) == 0)
+        Log::info('$dt_now '.$dt_now.' $dt '.$dt);
+        if($dt->isSameDay($dt_now) == true)
         {
             $hour = $dt_now->hour;
         }else
@@ -481,9 +481,11 @@ class ScheduleController extends Controller
     public function ScheduleDisp($dt,$setHour,$my_timezone) { 
         
         $now = $dt->year."/".str_pad($dt->month, 2, 0, STR_PAD_LEFT)."/".str_pad($dt->day, 2, 0, STR_PAD_LEFT);
-
-        $dt_where_pre = $dt->copy()->subDay();
-        $dt_where_nex = $dt->copy()->addDay();
+        $pre_dt = $dt->copy()->subDay();
+        $now_pre = $pre_dt->year."/".str_pad($pre_dt->month, 2, 0, STR_PAD_LEFT)."/".str_pad($pre_dt->day, 2, 0, STR_PAD_LEFT);
+        
+        $dt_where_pre = $dt->copy()->subDay(2);
+        $dt_where_nex = $dt->copy()->addDay(2);
         
         Log::info('$dt_where_pre'.$dt_where_pre->toDateString().' $dt_where_nex'.$dt_where_nex->toDateString());
   
@@ -532,7 +534,8 @@ class ScheduleController extends Controller
         'groups' => $groups,
         'friendSchedule' => $friendSchedule,
         'groupSchedule' => $groupSchedule,
-        'my_timezone' => $my_timezone]);     
+        'my_timezone' => $my_timezone,
+        'now_pre' => $now_pre]);     
     }
     /**
      *  スケジュール表示 
@@ -663,7 +666,7 @@ class ScheduleController extends Controller
             $dt_now->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
         }
         
-        if($dt->diffInDays($dt_now) == 0)
+        if($dt->isSameDay($dt_now) == true)
         {
             $hour = $dt_now->hour;
         }else

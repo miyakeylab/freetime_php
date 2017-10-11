@@ -113,6 +113,10 @@
                             }
                       
                             $hourDiff = $now_start->diffInHours($now_end);
+                            if(($hourDiff + $n) > 24)
+                            {
+                              $hourDiff = (24 - $n);
+                            }
                         ?>
                         
                         @if($result === 0)
@@ -141,7 +145,7 @@
                                 }
                                 ?>
                         <td class="friendFeed shcedule-font {{  $color  }}" colspan="{{ $hourDiff }}" align="center" data-toggle="modal" 
-                        data-target="#groupModal" 
+                        data-target="#" 
                         data-start="{{ $now_start }}" 
                         data-end="{{ $now_end }}"
                         data-title="{{ $margeTemp->title }}"
@@ -155,14 +159,16 @@
                   @endif
                 @endforeach
                 @if($hourDiff <= 0)
+
                   <td class="friendFeed" colspan="1" align="center" data-toggle="modal" 
-                  data-target="#groupModal" 
+                  data-target="#offerModal" 
                   data-start="{{ $now.' '.str_pad($n, 2, 0, STR_PAD_LEFT).':00' }}" 
                   data-end="{{ $now.' '.str_pad(($n+1), 2, 0, STR_PAD_LEFT).':00' }}"
                   data-title=""
                   data-content=""
                   data-category="0"
-                  data-groupid="0"></td>
+                  data-username=""
+                  data-userid=""></td>
                 @else
                    <?php $hourDiff -= 1; ?>
                 @endif
@@ -229,6 +235,10 @@
                             }
                       
                             $hourDiff = $now_start->diffInHours($now_end);
+                            if(($hourDiff + $n) > 24)
+                            {
+                              $hourDiff = (24 - $n);
+                            }
                         ?>   
                         
                         @if($result === 0)
@@ -257,7 +267,7 @@
                           }
                           ?>
                         <td class="myFeed shcedule-font {{  $color  }}" colspan="{{ $hourDiff }}" align="center" data-toggle="modal" 
-                        data-target="#staticModal" 
+                        data-target="#" 
                         data-start="{{ $now_start }}" 
                         data-end="{{ $now_end }}"
                         data-title="{{ $schedule->title }}"
@@ -272,7 +282,7 @@
                     
                     @if($result === 0)
                       <td class="myFeed" colspan="1" align="center" data-toggle="modal" 
-                      data-target="#staticModal" 
+                      data-target="#" 
                       data-start="{{ $now.' '.str_pad($n, 2, 0, STR_PAD_LEFT).':00' }}" 
                       data-end="{{ $now.' '.str_pad(($n+1), 2, 0, STR_PAD_LEFT).':00' }}"
                       data-title=""
@@ -376,6 +386,10 @@
                             }
                       
                             $hourDiff = $now_start->diffInHours($now_end);
+                            if(($hourDiff + $n) > 24)
+                            {
+                              $hourDiff = (24 - $n);
+                            }
                         ?>
                         
                         @if($result === 0)
@@ -404,7 +418,7 @@
                                 }
                                 ?>
                         <td class="friendFeed shcedule-font {{  $color  }}" colspan="{{ $hourDiff }}" align="center" data-toggle="modal" 
-                        data-target="#groupModal" 
+                        data-target="#" 
                         data-start="{{ $now_start }}" 
                         data-end="{{ $now_end }}"
                         data-title="{{ $schedule->title }}"
@@ -420,7 +434,7 @@
                     
                     @if($result === 0)
                       <td class="friendFeed" colspan="1" align="center" data-toggle="modal" 
-                      data-target="#groupModal" 
+                      data-target="#" 
                       data-start="{{ $now.' '.str_pad($n, 2, 0, STR_PAD_LEFT).':00' }}" 
                       data-end="{{ $now.' '.str_pad(($n+1), 2, 0, STR_PAD_LEFT).':00' }}"
                       data-title=""
@@ -529,6 +543,10 @@
                             }
                       
                             $hourDiff = $now_start->diffInHours($now_end);
+                            if(($hourDiff + $n) > 24)
+                            {
+                              $hourDiff = (24 - $n);
+                            }
                         ?>
                         
                         @if($result === 0)
@@ -557,7 +575,7 @@
                                 }
                                 ?>
                         <td class="friendFeed shcedule-font {{  $color  }}" colspan="{{ $hourDiff }}" align="center" data-toggle="modal" 
-                        data-target="#friendModal" 
+                        data-target="#" 
                         data-start="{{ $now_start }}" 
                         data-end="{{ $now_end }}"
                         data-title="{{ $schedule->title }}"
@@ -572,7 +590,7 @@
                     
                     @if($result === 0)
                       <td class="friendFeed" colspan="1" align="center" data-toggle="modal" 
-                      data-target="#offerModal" 
+                      data-target="#" 
                       data-start="{{ $now.' '.str_pad($n, 2, 0, STR_PAD_LEFT).':00' }}" 
                       data-end="{{ $now.' '.str_pad(($n+1), 2, 0, STR_PAD_LEFT).':00' }}"
                       data-title=""
@@ -634,250 +652,12 @@
         <input type="hidden" name="timezone" value="{{ $my_timezone }}" /> 
       </form>
     </div>
-  <!-- 自モーダルダイアログ -->
-  <div class="modal" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <form class="form-horizontal" method="POST" action="{{ url('my_schedule/set') }}">
-            {{ csrf_field() }}
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">
-            <span aria-hidden="true">&#215;</span><span class="sr-only">{{ __('messages.schedule_close') }}</span>
-          </button>
-          <h4 class="modal-title">{{ __('messages.schedule_modal_title') }}</h4>
-        </div><!-- /modal-header -->
-          <div class="panel panel-default">
-                <div class="panel-heading">{{ __('messages.schedule_modal_date') }}</div>
-                <div class="panel-body">
-           <div class="padding-top-5"></div>
-            <label for="schedule-start" class="col-md-4 control-label">{{ __('messages.schedule_modal_start') }}</label>
-            <div class="col-md-5 input-group date" >
-                <input class="form-control" type="text" id="schedule-start" name="schedule_start" />
-                <span class="input-group-addon"><span class="add-on glyphicon glyphicon-th"></span></span>
-            </div>
-            <div class="padding-top-5"></div>
-            <label for="schedule-end" class="col-md-4 control-label">{{ __('messages.schedule_modal_end') }}</label>
-            <div class="col-md-5 input-group date" >
-                <input class="form-control" type="text" id="schedule-end" name="schedule_end" />
-                <span class="input-group-addon"><span class="add-on glyphicon glyphicon-th"></span></span>
-            </div>
-            </div>
-            </div>
-        <div class="modal-body">
-          <div class="panel panel-default">
-            <div class="panel-heading">{{ __('messages.schedule_modal_content_title') }}</div>
-            <div class="panel-body">
-            <div class="col-xs-offset-2 col-md-8 col-xs-offset-2"  >
-                <input type="text" class="form-control" id="schedule-title" name="schedule_title" ></textarea>
-            </div>
-            <div class="col-xs-offset-2 col-md-8 col-xs-offset-2"  >
-                <textarea class="form-control" id="schedule-content" name="schedule_content" cols="45" rows="4" ></textarea>
-            </div>
-            <div class="col-xs-offset-2 col-md-8 col-xs-offset-2"  >
-            
-            <div class="checkbox-inline">
-              <input type="radio" value="Default" name="colors" id="colors_default" >
-                <label for="colors_default" ><span class="badge badge-default">FreeTime</span></label>
-            </div>
-            <div class="checkbox-inline">
-              <input type="radio" value="Primary" name="colors" id="colors_primary">
-                <label for="colors_primary"><span class="badge badge-primary">Work</span></label>
-            </div>
-            <div class="checkbox-inline">
-              <input type="radio" value="Success" name="colors" id="colors_success">
-                <label for="colors_success"><span class="badge badge-success">Play</span></label>
-            </div>
-            <div class="checkbox-inline">
-              <input type="radio" value="Info" name="colors" id="colors_info">
-                <label for="colors_info"><span class="badge badge-info">Sleep</span></label>
-            </div>
-            <div class="checkbox-inline">
-              <input type="radio" value="Warning" name="colors" id="colors_warning">
-                <label for="colors_warning"><span class="badge badge-warning">Etc</span></label>
-            </div>
-            <div class="checkbox-inline">
-              <input type="radio" value="Danger" name="colors" id="colors_danger">
-                <label for="colors_danger"><span class="badge badge-danger">Block</span></label>
-            </div> 
-            </div>
-            </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('messages.schedule_modal_close_button') }}</button>
-          <button type="submit" class="btn btn-primary">{{ __('messages.schedule_modal_reg_button') }}</button>
-        </div>
-        <input type="hidden" name="now_day" value="{{ $now }}" />
-        <input type="hidden" name="my_timezone" value="{{ $my_timezone }}" /> 
-        </form>
-      </div> <!-- /.modal-content -->
-    </div> <!-- /.modal-dialog -->
-  </div> <!-- /.modal -->
-  
-  <!-- グループモーダルダイアログ -->
-  <div class="modal" id="groupModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <form class="form-horizontal" method="POST" action="{{ url('my_schedule/group_set') }}">
-            {{ csrf_field() }}
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">
-            <span aria-hidden="true">&#215;</span><span class="sr-only">{{ __('messages.schedule_close') }}</span>
-          </button>
-          <h4 class="modal-title">{{ __('messages.schedule_modal_title') }}</h4>
-        </div><!-- /modal-header -->
-          <div class="panel panel-default">
-                <div class="panel-heading">{{ __('messages.schedule_modal_date') }}</div>
-                <div class="panel-body">
-           <div class="padding-top-5"></div>
-            <label for="schedule-start" class="col-md-4 control-label">{{ __('messages.schedule_modal_start') }}</label>
-            <div class="col-md-5 input-group date" >
-                <input class="form-control" type="text" id="schedule-start" name="schedule_start" />
-                <span class="input-group-addon"><span class="add-on glyphicon glyphicon-th"></span></span>
-            </div>
-            <div class="padding-top-5"></div>
-            <label for="schedule-end" class="col-md-4 control-label">{{ __('messages.schedule_modal_end') }}</label>
-            <div class="col-md-5 input-group date" >
-                <input class="form-control" type="text" id="schedule-end" name="schedule_end" />
-                <span class="input-group-addon"><span class="add-on glyphicon glyphicon-th"></span></span>
-            </div>
-            </div>
-            </div>
-        <div class="modal-body">
-          <div class="panel panel-default">
-            <div class="panel-heading">{{ __('messages.schedule_modal_content_title') }}</div>
-            <div class="panel-body">
-            <div class="col-xs-offset-2 col-md-8 col-xs-offset-2"  >
-                <input type="text" class="form-control" id="schedule-title" name="schedule_title" ></textarea>
-            </div>
-            <div class="col-xs-offset-2 col-md-8 col-xs-offset-2"  >
-                <textarea class="form-control" id="schedule-content" name="schedule_content" cols="45" rows="4" ></textarea>
-            </div>
-            <div class="col-xs-offset-2 col-md-8 col-xs-offset-2"  >
-            
-            <div class="checkbox-inline">
-              <input type="radio" value="Default" name="colors" id="colors_default" >
-                <label for="colors_default" ><span class="badge badge-default">FreeTime</span></label>
-            </div>
-            <div class="checkbox-inline">
-              <input type="radio" value="Primary" name="colors" id="colors_primary">
-                <label for="colors_primary"><span class="badge badge-primary">Work</span></label>
-            </div>
-            <div class="checkbox-inline">
-              <input type="radio" value="Success" name="colors" id="colors_success">
-                <label for="colors_success"><span class="badge badge-success">Play</span></label>
-            </div>
-            <div class="checkbox-inline">
-              <input type="radio" value="Info" name="colors" id="colors_info">
-                <label for="colors_info"><span class="badge badge-info">Sleep</span></label>
-            </div>
-            <div class="checkbox-inline">
-              <input type="radio" value="Warning" name="colors" id="colors_warning">
-                <label for="colors_warning"><span class="badge badge-warning">Etc</span></label>
-            </div>
-            <div class="checkbox-inline">
-              <input type="radio" value="Danger" name="colors" id="colors_danger">
-                <label for="colors_danger"><span class="badge badge-danger">Block</span></label>
-            </div> 
-            </div>
-            </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('messages.schedule_modal_close_button') }}</button>
-          <button type="submit" class="btn btn-primary">{{ __('messages.schedule_modal_reg_button') }}</button>
-        </div>
-        <input type="hidden" name="now_day" value="{{ $now }}" />
-        <input type="hidden" name="my_timezone" value="{{ $my_timezone }}" /> 
-        <input type="hidden" id="group_id" name="group_id" /> 
-        </form>
-      </div> <!-- /.modal-content -->
-    </div> <!-- /.modal-dialog -->
-  </div> <!-- /.modal -->
-  
-  <!-- 他モーダルダイアログ -->
-  <div class="modal" id="friendModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <form class="form-horizontal" method="POST" action="{{ url('my_schedule/share') }}">
-            {{ csrf_field() }}
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">
-            <span aria-hidden="true">&#215;</span><span class="sr-only">{{ __('messages.schedule_modal_close') }}</span>
-          </button>
-          <h4 class="modal-title">{{ __('messages.schedule_modal_disp') }}</h4>
-        </div><!-- /modal-header -->
-        <div class="panel panel-default">
-              <div class="panel-heading">{{ __('messages.schedule_modal_date') }}</div>
-              <div class="panel-body">
-         <div class="padding-top-5"></div>
-          <label for="friend-schedule-start" class="col-md-4 control-label">{{ __('messages.schedule_modal_start') }}</label>
-          <div class="col-md-5 input-group date" >
-              <input class="form-control" type="text" id="friend-schedule-start" name="friend_schedule_start" readonly="readonly" />
-          </div>
-          <div class="padding-top-5"></div>
-          <label for="friend-schedule-end" class="col-md-4 control-label">{{ __('messages.schedule_modal_end') }}</label>
-          <div class="col-md-5 input-group date" >
-              <input class="form-control" type="text" id="friend-schedule-end" name="friend_schedule_end" readonly="readonly" />
-          </div>
-          </div>
-          </div>
-        <div class="modal-body">
-          <div class="panel panel-default">
-            <div class="panel-heading">{{ __('messages.schedule_modal_content_title') }}</div>
-            <div class="panel-body">
-            <div class="col-xs-offset-2 col-md-8 col-xs-offset-2"  >
-                <input type="text" class="form-control" id="friend-schedule-title" name="friend_schedule_title" readonly="readonly" ></textarea>
-            </div>
-            <div class="col-xs-offset-2 col-md-8 col-xs-offset-2"  >
-                <textarea class="form-control" id="friend-schedule-content" name="friend_schedule_content" cols="45" rows="4" readonly="readonly" ></textarea>
-            </div>
-            <div class="col-xs-offset-2 col-md-8 col-xs-offset-2"  >
-            
-            <div class="checkbox-inline">
-              <input type="radio" value="Default" name="friend_colors" id="friend-colors_default">
-                <label for="colors_default" ><span class="badge badge-default">FreeTime</span></label>
-            </div>
-            <div class="checkbox-inline">
-              <input type="radio" value="Primary" name="friend_colors" id="friend-colors_primary" >
-                <label for="colors_primary"><span class="badge badge-primary">Work</span></label>
-            </div>
-            <div class="checkbox-inline">
-              <input type="radio" value="Success" name="friend_colors" id="friend-colors_success" >
-                <label for="colors_success"><span class="badge badge-success">Play</span></label>
-            </div>
-            <div class="checkbox-inline">
-              <input type="radio" value="Info" name="friend_colors" id="friend-colors_info" >
-                <label for="colors_info"><span class="badge badge-info">Sleep</span></label>
-            </div>
-            <div class="checkbox-inline">
-              <input type="radio" value="Warning" name="friend_colors" id="friend-colors_warning" >
-                <label for="colors_warning"><span class="badge badge-warning">Etc</span></label>
-            </div>
-            <div class="checkbox-inline">
-              <input type="radio" value="Danger" name="friend_colors" id="friend-colors_danger" >
-                <label for="colors_danger"><span class="badge badge-danger">Block</span></label>
-            </div> 
-            </div>
-            </div>
-            </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('messages.schedule_modal_close_button') }}</button>
-              <button type="submit" class="btn btn-primary">{{ __('messages.schedule_modal_share') }}</button>
-            </div>
-            <input type="hidden" name="now_day" value="{{ $now }}" />
-            <input type="hidden" name="my_timezone" value="{{ $my_timezone }}" /> 
-          </form>
-      </div> <!-- /.modal-content -->
-    </div> <!-- /.modal-dialog -->
-  </div> <!-- /.modal -->
-  
+
   <!-- オファーモーダルダイアログ -->
   <div class="modal" id="offerModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form class="form-horizontal" method="POST" action="{{ url('my_schedule/offer') }}">
+        <form class="form-horizontal" method="POST" action="{{ url('marge/offer') }}">
             {{ csrf_field() }}
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">
@@ -943,7 +723,42 @@
             </div>
           <div class="panel panel-default">
             <!-- 友達一覧 -->
-            <div class="panel-heading"><p id="friend_user_name"></p></div>
+            <div class="panel-heading">{{ __('messages.friend_user_list') }}</div>
+            <div class="panel-body fixed-panel">
+            
+        @if (count($friends) > 0)
+            <?php $i=0; ?>
+            <!-- 友達一覧 -->
+            @foreach ($friends as $friend)
+            @if(in_array( $friend->friend_user_id, $user_marge_check) === true)
+            <?php if($i !== 0){ ?>
+            <hr class="style-one">
+            <?php } ?>
+            <?php $i++; ?>
+            <div class="media">
+                <!-- 1.画像の配置 -->
+                <a class="media-left">
+                    <img class="media-object user_icon_size" src="{{url($friend->user_img)}}">
+                </a>
+                <!-- 2.画像の説明 -->
+                <div class="media-body">
+                    @if($friend->name !== "")
+                    <h4 class="media-heading">{{ $friend->name }}</h4>
+                    @endif
+                    <div class="checkbox">
+        				<label>
+        					<input type="checkbox" name="addUser[]" value="{{ $friend->friend_user_id }}" checked="checked"> {{ __('messages.offerCheck') }}
+        				</label>
+        			</div>
+                </div>
+                <div class="media-right">
+
+                </div>
+            </div>
+            @endif
+            @endforeach
+        @endif
+        </div>
         </div>
         </div>
         <div class="modal-footer">
@@ -951,6 +766,7 @@
           <button type="submit" class="btn btn-primary">{{ __('messages.offerCerate') }}</button>
         </div>
         <input type="hidden" name="now_day" value="{{ $now }}" />
+        <input type="hidden" name="my_timezone" value="{{ $my_timezone }}" /> 
         <input type="hidden" id="offer_friend_id" name="offer_friend_id" /> 
         </form>
       </div> <!-- /.modal-content -->

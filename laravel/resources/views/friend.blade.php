@@ -13,7 +13,7 @@
         <div class="col-md-4">
         <div class="panel panel-default">
         <div class="panel-heading">{{ __('messages.friend_list') }}</div>
-        <div class="panel-body">
+        <div class="panel-body fixed-panel-user">
         @if (count($friends) > 0)
             <?php $i=0; ?>
             <!-- 友達一覧 -->
@@ -50,7 +50,7 @@
         <div class="col-md-4">        
         <div class="panel panel-default">
         <div class="panel-heading">{{ __('messages.friend_request_list') }}</div>
-        <div class="panel-body">
+        <div class="panel-body fixed-panel-user">
         @if (count($friendOffers) > 0)
             <?php $i=0; ?>
             <!-- 友達一覧 -->
@@ -102,7 +102,7 @@
         <div class="col-md-4">          
         <div class="panel panel-default">
         <div class="panel-heading">{{ __('messages.friend_user_list') }}</div>
-        <div class="panel-body">
+        <div class="panel-body fixed-panel-user">
         @if (count($users) > 0)
             <?php $i=0; ?>
             <!-- 友達一覧 -->
