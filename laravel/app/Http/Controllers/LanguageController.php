@@ -11,10 +11,6 @@ use Illuminate\Support\Facades\Session;
 
 class LanguageController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
         
     /**
      *  言語切り替え処理 
@@ -30,7 +26,7 @@ class LanguageController extends Controller
         if (Auth::guest())
         {
             Log::info('ログイン前');
-            return redirect()->back();
+            return Redirect::back();
         }
         else
         {
