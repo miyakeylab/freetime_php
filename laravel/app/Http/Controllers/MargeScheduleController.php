@@ -43,6 +43,8 @@ class MargeScheduleController extends Controller
         $now = $dt->year."/".str_pad($dt->month, 2, 0, STR_PAD_LEFT)."/".str_pad($dt->day, 2, 0, STR_PAD_LEFT);
         $dt_where_pre = $dt->copy()->subDay(2);
         $dt_where_nex = $dt->copy()->addDay(2);
+        $pre_dt = $dt->copy()->subDay();
+        $now_pre = $pre_dt->year."/".str_pad($pre_dt->month, 2, 0, STR_PAD_LEFT)."/".str_pad($pre_dt->day, 2, 0, STR_PAD_LEFT);
         
         $hour = $setHour;
         $friends = Friend::join('users', 'friends.friend_user_id', '=', 'users.id')->join('userdetails', 'friends.friend_user_id', '=', 'userdetails.user_id')->where('friends.user_id',Auth::user()->id)->get();
@@ -108,7 +110,8 @@ class MargeScheduleController extends Controller
         'my_timezone' => $my_timezone,
         'user_marge_check' => $user_marge_check,
         'group_marge_check' => $group_marge_check,
-        'margeSchedule' => $margeSchedule]);     
+        'margeSchedule' => $margeSchedule,
+        'now_pre' => $now_pre]);     
     }
     /**
      * マージ処理
