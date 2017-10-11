@@ -43,7 +43,7 @@ body {
 
 table
 {
-  font-size: 7px;
+  font-size: 9px;
   table-layout: auto;
   min-width: 0px;
   text-align: center;
@@ -184,27 +184,27 @@ div#floating-menu {
 /*}*/
 
 .badge-default{
-  background-color: #75edf5;
+  background-color: #80f575;
     color: #000000;
 }
 .badge-primary{
-  background-color: #a99179;
+  background-color: #75edf5;
     color: #000000;
 }
 .badge-success{
-  background-color: #8acc8a;
+  background-color: #f4f066;
     color: #000000;
 }
 .badge-info{
-  background-color: #92d4e7;
+  background-color: #8ac4f9;
     color: #000000;
 }
 .badge-warning{
-  background-color: #f6cd93;
+  background-color: #ffaf42;
     color: #000000;
 }
 .badge-danger{
-  background-color: #e99390;
+  background-color: #fe8480;
     color: #000000;
 }
 

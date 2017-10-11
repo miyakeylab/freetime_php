@@ -166,6 +166,9 @@
                                 $now_end->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$my_timezone]['2']);
                             }
                             $now_start_pre = new \Carbon\Carbon($str_1);
+                          ?>
+                        @if($now_start_pre->isSameDay($now_end) == true)
+                        <?php
                             $hourDiff = $now_start_pre->diffInHours($now_end);
                             if(($hourDiff + $n) > 24)
                             {
@@ -205,7 +208,8 @@
                         data-content="{{ $schedule->content }}"
                         data-category="{{ $schedule->category_id }}"><span class="{{ 'overflowStr_'.$hourDiff }}" style="display:block;">{{ $schedule->title }}</span></td>
                           
-                        @endif                        
+                        @endif
+                        @endif
                       @endif
                     @endforeach
                     
