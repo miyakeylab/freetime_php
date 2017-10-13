@@ -526,7 +526,7 @@ class ScheduleController extends Controller
                 ->get();
         }        
         Log::info('スケジュール画面表示 ID:'.Auth::user()->id.' 日付:'.$now.' 時間:'.$hour.' TimeZone:'.$my_timezone);
-        return view('my_schedule',['now' => $now,
+        return view('schedule_main',['now' => $now,
         'hour' => $hour,
         'friends' => $friends,
         'user' => $user, 
@@ -823,4 +823,146 @@ class ScheduleController extends Controller
 
         return $this->UserScheduleDisp($id,$dt,$my_timezone);
     }
+    
+    /**
+     * スケジュール削除
+     **/
+    public function DeleteSchedule(Request $request)
+    {
+        Log::info('スケジュール削除 id:'.$request->schedule_id);
+        
+        $del_data = Schedule::find($request->schedule_id);
+
+        $del_data->delete();
+        
+        $dt = new Carbon($request->now_day_del);
+        $dt_now = Carbon::now();
+        $timeId = $request->my_timezone_del;
+        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['0'] == true)
+        {
+            $dt_now->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_now->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
+        else
+        {
+            $dt_now->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_now->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
+        if($dt->isSameDay($dt_now) == true)
+        {
+            $hour = $dt_now->hour;
+        }else
+        {
+            $hour = 25;
+        }
+        
+        $my_timezone = $timeId;
+
+        return $this->ScheduleDisp($dt,$hour,$my_timezone);
+    }    
+    /**
+     * スケジュール更新
+     **/
+    public function ModSchedule(Request $request)
+    {
+        Log::info('スケジュール更新 id:'.$request->schedule_id);
+        
+
+        $dt_start = new Carbon($request->schedule_start);
+        $dt_end = new Carbon($request->schedule_end);
+        $dt_start_gmt = new Carbon($request->schedule_start);
+        $dt_end_gmt = new Carbon($request->schedule_end);        
+        $timeId =  $request->my_timezone;
+        
+        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['0'] == true)
+        {
+            // GMTにするためマイナス
+            $dt_start_gmt->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_start_gmt->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+            $dt_end_gmt->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_end_gmt->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
+        else
+        {
+            $dt_start_gmt->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_start_gmt->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+            $dt_end_gmt->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_end_gmt->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
+        
+        $schedule = Schedule::find($request->schedule_id);
+        
+        $schedule->my_time_id = $timeId;            //時間ID
+        $schedule->start_time = $dt_start;         //スケジュール開始時間
+        $schedule->end_time=$dt_end;                //スケジュール終了時間
+        $schedule->start_time_gmt = $dt_start_gmt;     //スケジュール開始時間(GMT)
+        $schedule->end_time_gmt = $dt_end_gmt;       //スケジュール終了時間(GMT)
+        if($request->schedule_content === null)
+        {
+            $schedule->content = "";            //スケジュール内容
+        }else{
+            $schedule->content = $request->schedule_content;            //スケジュール内容
+        }
+        
+        
+        if($request->colors == "Default")
+        {
+            $schedule->category_id=0;        //カテゴリーID
+        }else if($request->colors == "Primary")
+        {
+            $schedule->category_id=1;        //カテゴリーID
+        }else if($request->colors == "Success")
+        {
+            $schedule->category_id=2;        //カテゴリーID
+        }else if($request->colors == "Info")
+        {
+            $schedule->category_id=3;        //カテゴリーID
+        }else if($request->colors == "Warning")
+        {
+            $schedule->category_id=4;        //カテゴリーID
+        }else if($request->colors == "Danger")
+        {
+            $schedule->category_id=5;        //カテゴリーID
+        }else
+        {
+            $schedule->category_id=0;        //カテゴリーID
+        }
+        
+        
+        if($request->schedule_title === null)
+        {
+            $schedule->title="";              //スケジュールタイトル
+        }else{
+            $schedule->title=$request->schedule_title;              //スケジュールタイトル
+            
+        }
+        $schedule->pat_id=0;             //パターンID
+        $schedule->schedule_img="";        //スタンプレイアウト      
+        $schedule->save();
+        
+        $dt = new Carbon($request->now_day);
+        $dt_now = Carbon::now();
+        
+        if(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['0'] == true)
+        {
+            $dt_now->addHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_now->addMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
+        else
+        {
+            $dt_now->subHour(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['1']);
+            $dt_now->subMinutes(Config::get('const.TIME_ZONE_MGT_DIFF_ARRAY')[$timeId]['2']);
+        }
+        if($dt->isSameDay($dt_now) == true)
+        {
+            $hour = $dt_now->hour;
+        }else
+        {
+            $hour = 25;
+        }
+        
+        $my_timezone = $timeId;
+
+        return $this->ScheduleDisp($dt,$hour,$my_timezone);
+    }      
 }

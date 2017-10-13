@@ -269,7 +269,7 @@
   <div class="modal" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form class="form-horizontal" method="POST" action="{{ url('my_schedule/user/set') }}">
+        <form class="form-horizontal" method="POST" action="{{ url('schedule_main/user/set') }}">
             {{ csrf_field() }}
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">
@@ -348,7 +348,7 @@
   <div class="modal" id="friendModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" >
     <div class="modal-dialog">
       <div class="modal-content">
-        <form class="form-horizontal" method="POST" action="{{ url('my_schedule/user/share') }}">
+        <form class="form-horizontal" method="POST" action="{{ url('schedule_main/user/share') }}">
             {{ csrf_field() }}
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">
@@ -425,7 +425,7 @@
   <div class="modal" id="offerModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form class="form-horizontal" method="POST" action="{{ url('my_schedule/user/offer') }}">
+        <form class="form-horizontal" method="POST" action="{{ url('schedule_main/user/offer') }}">
             {{ csrf_field() }}
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">

@@ -71,6 +71,8 @@ return [
     'schedule_modal_content' => "Contents",        
     'schedule_modal_close_button' => "Close", 
     'schedule_modal_reg_button' => "Register",
+    'schedule_modal_del_button' => "Delete",
+    'schedule_modal_mod_button' => "Modification",
     'schedule_modal_disp' => 'Scheduled Display',
     'schedule_friend_list' => 'Friend Schedule List',
     'schedule_group_list' => 'Group Schedule List',

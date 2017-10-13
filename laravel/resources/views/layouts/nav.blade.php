@@ -47,7 +47,7 @@
                     @else
                     <!-- ログイン後メニュー -->
                         <li class="dropdown">
-                            <li><a href="{{ url('/my_schedule') }}"><i class="fa fa-btn fa-calendar"></i> </a></li>
+                            <li><a href="{{ url('/schedule_main') }}"><i class="fa fa-btn fa-calendar"></i> </a></li>
                             <li><a href="{{ url('/marge_schedule') }}"><i class="fa fa-btn fa-calendar-plus-o"></i> </a></li>
                             <li><a href="{{ url('/friend') }}"><i class="fa fa-btn fa-user"></i> 
                             @if(count($friend_offer_count) > 0)

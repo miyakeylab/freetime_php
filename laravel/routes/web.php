@@ -18,8 +18,8 @@ Route::get('/', 'ScheduleController@MainView');
 /** 
 * スケジュール表示 
 */ 
-Route::get('/my_schedule','ScheduleController@MainView');
-Route::post('/my_schedule','ScheduleController@MainView');
+Route::get('/schedule_main','ScheduleController@MainView');
+Route::post('/schedule_main','ScheduleController@MainView');
 /**
  * ユーザースケジュール表示 
  */ 
@@ -27,20 +27,29 @@ Route::get('/user_schedule/{id}','ScheduleController@UserScheduleView');
 /** 
 * スケジュール登録 
 */ 
-Route::post('/my_schedule/set','ScheduleController@CreateSchedule');
+Route::post('/schedule_main/set','ScheduleController@CreateSchedule');
+/** 
+* スケジュール登録 
+*/ 
+Route::post('/schedule_main/mod','ScheduleController@ModSchedule');
+/** 
+* スケジュール削除
+*/ 
+Route::post('/schedule_main/del','ScheduleController@DeleteSchedule');
 /** 
 * スケジュール取り込み 
 */ 
-Route::post('/my_schedule/share','ScheduleController@CreateShareSchedule');
+Route::post('/schedule_main/share','ScheduleController@CreateShareSchedule');
 
 /** 
 * スケジュール登録 
 */ 
-Route::post('/my_schedule/user/set','ScheduleController@CreateScheduleUser');
+Route::post('/schedule_main/user/set','ScheduleController@CreateScheduleUser');
+
 /** 
 * スケジュール取り込み 
 */ 
-Route::post('/my_schedule/user/share','ScheduleController@CreateShareScheduleUser');
+Route::post('/schedule_main/user/share','ScheduleController@CreateShareScheduleUser');
 
 
 Route::get('/marge_schedule','MargeScheduleController@MainView');
@@ -48,11 +57,11 @@ Route::post('/marge','MargeScheduleController@MargeRequest');
 /** 
 * スケジュール前日 
 */ 
-Route::post('/my_schedule/prev','ScheduleController@PrevScheduleView');
+Route::post('/schedule_main/prev','ScheduleController@PrevScheduleView');
 /** 
 * スケジュール翌日 
 */ 
-Route::post('/my_schedule/next','ScheduleController@NextScheduleView');
+Route::post('/schedule_main/next','ScheduleController@NextScheduleView');
 
 Auth::routes();
 /** 
@@ -90,7 +99,7 @@ Route::get('/group_schedule/{group_id}','ScheduleController@GroupScheduleView');
 /**
  * グループスケジュール作成 
  */ 
-Route::post('/my_schedule/group_set','ScheduleController@GroupScheduleCreate');
+Route::post('/schedule_main/group_set','ScheduleController@GroupScheduleCreate');
 Route::post('/group_schedule/group_set','GroupController@GroupScheduleCreate');
 /**
  * グループ友達追加 
@@ -116,8 +125,8 @@ Route::get('/offer','OfferController@MainView');
  * オファー作成
  */ 
 Route::post('/offer/set','OfferController@OfferCreate');
-Route::post('/my_schedule/offer','ScheduleController@OfferCreate');
-Route::post('/my_schedule/user/offer','ScheduleController@OfferCreateUser');
+Route::post('/schedule_main/offer','ScheduleController@OfferCreate');
+Route::post('/schedule_main/user/offer','ScheduleController@OfferCreateUser');
 Route::post('/marge/offer','MargeScheduleController@OfferCreate');
 /**
  * オファーリクエストOK

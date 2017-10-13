@@ -1,4 +1,4 @@
-<!-- resources/views/my_schedule.blade.php -->
+<!-- resources/views/schedule_main.blade.php -->
 
 @extends('layouts.app')
 @include('layouts.head', ['page' => 1])
@@ -7,13 +7,13 @@
 @section('content')
     <div class="panel-body">
         <div class="col-xs-12 padding-bottom-10">
-          <form method="POST" action="{{ url('my_schedule/prev') }}" style="display: inline" name="prevForm">
+          <form method="POST" action="{{ url('schedule_main/prev') }}" style="display: inline" name="prevForm">
             {{ csrf_field() }}
             <a href="javascript:document.prevForm.submit()"><i class="fa fa-btn fa-chevron-left"></i></a>
             <input type="hidden" name="now_day" value="{{ $now }}" /> 
             <input type="hidden" name="my_timezone" value="{{ $my_timezone }}"/> 
           </form><b>{{ " "."$now"." " }}</b>
-          <form method="POST" action="{{ url('my_schedule/next') }}" style="display: inline" name="nextForm">
+          <form method="POST" action="{{ url('schedule_main/next') }}" style="display: inline" name="nextForm">
             {{ csrf_field() }}
             <a href="javascript:document.nextForm.submit()"><i class="fa fa-btn fa-chevron-right"></i></a>
             <input type="hidden" name="now_day" value="{{ $now }}" /> 
@@ -154,7 +154,8 @@
                         data-end="{{ $now_end }}"
                         data-title="{{ $schedule->title }}"
                         data-content="{{ $schedule->content }}"
-                        data-category="{{ $schedule->category_id }}"><span class="{{ 'overflowStr_'.$hourDiff }}" style="display:block;">{{ $schedule->title }}</span></td>
+                        data-category="{{ $schedule->category_id }}" 
+                        data-id="{{ $schedule->id }}"><span class="{{ 'overflowStr_'.$hourDiff }}" style="display:block;">{{ $schedule->title }}</span></td>
                         
                         @else
                          <?php $count[$n] +=1; ?>
@@ -212,7 +213,8 @@
                           data-end="{{ $now_end }}"
                           data-title="{{ $schedule->title }}"
                           data-content="{{ $schedule->content }}"
-                          data-category="{{ $schedule->category_id }}"><span class="{{ 'overflowStr_'.$hourDiff }}" style="display:block;">{{ $schedule->title }}</span></td>
+                          data-category="{{ $schedule->category_id }}"
+                          data-id="{{ $schedule->id }}"><span class="{{ 'overflowStr_'.$hourDiff }}" style="display:block;">{{ $schedule->title }}</span></td>
                           
                           @endif
                         @endif
@@ -221,7 +223,7 @@
                     
                     @if($result === 0)
                       <td class="myFeed" colspan="1" align="center" data-toggle="modal" 
-                      data-target="#staticModal" 
+                      data-target="#inputModal" 
                       data-start="{{ $now.' '.str_pad($n, 2, 0, STR_PAD_LEFT).':00' }}" 
                       data-end="{{ $now.' '.str_pad(($n+1), 2, 0, STR_PAD_LEFT).':00' }}"
                       data-title=""
@@ -260,8 +262,11 @@
                   </a>
                 </td>
                 @for ($n=0;$n<24;$n++)
-                  @if($count[$n] != 0)
-                    <td class="yobiFeed" colspan="1" align="center">{{ "+".$count[$n] }}</td>
+                  @if($count[$n] != 0 )
+                  
+                  <td class="yobiFeed" colspan="1" align="center">
+                    <a data-target="#someModal" data-toggle="modal" class="modal-open" href="#">{{ "+".$count[$n] }}</a>
+                  </td>
                   @else
                     <td class="yobiFeed" colspan="1" align="center"></td>
                   @endif
@@ -704,8 +709,7 @@
   <div class="modal" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form class="form-horizontal" method="POST" action="{{ url('my_schedule/set') }}">
-            {{ csrf_field() }}
+
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">
             <span aria-hidden="true">&#215;</span><span class="sr-only">{{ __('messages.schedule_close') }}</span>
@@ -718,13 +722,13 @@
            <div class="padding-top-5"></div>
             <label for="schedule-start" class="col-md-4 control-label">{{ __('messages.schedule_modal_start') }}</label>
             <div class="col-md-5 input-group date" >
-                <input class="form-control" type="text" id="schedule-start" name="schedule_start" />
+                <input class="form-control" type="text" id="schedule-start" name="schedule_start" form="form-reg" />
                 <span class="input-group-addon"><span class="add-on glyphicon glyphicon-th"></span></span>
             </div>
             <div class="padding-top-5"></div>
             <label for="schedule-end" class="col-md-4 control-label">{{ __('messages.schedule_modal_end') }}</label>
             <div class="col-md-5 input-group date" >
-                <input class="form-control" type="text" id="schedule-end" name="schedule_end" />
+                <input class="form-control" type="text" id="schedule-end" name="schedule_end" form="form-reg" />
                 <span class="input-group-addon"><span class="add-on glyphicon glyphicon-th"></span></span>
             </div>
             </div>
@@ -734,35 +738,35 @@
             <div class="panel-heading">{{ __('messages.schedule_modal_content_title') }}</div>
             <div class="panel-body">
             <div class="col-xs-offset-2 col-md-8 col-xs-offset-2"  >
-                <input type="text" class="form-control" id="schedule-title" name="schedule_title" ></textarea>
+                <input type="text" class="form-control" id="schedule-title" name="schedule_title"  form="form-reg" ></textarea>
             </div>
             <div class="col-xs-offset-2 col-md-8 col-xs-offset-2"  >
-                <textarea class="form-control" id="schedule-content" name="schedule_content" cols="45" rows="4" ></textarea>
+                <textarea class="form-control" id="schedule-content" name="schedule_content" cols="45" rows="4"  form="form-reg" ></textarea>
             </div>
             <div class="col-xs-offset-2 col-md-8 col-xs-offset-2"  >
             
             <div class="checkbox-inline">
-              <input type="radio" value="Default" name="colors" id="colors_default" >
+              <input type="radio" value="Default" name="colors" id="colors_default"  form="form-reg" >
                 <label for="colors_default" ><span class="badge badge-default">FreeTime</span></label>
             </div>
             <div class="checkbox-inline">
-              <input type="radio" value="Primary" name="colors" id="colors_primary">
+              <input type="radio" value="Primary" name="colors" id="colors_primary" form="form-reg" >
                 <label for="colors_primary"><span class="badge badge-primary">Work</span></label>
             </div>
             <div class="checkbox-inline">
-              <input type="radio" value="Success" name="colors" id="colors_success">
+              <input type="radio" value="Success" name="colors" id="colors_success" form="form-reg" >
                 <label for="colors_success"><span class="badge badge-success">Play</span></label>
             </div>
             <div class="checkbox-inline">
-              <input type="radio" value="Info" name="colors" id="colors_info">
+              <input type="radio" value="Info" name="colors" id="colors_info" form="form-reg" >
                 <label for="colors_info"><span class="badge badge-info">Sleep</span></label>
             </div>
             <div class="checkbox-inline">
-              <input type="radio" value="Warning" name="colors" id="colors_warning">
+              <input type="radio" value="Warning" name="colors" id="colors_warning" form="form-reg" >
                 <label for="colors_warning"><span class="badge badge-warning">Etc</span></label>
             </div>
             <div class="checkbox-inline">
-              <input type="radio" value="Danger" name="colors" id="colors_danger">
+              <input type="radio" value="Danger" name="colors" id="colors_danger" form="form-reg" >
                 <label for="colors_danger"><span class="badge badge-danger">Block</span></label>
             </div> 
             </div>
@@ -770,21 +774,112 @@
             </div>
         </div>
         <div class="modal-footer">
+          <form style="display: inline" class="form-horizontal" id="form-reg" method="POST" action="{{ url('schedule_main/mod') }}">
+            {{ csrf_field() }}
+          <button type="submit" class="btn btn-primary">{{ __('messages.schedule_modal_mod_button') }}</button>
+          </form>
+          <form style="display: inline" class="form-horizontal" id="form-del" method="POST" action="{{ url('schedule_main/del') }}">
+            {{ csrf_field() }}
+          <button type="submit" class="btn btn-danger">{{ __('messages.schedule_modal_del_button') }}</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('messages.schedule_modal_close_button') }}</button>
-          <button type="submit" class="btn btn-primary">{{ __('messages.schedule_modal_reg_button') }}</button>
+          </form>
         </div>
-        <input type="hidden" name="now_day" value="{{ $now }}" />
-        <input type="hidden" name="my_timezone" value="{{ $my_timezone }}" /> 
-        </form>
+        <!-- hidden -->
+        <input type="hidden" name="now_day" value="{{ $now }}" form="form-reg" />
+        <input type="hidden" name="my_timezone" value="{{ $my_timezone }}" form="form-reg" /> 
+        <input type="hidden" id="schedule-id_mod" name="schedule_id" form="form-reg"/> 
+        <input type="hidden" id="schedule-id_del" name="schedule_id" form="form-del"/> 
+        <input type="hidden" name="now_day_del" value="{{ $now }}" form="form-del" />
+        <input type="hidden" name="my_timezone_del" value="{{ $my_timezone }}" form="form-del" /> 
       </div> <!-- /.modal-content -->
     </div> <!-- /.modal-dialog -->
   </div> <!-- /.modal -->
   
+  <!-- 自入力モーダルダイアログ -->
+  <div class="modal" id="inputModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&#215;</span><span class="sr-only">{{ __('messages.schedule_close') }}</span>
+          </button>
+          <h4 class="modal-title">{{ __('messages.schedule_modal_title') }}</h4>
+        </div><!-- /modal-header -->
+          <div class="panel panel-default">
+                <div class="panel-heading">{{ __('messages.schedule_modal_date') }}</div>
+                <div class="panel-body">
+           <div class="padding-top-5"></div>
+            <label for="schedule-start" class="col-md-4 control-label">{{ __('messages.schedule_modal_start') }}</label>
+            <div class="col-md-5 input-group date" >
+                <input class="form-control" type="text" id="schedule-start_in" name="schedule_start" form="form-reg-in" />
+                <span class="input-group-addon"><span class="add-on glyphicon glyphicon-th"></span></span>
+            </div>
+            <div class="padding-top-5"></div>
+            <label for="schedule-end" class="col-md-4 control-label">{{ __('messages.schedule_modal_end') }}</label>
+            <div class="col-md-5 input-group date" >
+                <input class="form-control" type="text" id="schedule-end_in" name="schedule_end" form="form-reg-in" />
+                <span class="input-group-addon"><span class="add-on glyphicon glyphicon-th"></span></span>
+            </div>
+            </div>
+            </div>
+        <div class="modal-body">
+          <div class="panel panel-default">
+            <div class="panel-heading">{{ __('messages.schedule_modal_content_title') }}</div>
+            <div class="panel-body">
+            <div class="col-xs-offset-2 col-md-8 col-xs-offset-2"  >
+                <input type="text" class="form-control" id="schedule-title_in" name="schedule_title"  form="form-reg-in" ></textarea>
+            </div>
+            <div class="col-xs-offset-2 col-md-8 col-xs-offset-2"  >
+                <textarea class="form-control" id="schedule-content_in" name="schedule_content" cols="45" rows="4"  form="form-reg-in" ></textarea>
+            </div>
+            <div class="col-xs-offset-2 col-md-8 col-xs-offset-2"  >
+            
+            <div class="checkbox-inline">
+              <input type="radio" value="Default" name="colors" id="colors_default_in"  form="form-reg-in" >
+                <label for="colors_default" ><span class="badge badge-default">FreeTime</span></label>
+            </div>
+            <div class="checkbox-inline">
+              <input type="radio" value="Primary" name="colors" id="colors_primary_in" form="form-reg-in" >
+                <label for="colors_primary"><span class="badge badge-primary">Work</span></label>
+            </div>
+            <div class="checkbox-inline">
+              <input type="radio" value="Success" name="colors" id="colors_success_in" form="form-reg-in" >
+                <label for="colors_success"><span class="badge badge-success">Play</span></label>
+            </div>
+            <div class="checkbox-inline">
+              <input type="radio" value="Info" name="colors" id="colors_info_in" form="form-reg-in" >
+                <label for="colors_info"><span class="badge badge-info">Sleep</span></label>
+            </div>
+            <div class="checkbox-inline">
+              <input type="radio" value="Warning" name="colors" id="colors_warning_in" form="form-reg-in" >
+                <label for="colors_warning"><span class="badge badge-warning">Etc</span></label>
+            </div>
+            <div class="checkbox-inline">
+              <input type="radio" value="Danger" name="colors" id="colors_danger_in" form="form-reg-in" >
+                <label for="colors_danger"><span class="badge badge-danger">Block</span></label>
+            </div> 
+            </div>
+            </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <form style="display: inline" class="form-horizontal" id="form-reg-in" method="POST" action="{{ url('schedule_main/set') }}">
+            {{ csrf_field() }}
+          <button type="submit" class="btn btn-primary">{{ __('messages.schedule_modal_reg_button') }}</button>
+          </form>          
+          <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('messages.schedule_modal_close_button') }}</button>
+        </div>
+        <!-- hidden -->
+        <input type="hidden" name="now_day" value="{{ $now }}" form="form-reg-in" />
+        <input type="hidden" name="my_timezone" value="{{ $my_timezone }}" form="form-reg-in" />
+      </div> <!-- /.modal-content -->
+    </div> <!-- /.modal-dialog -->
+  </div> <!-- /.modal -->  
   <!-- グループモーダルダイアログ -->
   <div class="modal" id="groupModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form class="form-horizontal" method="POST" action="{{ url('my_schedule/group_set') }}">
+        <form class="form-horizontal" method="POST" action="{{ url('schedule_main/group_set') }}">
             {{ csrf_field() }}
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">
@@ -865,7 +960,7 @@
   <div class="modal" id="friendModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" >
     <div class="modal-dialog">
       <div class="modal-content">
-        <form class="form-horizontal" method="POST" action="{{ url('my_schedule/share') }}">
+        <form class="form-horizontal" method="POST" action="{{ url('schedule_main/share') }}">
             {{ csrf_field() }}
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">
@@ -943,7 +1038,7 @@
   <div class="modal" id="offerModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form class="form-horizontal" method="POST" action="{{ url('my_schedule/offer') }}">
+        <form class="form-horizontal" method="POST" action="{{ url('schedule_main/offer') }}">
             {{ csrf_field() }}
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">
@@ -1022,7 +1117,32 @@
         </form>
       </div> <!-- /.modal-content -->
     </div> <!-- /.modal-dialog -->
+  </div> <!-- /.modal --> 
+  
+  <!-- 複数スケジュールダイアログ -->
+  <div class="modal" id="someModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&#215;</span><span class="sr-only">{{ __('messages.schedule_close') }}</span>
+        </button>
+        <h4 class="modal-title">{{ __('messages.schedule_modal_title') }}</h4>
+        </div><!-- /modal-header -->
+          <div class="panel panel-default">
+          <div class="panel-heading">{{ __('messages.schedule_modal_date') }}</div>
+          <div class="panel-body">
+          <div class="padding-top-5"></div>
+          </div>
+          </div>
+        <div class="modal-footer">
+        </div>
+        <!-- hidden -->
+      </div> <!-- /.modal-content -->
+    </div> <!-- /.modal-dialog -->
   </div> <!-- /.modal -->  
+  
+  
   <!--(フローティングメニューに載せたいHTMLコード)-->
   <!--<div id="floating-menu">-->
   <!--   <i class="fa fa-btn fa-chevron-left"></i> {{ " "."$now"." " }}<i class="fa fa-btn fa-chevron-right"></i>-->

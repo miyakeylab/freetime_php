@@ -16,13 +16,15 @@ $(function () {
       var title = button.data('title');
       var content = button.data('content');
       var category = button.data('category');
-      console.log(category);
+      var id = button.data('id');
+      
       var modal = $(this);
       modal.find('#schedule-start').val(hour_start);
       modal.find('#schedule-end').val(hour_end);
       modal.find('#schedule-title').val(title);  
       modal.find('#schedule-content').val(content);
-      
+      modal.find('#schedule-id_mod').val(id);
+      modal.find('#schedule-id_del').val(id);
       switch (category) {
         case 0:
           modal.find('#colors_default').prop('checked','checked');
@@ -55,7 +57,58 @@ $(function () {
     $('#staticModal').on('click', '.modal-footer .btn-primary', function() {
       $('#staticModal').modal('hide');
     });
-    
+    /**
+     * スケジュールボタン
+     */
+    // ダイアログ表示前にJavaScriptで操作する
+    $('#inputModal').on('show.bs.modal', function(event) {
+      var button = $(event.relatedTarget);
+      var hour_start = button.data('start');
+      var hour_end = button.data('end');
+      var title = button.data('title');
+      var content = button.data('content');
+      var category = button.data('category');
+      var id = button.data('id');
+      
+      var modal = $(this);
+      modal.find('#schedule-start_in').val(hour_start);
+      modal.find('#schedule-end_in').val(hour_end);
+      modal.find('#schedule-title_in').val(title);  
+      modal.find('#schedule-content_in').val(content);
+      modal.find('#schedule-id_in').val(id);
+
+      switch (category) {
+        case 0:
+          modal.find('#colors_default_in').prop('checked','checked');
+          break;
+        case 1:
+          modal.find('#colors_primary_in').prop('checked','checked');
+          break;
+        case 2:
+          modal.find('#colors_success_in').prop('checked','checked');
+          break;
+        case 3:
+          modal.find('#colors_info_in').prop('checked','checked');
+          break;
+        case 4:
+          modal.find('#colors_warning_in').prop('checked','checked');
+          break;
+        case 5:
+          modal.find('#colors_danger_in').prop('checked','checked');
+          break;
+        default:
+          modal.find('#colors_default_in').prop('checked','checked');
+          break;
+      }
+      
+    });
+    // ダイアログ表示直後にフォーカスを設定する
+    $('#inputModal').on('shown.bs.modal', function(event) {
+      $(this).find('.modal-footer .btn-default').focus();
+    });
+    $('#inputModal').on('click', '.modal-footer .btn-primary', function() {
+      $('#inputModal').modal('hide');
+    });    
     /**
      * グループスケジュールボタン
      */
@@ -234,7 +287,23 @@ $(function () {
     });
     $('#friendOfferModal').on('click', '.modal-footer .btn-primary', function() {
       $('#friendOfferModal').modal('hide');
-    });   
+    });
+    
+    /**
+     * スケジュールボタン
+     */
+    // ダイアログ表示前にJavaScriptで操作する
+    $('#someModal').on('show.bs.modal', function(event) {
+      var button = $(event.relatedTarget);
+      var modal = $(this);
+    });
+    // ダイアログ表示直後にフォーカスを設定する
+    $('#someModal').on('shown.bs.modal', function(event) {
+      $(this).find('.modal-footer .btn-default').focus();
+    });
+    $('#someModal').on('click', '.modal-footer .btn-primary', function() {
+      $('#someModal').modal('hide');
+    });        
 });  
   
 /**
