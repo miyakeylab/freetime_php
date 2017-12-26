@@ -22,7 +22,7 @@
         </div>
         <button type="submit" class="btn btn-success col-xs-6" 
         data-toggle="modal" 
-        data-target="#staticModal" 
+        data-target="#inputModal" 
         data-start="{{ $now.' '.str_pad($hour, 2, 0, STR_PAD_LEFT).':00' }}" 
         data-end="{{ $now.' '.str_pad(($hour+1), 2, 0, STR_PAD_LEFT).':00' }}" 
         data-title=""
@@ -1034,7 +1034,7 @@
     </div> <!-- /.modal-dialog -->
   </div> <!-- /.modal -->
   
-  <!-- オファーモーダルダイアログ -->
+  <!-- オファーモーダ���ダイアログ -->
   <div class="modal" id="offerModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
