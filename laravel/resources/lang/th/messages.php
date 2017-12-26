@@ -70,7 +70,7 @@ return [
      'schedule_modal_content_title' => "เนื้อหา",
      'schedule_modal_content' => "เนื้อหา",
      'schedule_modal_close_button' => "ปิด",
-     'schedule_modal_reg_button' => "ลงทะเบียน"
+     'schedule_modal_reg_button' => "ลงทะเบียน",
      'schedule_modal_del_button' => "ลบ",
     'schedule_modal_mod_button' => "การแก้ไข",
      'schedule_modal_disp' => 'กำหนดการแสดงผล',
