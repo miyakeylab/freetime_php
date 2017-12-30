@@ -9,7 +9,10 @@
 
     @yield('content')
     @yield('input_modal')
+    @yield('change_modal')
     @yield('offer_modal')
+    @yield('group_modal')
+    @yield('friend_modal')
     </div>
 </body>
 </html>
